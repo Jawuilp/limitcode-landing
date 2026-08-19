@@ -5,7 +5,7 @@
       <div class="hero-copy">
         <span class="eyebrow reveal"><span class="dot"></span>For Sublime Text 4</span>
         <h1 class="hero-headline reveal d1">
-          Your coding agent,<br/>
+          Your coding agent,<br class="hero-break" />
           <em>inside</em> Sublime Text.
         </h1>
         <p class="hero-sub reveal d2">
@@ -71,6 +71,12 @@
   if (openButton instanceof HTMLButtonElement && dialog instanceof HTMLDialogElement) {
     const heroVideo = openButton.querySelector("video");
     const dialogVideo = dialog.querySelector("video");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion && heroVideo instanceof HTMLVideoElement) {
+      heroVideo.autoplay = false;
+      heroVideo.pause();
+    }
 
     openButton.addEventListener("click", () => {
       if (heroVideo instanceof HTMLVideoElement && dialogVideo instanceof HTMLVideoElement) {
@@ -91,7 +97,7 @@
 
     dialog.addEventListener("close", () => {
       if (dialogVideo instanceof HTMLVideoElement) dialogVideo.pause();
-      if (heroVideo instanceof HTMLVideoElement) heroVideo.play().catch(() => {});
+      if (!reduceMotion && heroVideo instanceof HTMLVideoElement) heroVideo.play().catch(() => {});
     });
   }
 </script>
@@ -197,8 +203,8 @@
     top: 12px;
     right: 12px;
     display: grid;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     place-items: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
@@ -217,6 +223,13 @@
   @media (max-width: 700px) {
     .hero-dialog-shell {
       width: min(94vw, calc(82vh * 16 / 9));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-break { display: none; }
+    .hero-headline {
+      font-size: clamp(2.55rem, calc(1rem + 8vw), var(--step-5));
     }
   }
 
