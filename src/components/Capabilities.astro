@@ -1,0 +1,149 @@
+---
+import VideoCard from "./VideoCard.astro";
+
+const capabilities = [
+  {
+    index: "01 / PROJECT",
+    title: "Work against the project on disk.",
+    body: "Limitcode can list, read, and search files, then create targeted edits, apply patches, and run build or test commands from the same conversation.",
+    meta: ["inspect files", "targeted edits", "patches", "builds & tests"],
+  },
+  {
+    index: "02 / CONTROL",
+    title: "Mutating tools ask by default.",
+    body: "Reading and searching can stay frictionless. Writes, diffs, shell commands, web search and page fetching, and MCP calls follow configurable permission rules before they change state.",
+    meta: ["ask by default", "web search", "session rules", "cancel anytime"],
+  },
+  {
+    index: "03 / MEMORY",
+    title: "Keep context without losing recovery.",
+    body: "Conversations are saved by project, long sessions compact automatically, and agent edits receive snapshots for Limitcode Undo and Redo during the session.",
+    meta: ["sessions", "auto-compaction", "undo / redo"],
+  },
+  {
+    index: "04 / EXTEND",
+    title: "Bring the workflow your repository already uses.",
+    body: "Load repository instructions, reusable skills, configured MCP connections, and focused subagents without moving the task into a separate application.",
+    meta: ["project instructions", "skills", "MCP", "subagents"],
+    video: "/limit-search-skilss.mp4?v=3",
+  },
+];
+---
+
+<section id="features" class="capabilities container">
+  <div class="section-head">
+    <span class="section-num reveal">02 — Capabilities</span>
+    <h2 class="reveal d1">A working loop, <em class="not-wrapper">not a prompt wrapper</em>.</h2>
+    <p class="reveal d2">Limitcode combines project tools, approval boundaries, conversation memory, and recovery inside the Sublime workflow you already use.</p>
+  </div>
+
+  <div class="capability-ledger">
+    {capabilities.map((capability, index) => (
+      <article class={`capability reveal d${index + 1}`}>
+        <span class="capability-index">{capability.index}</span>
+        <h3>{capability.title}</h3>
+        <p>{capability.body}</p>
+        {capability.video && (
+          <VideoCard
+            src={capability.video}
+            poster="/limit-search-skilss-poster.jpg"
+            duration="0:31"
+          />
+        )}
+        <div class="capability-meta">
+          {capability.meta.map((item) => <code>{item}</code>)}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .capabilities .section-head h2 em.not-wrapper {
+    color: var(--signal);
+    font-style: normal;
+  }
+
+  .capability-ledger {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .capability {
+    min-height: 300px;
+    padding: clamp(28px, 4vw, 48px);
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .capability:nth-child(odd) {
+    border-right: 1px solid var(--hairline);
+  }
+
+  .capability:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .capability-index {
+    font-family: var(--font-mono);
+    color: var(--signal);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    margin-bottom: auto;
+  }
+
+  .capability h3 {
+    max-width: 18ch;
+    margin: 48px 0 14px;
+  }
+
+  .capability p {
+    max-width: 48ch;
+  }
+
+  .capability-video {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 6px;
+    border: 1px solid var(--hairline);
+    background: #0f1117;
+  }
+
+  .capability-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 24px;
+  }
+
+  .capability-meta code {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline-soft);
+    padding: 4px 7px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 700px) {
+    .capability-ledger {
+      grid-template-columns: 1fr;
+    }
+
+    .capability,
+    .capability:nth-child(odd),
+    .capability:nth-last-child(-n + 2) {
+      min-height: 260px;
+      border-right: 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .capability:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

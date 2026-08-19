@@ -1,0 +1,290 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+interface Change {
+  type: "added" | "changed" | "fixed" | "removed";
+  text: string;
+}
+
+interface Entry {
+  version: string;
+  date: string;
+  title: string;
+  body?: string;
+  changes: Change[];
+}
+
+const entries: Entry[] = [
+  {
+    version: "1.0.2",
+    date: "2026-08-18",
+    title: "Stable tool status",
+    body: "Long-running tools now keep their progress indicator and Stop control in one stable place while output streams.",
+    changes: [
+      { type: "added", text: "Animated spinner inside the active tool card, so long commands show they are still working" },
+      { type: "added", text: "Stop control moved into the running tool card instead of a separate floating status line" },
+      { type: "fixed", text: "Fixed the jumping/flashing status line during long command output (e.g. pnpm build)" },
+      { type: "fixed", text: "Tool cards are restored in chronological order when reloading a chat history" },
+    ],
+  },
+  {
+    version: "1.0.1",
+    date: "2026-08-18",
+    title: "History and loader fixes",
+    body: "Chat history restores tool calls where they happened, and running tools animate while they work.",
+    changes: [
+      { type: "added", text: "Persisted tool-call position inside assistant responses, so reloaded chats show calls in the order the agent made them" },
+      { type: "fixed", text: "Long-running tools now show an animated loader instead of a static dot" },
+    ],
+  },
+  {
+    version: "1.0.0",
+    date: "2026-08-18",
+    title: "First stable release",
+    body: "The first packaged Limitcode Pro release, with license activation and image support across platforms.",
+    changes: [
+      { type: "added", text: "Clipboard image paste on macOS and Linux, matching the existing Windows support" },
+      { type: "added", text: "Multimodal image attachments in chat, supported by image-capable models" },
+      { type: "added", text: "License activation against the Limitcode Pro license service with device limits and offline grants" },
+      { type: "added", text: "Separate downloads for current and next-generation Sublime plugin hosts" },
+    ],
+  },
+  {
+    version: "1.0.0-rc.1",
+    date: "2026-08-10",
+    title: "V1 release candidate",
+    body: "The first packaged Limitcode Pro V1 candidate brings the full coding-agent loop into a side-by-side Sublime Text view.",
+    changes: [
+      { type: "added", text: "Side-by-side Sublime chat with streaming responses, reasoning display, cancellation, and visible tool results" },
+      { type: "added", text: "Code, Architect, Ask, and Debug modes with mode-specific tool access" },
+      { type: "added", text: "Project tools for file listing, reading, searching, creation, targeted edits, patches, web access, and shell commands" },
+      { type: "added", text: "Configurable permission rules: reads and searches can stay frictionless while mutating tools ask by default" },
+      { type: "added", text: "Project-scoped conversation history, prompt history, and automatic long-context compaction" },
+      { type: "added", text: "Agent edit snapshots with Limitcode Undo and Redo during the active session" },
+      { type: "added", text: "Provider, model, reasoning-effort, context, and estimated cost controls in the chat status bar" },
+      { type: "added", text: "OpenAI, Anthropic, Gemini, OpenRouter, Mistral AI, Copilot, DeepSeek, and OpenAI-compatible or local provider paths" },
+      { type: "added", text: "Account sign-in for GitHub Copilot, OpenAI Codex, and Google Antigravity with a shared logout command" },
+      { type: "added", text: "Web search and URL fetching as permission-gated tools with a configurable search backend" },
+      { type: "added", text: "LSP diagnostics collected after edits to surface syntax and type errors back to the agent" },
+      { type: "added", text: "Repository-level instructions that can join task context automatically" },
+      { type: "added", text: "Reusable skills, configured MCP connections, checklists, batches, and focused subagents" },
+      { type: "added", text: "Dynamic model discovery with per-provider caches and reasoning-effort controls" },
+      { type: "added", text: "Session cost statistics and token tracking in the chat status bar" },
+      { type: "changed", text: "Separate downloads now support both current and next-generation Sublime plugin hosts" },
+      { type: "fixed", text: "Improved startup and module loading from the installed package" },
+    ],
+  },
+];
+
+function formatDate(raw: string): string {
+  const d = new Date(raw + "T00:00:00Z");
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+const typeLabel: Record<string, string> = {
+  added: "Added",
+  changed: "Changed",
+  fixed: "Fixed",
+  removed: "Removed",
+};
+
+const typeColor: Record<string, string> = {
+  added: "var(--sage)",
+  changed: "var(--sublime)",
+  fixed: "var(--signal)",
+  removed: "var(--muted)",
+};
+---
+
+<Layout title="Changelog — Limitcode Pro" description="Release notes and version history for Limitcode Pro." canonicalPath="/changelog/">
+  <Nav />
+  <main>
+    <section class="changelog-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Release history</span>
+        <h1 class="reveal d1">Limitcode release notes.</h1>
+        <p class="lead reveal d2">A version-by-version record of visible features, behavior changes, and fixes in Limitcode Pro.</p>
+      </div>
+    </section>
+
+    <section class="changelog-timeline container">
+      {entries.map((entry, i) => (
+        <article class={`entry reveal d${Math.min(i + 1, 5)}`}>
+          <header class="entry-head">
+            <div class="entry-meta">
+              <span class="entry-version">v{entry.version}</span>
+              <time class="entry-date" datetime={entry.date}>{formatDate(entry.date)}</time>
+            </div>
+            <h2 class="entry-title">{entry.title}</h2>
+            {entry.body && <p class="entry-body">{entry.body}</p>}
+          </header>
+
+          <div class="changes">
+            {(["added", "changed", "fixed", "removed"] as const).map((type) => {
+              const items = entry.changes.filter((c) => c.type === type);
+              if (items.length === 0) return null;
+              return (
+                <div class="change-group">
+                  <h3 class="change-type" style={`color: ${typeColor[type]}`}>
+                    <span class="change-dot" style={`background: ${typeColor[type]}`}></span>
+                    {typeLabel[type]}
+                  </h3>
+                  <ul class="change-list">
+                    {items.map((c) => (
+                      <li>{c.text}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .changelog-hero {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+  .changelog-hero h1 {
+    font-size: var(--step-4);
+    margin-top: 14px;
+    margin-bottom: 12px;
+    max-width: 16ch;
+  }
+  .changelog-hero .lead {
+    margin-top: 0;
+  }
+
+  .changelog-timeline {
+    padding-top: 0;
+    padding-bottom: clamp(80px, 11vw, 140px);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .entry {
+    border-top: 1px solid var(--hairline);
+    padding: clamp(32px, 4vw, 56px) 0;
+  }
+
+  .entry-head {
+    margin-bottom: 28px;
+  }
+
+  .entry-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 10px;
+  }
+
+  .entry-version {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--signal);
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    background: rgba(232, 97, 50, 0.08);
+    border: 1px solid rgba(232, 97, 50, 0.18);
+    border-radius: 4px;
+  }
+
+  .entry-date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .entry-title {
+    font-size: var(--step-2);
+    font-weight: 700;
+    letter-spacing: -0.016em;
+    line-height: 1.15;
+    max-width: 30ch;
+  }
+
+  .entry-body {
+    margin-top: 8px;
+    max-width: 60ch;
+    color: var(--ink-soft);
+  }
+
+  .changes {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px 24px;
+    max-width: 680px;
+  }
+
+  .change-group {
+    display: contents;
+  }
+
+  .change-type {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+
+  .change-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .change-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .change-list li {
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .change-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--hairline);
+  }
+
+  @media (max-width: 640px) {
+    .changes {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .change-type {
+      padding-top: 0;
+    }
+  }
+</style>

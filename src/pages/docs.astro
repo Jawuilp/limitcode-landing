@@ -1,0 +1,590 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import VideoCard from "../components/VideoCard.astro";
+
+const quickSteps = [
+  {
+    ord: "01",
+    title: "Download the matching build",
+    body: "After checkout, keep the activation key and download the Limitcode Pro package matched to your Sublime Text build (current or next-generation plugin host).",
+  },
+  {
+    ord: "02",
+    title: "Install and activate",
+    body: "Copy the package into Sublime Text's Installed Packages folder, restart Sublime Text, then activate this device from the Command Palette.",
+    code: "Limitcode Pro: Activate License",
+  },
+  {
+    ord: "03",
+    title: "Connect a provider",
+    body: "Add an API key, sign in with a supported account, reuse an existing CLI login, or point Limitcode at a local endpoint. Then open Limitcode Chat.",
+    code: "Limitcode: Setup Provider API Key",
+  },
+];
+
+const paletteGroups = [
+  {
+    name: "Session",
+    commands: ["Open Chat", "New Chat", "Chat History", "Rename Session", "Delete Session", "Clear Chat"],
+  },
+  {
+    name: "Agent & configuration",
+    commands: ["Send to Agent", "Change Provider", "Change Model", "Set Reasoning Effort", "Setup Provider API Key", "Toggle Permissions", "Show Instructions", "Show Cost Statistics"],
+  },
+  {
+    name: "Account sign-in",
+    commands: ["Login with GitHub Copilot (OAuth)", "Login with Codex (OAuth)", "Login with Google Antigravity (OAuth)", "Logout OAuth"],
+  },
+  {
+    name: "Limitcode Pro",
+    commands: ["Activate License", "Show License Status", "Deactivate This Device"],
+  },
+];
+
+const shortcuts = [
+  { keys: "Ctrl+Alt+L", action: "Open chat" },
+  { keys: "Ctrl+Alt+A", action: "Send selection or file to the agent" },
+  { keys: "Ctrl+Alt+M", action: "Change model" },
+  { keys: "Ctrl+Alt+P", action: "Change provider" },
+  { keys: "Ctrl+Shift+C", action: "Cancel the active request" },
+  { keys: "Enter", action: "Send the message (in the chat view)" },
+  { keys: "Escape", action: "Stop the agent (chat focused)" },
+];
+
+const settingsExample = `{
+  "default_provider": "openrouter",
+  "default_model": "anthropic/claude-sonnet-4-20250514",
+  "api_keys": {
+    "openrouter": "sk-..."
+  },
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "max_iterations": 25,
+  "permission": {
+    "tool": {
+      "read_file": "allow",
+      "list_files": "allow",
+      "search_files": "allow",
+      "write_to_file": "ask",
+      "edit_file": "ask",
+      "apply_diff": "ask",
+      "execute_command": "ask"
+    },
+    "file": {
+      "allow": ["src/**", "lib/**", "app/**", "*.py", "*.js", "*.ts", "*.md"],
+      "deny": ["**/*.lock", ".env", "**/node_modules/**", "**/.git/**", "**/__pycache__/**"]
+    }
+  }
+}`;
+
+const faq = [
+  {
+    q: "Does Limitcode need a separate daemon or service?",
+    a: "No. Limitcode runs inside Sublime Text. API-key providers work directly from the plugin; account, CLI, and local integrations use their own optional setup.",
+  },
+  {
+    q: "Where are my credentials stored?",
+    a: "API keys and OAuth tokens are stored in Sublime Text settings, not an operating-system keychain. Review the provider's terms before connecting a work or primary personal account.",
+  },
+  {
+    q: "Which Sublime Text builds are supported?",
+    a: "Separate downloads are provided for the current and the next-generation Sublime Text plugin hosts, so you install the package matched to your build.",
+  },
+  {
+    q: "What happens when I log out of an account provider?",
+    a: "Logout removes the stored credentials from local settings. It does not revoke the token on the provider side — revoke access in the provider's own security settings if you want it invalidated server-side.",
+  },
+  {
+    q: "Can Limitcode see images?",
+    a: "Yes. Paste a screenshot or image into the chat (Ctrl+V / Cmd+V on Windows, macOS, and Linux) and image-capable models can see and reason about it, for example to inspect UI bugs, diagrams, or design mockups.",
+  },
+  {
+    q: "Can Limitcode search the web?",
+    a: "Yes. Web search and URL fetching are built-in tools that ask for permission by default. The search backend is configurable in Limitcode settings.",
+  },
+  {
+    q: "Can I use skills and MCP servers?",
+    a: "Yes. Skills load specialized instructions on demand, and any MCP server you configure becomes callable as a tool — both under the same permission rules as the rest of the agent.",
+  },
+  {
+    q: "Can I use local models?",
+    a: "Yes. Ollama, LM Studio, LiteLLM, and custom OpenAI-compatible endpoints are supported. Tool calling depends on the endpoint and model implementation.",
+  },
+  {
+    q: "Can account-based integrations change or stop working?",
+    a: "Yes. Codex, Copilot, and Antigravity routes depend on provider-controlled accounts and service behavior. Availability, quotas, and compatibility can change independently of Limitcode. See the Providers page for account-risk notes.",
+  },
+];
+---
+
+<Layout
+  title="Docs — Limitcode Pro"
+  description="Installation, commands, settings, shortcuts, and FAQ for Limitcode Pro."
+  canonicalPath="/docs/"
+>
+  <!-- FAQPage schema: lets AI engines extract the Q&A directly -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map((item) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+    })),
+  })} />
+  <Nav />
+  <main>
+    <section class="docs-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Documentation</span>
+        <h1 class="reveal d1">Install, configure, and go.</h1>
+        <p class="lead reveal d2">
+          Everything needed to run Limitcode Pro in Sublime Text: setup, Command Palette
+          reference, settings, keyboard shortcuts, and answers to common questions.
+        </p>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">01 — Quick start</span>
+        <h2>From download to first task.</h2>
+      </div>
+      <div class="quick-grid">
+        {quickSteps.map((s) => (
+          <article class="quick-card">
+            <span class="ord">{s.ord}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+            {s.code && <div class="code"><span class="c">$</span> {s.code}</div>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">02 — Command Palette</span>
+        <h2>Everything starts with <code class="inline-code">Limitcode:</code>.</h2>
+        <p>Open the Command Palette with <code class="inline-code">Ctrl+Shift+P</code> and type any command prefix.</p>
+      </div>
+      <div class="palette-grid">
+        {paletteGroups.map((group) => (
+          <article class="palette-group">
+            <h3>{group.name}</h3>
+            <ul>
+              {group.commands.map((cmd) => (
+                <li><code>Limitcode: {cmd}</code></li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">03 — Keyboard shortcuts</span>
+        <h2>Built-in shortcuts.</h2>
+      </div>
+      <div class="shortcut-list">
+        {shortcuts.map((s) => (
+          <div class="shortcut-row">
+            <kbd>{s.keys}</kbd>
+            <span>{s.action}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">04 — Settings</span>
+        <h2>Reference settings file.</h2>
+        <p>
+          Open <code class="inline-code">Preferences → Package Settings → Limitcode → Settings</code>.
+          Provider and model use <code class="inline-code">default_provider</code> and{" "}
+          <code class="inline-code">default_model</code>.
+        </p>
+      </div>
+      <pre class="codeblock"><code>{settingsExample}</code></pre>
+
+      <div class="perm-grid">
+        <div>
+          <h3>Tool permissions</h3>
+          <p>
+            Reads and searches can stay frictionless (<code class="inline-code">allow</code>)
+            while mutating tools ask by default (<code class="inline-code">ask</code>), or are
+            denied. Use <code class="inline-code">Limitcode: Toggle Permissions</code> or the
+            trust commands per agent.
+          </p>
+        </div>
+        <div>
+          <h3>File allow / deny</h3>
+          <p>
+            Glob patterns decide which files the agent can touch. Deny lists protect
+            lockfiles, environment files, dependencies, and version-control folders by
+            default in the example above.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">05 — Providers &amp; accounts</span>
+        <h2>Bring the model access you already use.</h2>
+        <p>
+          Direct APIs (OpenAI, Anthropic, Gemini, OpenRouter, Mistral AI, DeepSeek, and compatible
+          gateways), account sign-in (GitHub Copilot, OpenAI Codex, Google Antigravity),
+          existing CLI sessions, and local OpenAI-compatible runtimes.
+        </p>
+      </div>
+      <div class="prov-cta">
+        <p>Account routes depend on provider-controlled behavior. Google Antigravity in particular carries elevated account risk — prefer a secondary Google account and use it at your own responsibility.</p>
+        <a class="btn btn-primary" href="/providers">Full providers guide <span class="arrow">→</span></a>
+      </div>
+
+      <div class="integ-video">
+        <VideoCard
+          src="/limit-use-mcp.mp4?v=3"
+          poster="/limit-use-mcp-poster.jpg"
+          duration="0:53"
+          caption="Limitcode Pro driving a Playwright MCP server to run real tests."
+        />
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">06 — FAQ</span>
+        <h2>Common questions.</h2>
+      </div>
+      <div class="faq-list">
+        {faq.map((item) => (
+          <details class="faq-item">
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="docs-boundary">
+      <div class="container">
+        <span class="eyebrow">Still stuck?</span>
+        <h2>Ask Jawuil directly.</h2>
+        <p>Installation help and questions about your license or a specific provider.</p>
+        <a class="btn btn-light" href="mailto:hola@jawuil.dev?subject=Limitcode%20Pro">hola@jawuil.dev →</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .docs-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+  }
+
+  .docs-hero h1 {
+    max-width: 14ch;
+    margin: 18px 0 22px;
+  }
+
+  .docs-hero .lead {
+    max-width: 56ch;
+  }
+
+  .docs-section {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(36px, 5vw, 60px);
+  }
+
+  .quick-card {
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .quick-card .ord {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--signal);
+    letter-spacing: 0.14em;
+  }
+
+  .quick-card h3 {
+    margin: 14px 0 10px;
+    font-size: var(--step-1);
+  }
+
+  .quick-card p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .code {
+    margin-top: 18px;
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--signal);
+    overflow-x: auto;
+  }
+
+  .code .c {
+    color: var(--sage);
+  }
+
+  .inline-code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--ink);
+  }
+
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(36px, 5vw, 60px);
+  }
+
+  .palette-group {
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+    padding: 26px;
+  }
+
+  .palette-group h3 {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .palette-group ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .palette-group li {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .palette-group code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  .shortcut-list {
+    margin-top: clamp(36px, 5vw, 60px);
+    border-top: 1px solid var(--hairline);
+    max-width: 720px;
+  }
+
+  .shortcut-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .shortcut-row kbd {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 4px 10px;
+    min-width: 120px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .shortcut-row span {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+
+  .codeblock {
+    margin: clamp(36px, 5vw, 60px) 0 0;
+    padding: 26px;
+    background: #1c1a16;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+
+  .codeblock code {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: #e8e2d4;
+    white-space: pre;
+  }
+
+  .perm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(36px, 6vw, 80px);
+    margin-top: 44px;
+  }
+
+  .perm-grid h3 {
+    font-size: var(--step-0);
+    margin-bottom: 10px;
+  }
+
+  .perm-grid p {
+    font-size: 0.93rem;
+    color: var(--ink-soft);
+  }
+
+  .prov-cta {
+    margin-top: clamp(36px, 5vw, 60px);
+    display: grid;
+    grid-template-columns: 1.4fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 32px;
+    border: 1px solid rgba(232, 97, 50, 0.42);
+    border-left: 4px solid var(--signal);
+    background: rgba(232, 97, 50, 0.07);
+  }
+
+  .prov-cta p {
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .integ-video {
+    margin-top: 28px;
+    max-width: 720px;
+  }
+
+  .integ-video { max-width: 720px; }
+
+  .integ-video p {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .faq-list {
+    margin: clamp(36px, 5vw, 60px) auto 0;
+    max-width: 780px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.02rem;
+    padding: 20px 4px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .faq-item summary::before {
+    content: "+";
+    font-family: var(--font-mono);
+    color: var(--signal);
+    font-size: 1rem;
+  }
+
+  .faq-item[open] summary::before {
+    content: "–";
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item p {
+    padding: 0 4px 22px;
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  .docs-boundary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(64px, 9vw, 120px) 0;
+  }
+
+  .docs-boundary h2,
+  .docs-boundary p {
+    color: var(--paper);
+  }
+
+  .docs-boundary h2 {
+    margin-top: 12px;
+  }
+
+  .docs-boundary p {
+    margin-top: 10px;
+    color: var(--paper-soft);
+  }
+
+  .docs-boundary .btn {
+    margin-top: 28px;
+  }
+
+  @media (max-width: 800px) {
+    .quick-grid,
+    .palette-grid,
+    .perm-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .prov-cta {
+      grid-template-columns: 1fr;
+      padding: 24px;
+    }
+
+    .shortcut-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .shortcut-row kbd {
+      min-width: 0;
+    }
+  }
+</style>

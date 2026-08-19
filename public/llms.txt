@@ -1,0 +1,34 @@
+# Limitcode Pro
+
+Limitcode Pro is a coding agent that lives inside Sublime Text. It works in a
+side-by-side chat view: it can inspect project files, apply approved edits,
+run approved commands, search the web, load skills, call MCP servers, and run
+focused subagents — all under configurable permission rules.
+
+The open-source edition is an AI pair programming assistant that works only on
+the files you have open in the editor (read_file, write_to_file, edit_file).
+The Pro edition is the fully autonomous version.
+
+## Key pages
+
+- [Home](https://limitcode.jawuil.dev/) — product overview, capabilities, workflow, pricing
+- [Providers](https://limitcode.jawuil.dev/providers/) — API keys, account sign-in (GitHub Copilot, OpenAI Codex, Google Antigravity), CLI sessions, local models
+- [Docs](https://limitcode.jawuil.dev/docs/) — installation, command palette, settings, keyboard shortcuts, FAQ
+- [Why Limitcode](https://limitcode.jawuil.dev/about/) — the story behind the name
+- [Changelog](https://limitcode.jawuil.dev/changelog/) — release notes
+- [News](https://limitcode.jawuil.dev/news/) — announcements
+- [Open source edition (GitHub)](https://github.com/Jawuilp/Limitcode)
+
+## Machine-readable pages (plain text / markdown)
+
+- [What is Limitcode](https://limitcode.jawuil.dev/index.md) — product definition, editions, quick facts
+- [Pricing](https://limitcode.jawuil.dev/pricing.md) — structured pricing for both editions
+- [Providers](https://limitcode.jawuil.dev/providers.md) — full provider list and connection methods
+- [Quick reference](https://limitcode.jawuil.dev/docs.md) — installation, shortcuts, settings, capabilities
+- [Changelog](https://limitcode.jawuil.dev/changelog.md) — release notes in markdown
+
+## Pricing
+
+Limitcode Pro is a one-time purchase, activated on up to three devices.
+The open-source edition is free. See [pricing.md](https://limitcode.jawuil.dev/pricing.md)
+or email hola@jawuil.dev.

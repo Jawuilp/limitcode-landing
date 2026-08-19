@@ -1,0 +1,144 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+  caption?: string;
+  duration?: string;
+}
+
+const { src, poster, caption, duration } = Astro.props;
+---
+
+<div class="video-card">
+  <div class="video-frame" data-video-card>
+    <img class="video-poster" src={poster ?? "/og.png"} alt="" loading="lazy" />
+    <button class="video-play" type="button" aria-label="Play demo video">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    </button>
+    <video class="video-player" preload="metadata" playsinline>
+      <source src={src} type="video/mp4" />
+    </video>
+  </div>
+  {caption && (
+    <p class="video-caption">
+      {caption}
+      {duration && <span class="video-duration">{duration}</span>}
+    </p>
+  )}
+</div>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll("[data-video-card]").forEach(function (frame) {
+      if (frame.dataset.videoReady) return;
+      frame.dataset.videoReady = "true";
+
+      var play = frame.querySelector(".video-play");
+      var video = frame.querySelector(".video-player");
+      if (!play || !video) return;
+
+      play.addEventListener("click", function () {
+        frame.classList.add("playing");
+        video.controls = true;
+        video.play().catch(function () {
+          frame.classList.remove("playing");
+        });
+      });
+    });
+  })();
+</script>
+
+<style>
+  .video-card {
+    width: 100%;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    background: #0f1117;
+    cursor: pointer;
+  }
+
+  .video-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 200ms ease, transform 200ms ease;
+    z-index: 1;
+  }
+
+  .video-play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 50%;
+    background: var(--signal);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    transition: transform 140ms ease, background 140ms ease;
+    padding: 0;
+    z-index: 2;
+  }
+
+  .video-play svg {
+    margin-left: 3px;
+  }
+
+  .video-play:hover {
+    transform: scale(1.08);
+    background: var(--signal-deep);
+  }
+
+  .video-player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    object-fit: contain;
+    background: #0f1117;
+    z-index: 3;
+  }
+
+  .video-frame.playing .video-poster,
+  .video-frame.playing .video-play {
+    display: none;
+  }
+
+  .video-frame.playing .video-player {
+    display: block;
+  }
+
+  .video-caption {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .video-duration {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--signal);
+    border: 1px solid rgba(232, 97, 50, 0.3);
+    padding: 1px 7px;
+    border-radius: 4px;
+  }
+</style>

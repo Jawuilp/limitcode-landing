@@ -1,0 +1,45 @@
+---
+const providers = [
+  { name: "OpenAI", sub: "direct API key", mark: "01" },
+  { name: "Anthropic", sub: "direct API key", mark: "02" },
+  { name: "Google Gemini", sub: "Google AI API key", mark: "03" },
+  { name: "GitHub Copilot", sub: "eligible GitHub account", mark: "04" },
+  { name: "OpenRouter", sub: "models available to your account", mark: "05" },
+  { name: "Mistral AI", sub: "direct API key", mark: "06" },
+  { name: "Local or custom", sub: "OpenAI-compatible endpoint", mark: "07" },
+];
+---
+
+<section id="providers" class="container">
+  <div class="section-head">
+    <span class="section-num">04 — Providers</span>
+    <h2>Connect the provider that fits the task.</h2>
+    <p>Use a direct API, an eligible account integration, a CLI-backed session, or an OpenAI-compatible endpoint. Model usage and provider subscriptions remain separate from Limitcode Pro.</p>
+  </div>
+
+  <div class="providers-grid">
+    <div>
+      <div class="provider-list">
+        {providers.map((p) => (
+          <div class="provider">
+            <span class="mark">{p.mark}</span>
+            <span class="name">{p.name}</span>
+            <span class="sub">{p.sub}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div>
+      <h3 style="margin-bottom: 16px;">Your provider relationship stays yours.</h3>
+      <p>Provider usage, subscriptions, rate limits, and model availability remain with the provider or endpoint you connect. Change provider or model from the active chat session.</p>
+      <p style="margin-top: 14px;">OpenAI-compatible endpoints such as Ollama, LM Studio, LiteLLM, or a custom gateway can keep inference local.</p>
+
+      <div class="note">
+        <span class="kicker">Data flow</span>
+        Prompts and any context or tool results included in a request go to the provider or endpoint you selected. Credentials are stored in your Sublime Text settings. Activation uses the Limitcode service.
+      </div>
+
+      <a class="docs-link" href="/providers">Compare every connection method →</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a href="/" class="wordmark" aria-label="Limitcode Pro home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect width="32" height="32" rx="6" fill="#17212B"/>
+        <text x="16" y="22" text-anchor="middle" font-family="ui-monospace, IBM Plex Mono, monospace" font-size="16" font-weight="700" fill="#F3EFE5">L</text>
+        <circle cx="24" cy="8" r="3" fill="#E86132"/>
+      </svg>
+      <span>limitcode<span class="pro">/pro</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="/#features">Capabilities</a>
+      <a href="/#how-it-works">Workflow</a>
+      <a href="/providers">Providers</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/docs">Docs</a>
+      <a href="/about">Why Limitcode</a>
+      <a href="/changelog">Changelog</a>
+      <a class="nav-buy" href="/#pricing">
+        <span class="dot"></span> Limitcode Pro
+      </a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+  </div>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/#features">Capabilities</a>
+    <a href="/#how-it-works">Workflow</a>
+    <a href="/providers">Providers</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/docs">Docs</a>
+    <a href="/about">Why Limitcode</a>
+    <a href="/changelog">Changelog</a>
+    <a class="nav-mobile-buy" href="/#pricing">
+      <span class="dot"></span> Limitcode Pro
+    </a>
+  </div>
+</nav>
+
+<script is:inline>
+  (function () {
+    var toggle = document.getElementById("nav-toggle");
+    var menu = document.getElementById("nav-mobile");
+    if (!toggle || !menu) return;
+    function setOpen(open) {
+      menu.classList.toggle("open", open);
+      toggle.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+    toggle.addEventListener("click", function () {
+      setOpen(!menu.classList.contains("open"));
+    });
+    menu.addEventListener("click", function (e) {
+      if (e.target && e.target.closest("a")) setOpen(false);
+    });
+  })();
+</script>

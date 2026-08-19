@@ -1,0 +1,19 @@
+---
+const items = [
+  "Side-by-side Sublime chat",
+  "API, account, CLI, or local model",
+  "Read, search, edit, and run tools",
+  "Writes and commands ask by default",
+];
+---
+
+<section class="proof" aria-label="At a glance">
+  <div class="container">
+    <div class="proof-row">
+      <div class="proof-label">At a glance →</div>
+      <div class="proof-items">
+        {items.map((it) => <span>{it}</span>)}
+      </div>
+    </div>
+  </div>
+</section>

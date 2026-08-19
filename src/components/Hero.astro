@@ -1,0 +1,226 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Copy column -->
+      <div class="hero-copy">
+        <span class="eyebrow reveal"><span class="dot"></span>For Sublime Text 4</span>
+        <h1 class="hero-headline reveal d1">
+          Your coding agent,<br/>
+          <em>inside</em> Sublime Text.
+        </h1>
+        <p class="hero-sub reveal d2">
+          The full coding-agent workflow without leaving Sublime Text — or running another editor beside it. Inspect project files, apply approved edits, run approved commands from a side-by-side chat.
+        </p>
+        <div class="hero-ctas reveal d3">
+          <a class="btn btn-primary" href="#pricing">
+            See Limitcode Pro <span class="arrow">→</span>
+          </a>
+          <a class="btn btn-quiet" href="#how-it-works">
+            See how it works <span class="arrow">→</span>
+          </a>
+        </div>
+        <div class="hero-meta reveal d4">
+          <span><b>Purchase</b> · one-time</span>
+          <span><b>Devices</b> · up to 3</span>
+          <span><b>Runtime</b> · inside Sublime</span>
+        </div>
+      </div>
+
+      <!-- Visual column -->
+      <div class="hero-visual reveal d2">
+        <button
+          class="editor-mock hero-demo"
+          type="button"
+          data-hero-open
+          aria-label="Open the Limitcode demo in a larger view"
+          aria-haspopup="dialog"
+        >
+          <video
+            class="hero-loop"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="/limitcode-hero-poster.jpg?v=1"
+            aria-hidden="true"
+          >
+            <source src="/limitcode-hero-loop.mp4?v=3" type="video/mp4" />
+          </video>
+          <span class="hero-expand">Expand demo <span aria-hidden="true">↗</span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog class="hero-dialog" data-hero-dialog aria-label="Expanded Limitcode demo">
+  <div class="hero-dialog-shell">
+    <button class="hero-dialog-close" type="button" data-hero-close aria-label="Close expanded demo">×</button>
+    <video class="hero-dialog-video" muted loop playsinline preload="none" controls>
+      <source src="/limitcode-hero-loop.mp4?v=3" type="video/mp4" />
+    </video>
+  </div>
+</dialog>
+
+<script>
+  const openButton = document.querySelector("[data-hero-open]");
+  const dialog = document.querySelector("[data-hero-dialog]");
+  const closeButton = document.querySelector("[data-hero-close]");
+
+  if (openButton instanceof HTMLButtonElement && dialog instanceof HTMLDialogElement) {
+    const heroVideo = openButton.querySelector("video");
+    const dialogVideo = dialog.querySelector("video");
+
+    openButton.addEventListener("click", () => {
+      if (heroVideo instanceof HTMLVideoElement && dialogVideo instanceof HTMLVideoElement) {
+        dialogVideo.currentTime = heroVideo.currentTime;
+      }
+      dialog.showModal();
+      if (heroVideo instanceof HTMLVideoElement) heroVideo.pause();
+      if (dialogVideo instanceof HTMLVideoElement) dialogVideo.play().catch(() => {});
+    });
+
+    if (closeButton instanceof HTMLButtonElement) {
+      closeButton.addEventListener("click", () => dialog.close());
+    }
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener("close", () => {
+      if (dialogVideo instanceof HTMLVideoElement) dialogVideo.pause();
+      if (heroVideo instanceof HTMLVideoElement) heroVideo.play().catch(() => {});
+    });
+  }
+</script>
+
+<style>
+  .hero-demo {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0f1117;
+    padding: 0;
+    cursor: zoom-in;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .hero-demo:hover,
+  .hero-demo:focus-visible {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 24px 64px rgba(20, 28, 36, 0.28);
+  }
+
+  .hero-demo:focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 4px;
+  }
+
+  .hero-loop {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-expand {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 5px;
+    background: rgba(15, 17, 23, 0.82);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(8px);
+    opacity: 0.78;
+    transition: opacity 160ms ease, background 160ms ease;
+  }
+
+  .hero-demo:hover .hero-expand,
+  .hero-demo:focus-visible .hero-expand {
+    opacity: 1;
+    background: var(--signal);
+  }
+
+  .hero-dialog {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .hero-dialog[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .hero-dialog::backdrop {
+    background: rgba(10, 15, 20, 0.86);
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-dialog-shell {
+    position: relative;
+    width: min(78vw, 1200px, calc(76vh * 16 / 9));
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    background: #0f1117;
+    box-shadow: 0 32px 100px rgba(0, 0, 0, 0.55);
+  }
+
+  .hero-dialog-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .hero-dialog-close {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(15, 17, 23, 0.9);
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .hero-dialog-close:hover,
+  .hero-dialog-close:focus-visible {
+    background: var(--signal);
+    outline: none;
+  }
+
+  @media (max-width: 700px) {
+    .hero-dialog-shell {
+      width: min(94vw, calc(82vh * 16 / 9));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-demo { transition: none; }
+  }
+</style>

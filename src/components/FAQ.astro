@@ -1,0 +1,59 @@
+---
+const faqs = [
+  {
+    q: "Does it work with my Sublime Text version?",
+    a: "Limitcode targets Sublime Text builds 4050+. Download the package matched to your Sublime build.",
+  },
+  {
+    q: "Which AI providers can I use?",
+    a: "The main integrations are OpenAI, Anthropic, Google Gemini, GitHub Copilot, OpenRouter, and Mistral AI. Limitcode also includes OpenAI-compatible adapters for services such as DeepSeek and custom or local endpoints including Ollama, LM Studio, and LiteLLM. Model and tool compatibility still depends on the selected provider.",
+  },
+  {
+    q: "Do I need my own API key?",
+    a: "It depends on the integration. Direct API providers require your own key. Copilot uses an eligible GitHub account, CLI-backed providers use an existing local login, and local endpoints may not require a key. Provider usage or subscriptions are not included with Limitcode Pro.",
+  },
+  {
+    q: "How many devices can I activate?",
+    a: "Up to three personal devices. Periodic verification refreshes offline access, which can continue for up to 30 days after a successful check.",
+  },
+  {
+    q: "What happens before an edit or shell command?",
+    a: "Read, list, and search tools are allowed by default. File writes, diffs, shell commands, web search, page fetching, and MCP calls ask by default. You can change those rules in Limitcode settings, cancel an active run, and use Limitcode Undo or Redo for agent edits during the session.",
+  },
+  {
+    q: "What leaves my machine?",
+    a: "Your prompt and any file context or tool results included in a request are sent to the provider or endpoint you selected. Activation and periodic verification contact the Limitcode service. Local model inference can stay local, but occasional network access is still required.",
+  },
+  {
+    q: "Does it read unsaved buffers automatically?",
+    a: "No. File tools operate on the version stored on disk. Use Send to Agent when you want to include the current selection or the active file contents explicitly.",
+  },
+  {
+    q: "Where can I get help?",
+    a: "Email hola@jawuil.dev for installation, licensing, provider setup, bug reports, or feature requests.",
+  },
+];
+---
+
+<section id="faq" class="container">
+  <div class="faq">
+    <div class="faq-aside">
+      <div class="section-head" style="margin-bottom: 0;">
+        <span class="section-num">07 — FAQ</span>
+        <h2 style="font-size: var(--step-3);">Short answers, real behavior.</h2>
+      </div>
+      <div class="aside-card" style="margin-top: 28px;">
+        <h4>Didn't find it?</h4>
+        <p>Email <a href="mailto:hola@jawuil.dev">hola@jawuil.dev</a> in English or Spanish for installation, licensing, or product support.</p>
+      </div>
+    </div>
+    <div class="faq-list">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

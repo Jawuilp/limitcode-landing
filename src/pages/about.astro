@@ -1,0 +1,246 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const limits = [
+  {
+    num: "01",
+    title: "Permission limits",
+    body: "Limitcode can inspect, edit, and act — but every boundary is a rule you control. Reads can stay frictionless; writes, commands, and web access ask first.",
+  },
+  {
+    num: "02",
+    title: "Context limits",
+    body: "It works inside your editor, on the files you have open, within the conversation you steer. No hidden background processes, no filesystem roaming on its own.",
+  },
+  {
+    num: "03",
+    title: "Focus limits",
+    body: "One task at a time, one step at a time, visible as it happens. The agent finishes a step, you review, it continues. That is the whole workflow.",
+  },
+];
+---
+
+<Layout
+  title="Why Limitcode? — Limitcode Pro"
+  description="The story behind the Limitcode name: a coding agent that works within the limits you control."
+  canonicalPath="/about/"
+>
+  <Nav />
+  <main>
+    <section class="about-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>About the name</span>
+        <h1 class="reveal d1">Why Limitcode?</h1>
+        <p class="lead reveal d2">
+          Sublime Text was never built to host a coding agent. Limitcode exists
+          to prove it can: a full agentic workflow running natively inside the
+          editor, pushing it to its limit.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-section container">
+      <div class="section-head">
+        <span class="section-num">01 — The name</span>
+        <h2>Limit + code: pushing Sublime Text to its limit.</h2>
+        <p>
+          For years, Sublime Text has been the editor of choice for developers
+          who want speed and focus — but it was never designed to host a coding
+          agent. No native agent runtime, no built-in tooling for it. That
+          limitation is exactly where the name comes from.
+        </p>
+        <p>
+          Limitcode exists to push Sublime Text to its limit: a full agentic
+          workflow — streaming chat, file inspection, approved edits, approved
+          commands — running natively inside the editor, not beside it. "Limit"
+          is not a restriction on what the agent can do; it is the challenge of
+          how far the editor itself can be pushed. "Code" is the whole point:
+          real files, real edits, real commands, inside the editor you already
+          use.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-section container">
+      <div class="section-head">
+        <span class="section-num">02 — The limits that make it work</span>
+        <h2>Three boundaries, on purpose.</h2>
+      </div>
+      <div class="limit-grid">
+        {limits.map((l) => (
+          <article class="limit-card">
+            <span class="limit-num">{l.num}</span>
+            <h3>{l.title}</h3>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="about-section container">
+      <div class="section-head">
+        <span class="section-num">03 — The philosophy</span>
+        <h2>An agent that stays in your lane.</h2>
+        <p>
+          Limitcode is not a chat that suggests code. It is an agent that works
+          alongside you — reads the file you opened, applies the edit you
+          approved, runs the command you allowed — and never leaves the editor
+          to do it. When the agent finishes, you are exactly where you started:
+          inside your project, with the change in front of you.
+        </p>
+      </div>
+
+      <div class="about-cta">
+        <div>
+          <h3>See it in action.</h3>
+          <p>The pair-programming version is open source. The fully autonomous one is here.</p>
+        </div>
+        <div class="about-cta-links">
+          <a class="btn btn-primary" href="/#pricing">Try Limitcode Pro <span class="arrow">→</span></a>
+          <a class="btn btn-quiet" href="https://github.com/Jawuilp/Limitcode" target="_blank" rel="noopener">Open source edition →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .about-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+  }
+
+  .about-hero h1 {
+    max-width: 12ch;
+    margin: 18px 0 22px;
+  }
+
+  .about-hero .lead {
+    max-width: 56ch;
+  }
+
+  .about-section {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .about-section .section-head p {
+    max-width: 62ch;
+  }
+
+  .about-section .section-head p + p {
+    margin-top: 12px;
+  }
+
+  .limit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(36px, 5vw, 60px);
+  }
+
+  .limit-card {
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .limit-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--signal);
+    letter-spacing: 0.14em;
+  }
+
+  .limit-card h3 {
+    margin: 14px 0 10px;
+    font-size: var(--step-1);
+  }
+
+  .limit-card p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .about-cta {
+    margin-top: clamp(36px, 5vw, 60px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 32px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .about-cta h3,
+  .about-cta p {
+    color: var(--paper);
+  }
+
+  .about-cta h3 {
+    font-size: var(--step-1);
+    margin-bottom: 8px;
+  }
+
+  .about-cta p {
+    color: var(--paper-soft);
+    max-width: 44ch;
+  }
+
+  .about-cta-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 220px;
+  }
+
+  @media (max-width: 800px) {
+    .limit-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .about-cta-links {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-hero {
+      padding-top: clamp(48px, 12vw, 72px);
+      padding-bottom: clamp(40px, 8vw, 64px);
+    }
+
+    .about-hero h1 {
+      font-size: var(--step-3);
+    }
+
+    .about-cta {
+      padding: 24px;
+      gap: 20px;
+    }
+
+    .about-cta-links {
+      min-width: 0;
+    }
+
+    .about-cta-links .btn {
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .about-section .section-head h2 {
+      font-size: var(--step-3);
+    }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import VideoCard from "./VideoCard.astro";
+
+const steps = [
+  {
+    num: "01",
+    label: "Ask",
+    title: "Describe the task.",
+    body: "Open Limitcode Chat and describe the task. Type @ to insert a project path, or use Send to Agent to include the current selection or file.",
+    meta: "chat · @file paths · selection or file context",
+  },
+  {
+    num: "02",
+    label: "Inspect",
+    title: "Read the project on disk.",
+    body: "Limitcode can list, search, and read files in the open workspace. Repository-level instructions can join the task context automatically.",
+    meta: "file discovery · project search · repository instructions",
+  },
+  {
+    num: "03",
+    label: "Act",
+    title: "Use dedicated tools.",
+    body: "Targeted edits, file creation, patches, builds, tests, and shell commands follow your permission rules. Mutating tools ask by default.",
+    meta: "targeted edits · patches · shell commands · permissions",
+  },
+  {
+    num: "04",
+    label: "Review",
+    title: "Keep a recovery path.",
+    body: "Tool calls and results remain in the conversation. Agent edits receive snapshots for Limitcode Undo and Redo while the session stays active.",
+    meta: "tool history · snapshots · Limitcode Undo / Redo",
+  },
+];
+---
+
+<section id="how-it-works" class="workflow">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num reveal">03 — Workflow</span>
+      <h2 class="reveal d1">The loop Limitcode uses on a task.</h2>
+      <p class="reveal d2">The conversation is the control surface. Tools inspect the project, make approved changes, and report each result back into the same session.</p>
+    </div>
+
+    <div class="workflow-grid">
+      <!-- Left: steps -->
+      <ol class="steps" role="list">
+        {steps.map((s, i) => (
+          <li class={`step reveal d${i + 1}`}>
+            <span class="num">{s.num} →</span>
+            <div>
+              <h3><code>{s.label}</code> {s.title}</h3>
+              <p>{s.body}</p>
+              <div class="meta">{s.meta}</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <!-- Right: real demo video -->
+      <div class="reveal d2">
+        <VideoCard
+          src="/limit-app-creaction.mp4?v=3"
+          poster="/limit-app-creaction-poster.jpg"
+          duration="1:15"
+          caption="Limitcode Pro creating a Pomodoro app from scratch — scaffold, edits, build, verify."
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .demo-video {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid var(--hairline);
+    background: #0f1117;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  }
+</style>

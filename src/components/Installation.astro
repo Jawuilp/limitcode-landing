@@ -1,0 +1,45 @@
+---
+const steps = [
+  {
+    ord: "Step 01 / 03",
+    title: "Download the matching build",
+    body: "Keep the activation key from Gumroad and download the package matched to your Sublime Text build.",
+    code: "Choose the download for your Sublime build",
+  },
+  {
+    ord: "Step 02 / 03",
+    title: "Install and activate",
+    body: "Copy Limitcode.sublime-package into Installed Packages, restart Sublime, then activate the device from the Command Palette.",
+    code: "Command Palette → Limitcode Pro: Activate License",
+  },
+  {
+    ord: "Step 03 / 03",
+    title: "Connect a provider",
+    body: "Add an API key, sign in with a supported account, use an existing CLI login, or point Limitcode at a local endpoint. Then open Limitcode Chat.",
+    code: "Command Palette → Limitcode: Setup Provider API Key",
+  },
+];
+---
+
+<section id="install" class="container">
+  <div class="section-head">
+    <span class="section-num">05 — Installation</span>
+    <h2>From download to first task in three steps.</h2>
+    <p>No separate daemon is required. API-key providers work directly from the plugin; account, CLI, and local integrations use their own optional setup.</p>
+  </div>
+
+  <div class="install-steps">
+    {steps.map((s) => (
+      <article class="install">
+        <span class="ord">{s.ord}</span>
+        <h3>{s.title}</h3>
+        <p>{s.body}</p>
+        <div class="code"><span class="c">$</span> {s.code.replace(/^\$\s*/, "")}</div>
+      </article>
+    ))}
+  </div>
+
+  <a class="docs-link" href="mailto:hola@jawuil.dev?subject=Limitcode%20Pro%20installation">
+    Need installation help? Email Jawuil →
+  </a>
+</section>
