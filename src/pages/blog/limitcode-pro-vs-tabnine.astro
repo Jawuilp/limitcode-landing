@@ -1,0 +1,638 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const tldr = [
+  {
+    label: "What it is",
+    pro: "A coding agent that works inside Sublime Text",
+    tm: "An enterprise AI coding platform for teams",
+  },
+  {
+    label: "Breadth",
+    pro: "One agent: inspect, edit, run approved commands",
+    tm: "Completions + chat + agentic workflows + CLI, deployed at org scale",
+  },
+  {
+    label: "Editor support",
+    pro: "Native Sublime Text 4",
+    tm: "VS Code, JetBrains, Eclipse, Visual Studio — Sublime is legacy/community",
+  },
+  {
+    label: "Deployment",
+    pro: "Install one package; you bring your provider",
+    tm: "SaaS, VPC, on-premises, or fully air-gapped",
+  },
+  {
+    label: "Governance",
+    pro: "Permission rules per action",
+    tm: "Org-wide: SSO, usage analytics, LLM access control, audit",
+  },
+  {
+    label: "Data & IP",
+    pro: "Your project only, under your control",
+    tm: "Zero code retention, no training, IP indemnification",
+  },
+  {
+    label: "Price",
+    pro: "One-time license, up to 3 devices",
+    tm: "$39–$59 per user/month (annual) + Context Engine",
+  },
+];
+
+const features = [
+  { f: "Runs natively inside Sublime Text", pro: true, tm: false },
+  { f: "Edits files and runs approved commands in Sublime", pro: true, tm: false },
+  { f: "Modern Sublime Text integration (chat + agents)", pro: true, tm: false },
+  { f: "Multiple providers — incl. local models", pro: true, tm: "vendor" },
+  { f: "Air-gapped / on-premises deployment", pro: false, tm: true },
+  { f: "Org-wide SSO and governance", pro: false, tm: true },
+  { f: "Usage analytics & LLM access control", pro: false, tm: true },
+  { f: "Zero code retention / no training", pro: "BYO provider", tm: true },
+  { f: "IP indemnification", pro: false, tm: true },
+  { f: "Atlassian Jira integration", pro: "via agent", tm: true },
+  { f: "Tabnine Context Engine (org knowledge)", pro: false, tm: true },
+  { f: "Tabnine CLI in the terminal", pro: false, tm: true },
+  { f: "Snapshot undo/redo of changes", pro: true, tm: false },
+  { f: "Web search, skills, subagents", pro: true, tm: false },
+  { f: "One-time license (no per-seat subscription)", pro: true, tm: false },
+];
+
+const faqs = [
+  {
+    q: "Is Tabnine free?",
+    a: "Tabnine's pricing page lists per-seat annual subscriptions: the Code Assistant platform at $39 per user per month and the Agentic Platform at $59 per user per month, plus a separate Enterprise Context Engine. There is no perpetual free-tier license shown; you request a quote.",
+  },
+  {
+    q: "Does Tabnine work with Sublime Text?",
+    a: "Not as a first-class experience. Tabnine's fully supported modern IDEs today are VS Code, JetBrains IDEs, Eclipse, and Visual Studio 2022/2026. Plugins for other editors — Sublime Text included — are either legacy (no advanced completions or chat) or unofficial community plugins. Limitcode Pro, by contrast, is built natively for Sublime Text 4.",
+  },
+  {
+    q: "Is Tabnine private?",
+    a: "Yes, and it is genuinely Tabnine's strongest selling point. You can deploy it as SaaS, in your own VPC, on-premises, or fully air-gapped, with zero code retention, no training on your code, end-to-end encryption, SSO, and enterprise compliance (GDPR, SOC 2, ISO 27001). Limitcode Pro takes a simpler privacy stance: no daemon runs by default, and the tool only touches your project under permission rules you set.",
+  },
+  {
+    q: "What is the main difference between Limitcode Pro and Tabnine?",
+    a: "Scope and orientation. Tabnine is an organization-wide coding platform built around completions, chat and now agentic workflows, designed to be deployed anywhere and governed centrally — a tool a company buys per seat. Limitcode Pro is a single agent a developer installs to make Sublime Text itself act: inspect, edit and run. One is a platform for teams; the other is an agent inside your editor.",
+  },
+  {
+    q: "Which is cheaper?",
+    a: "Tabnine is a subscription: roughly $39 to $59 per user per month on annual billing, so $468 to $708 per user every year. Limitcode Pro is a one-time license valid on up to three devices, with model usage billed directly to your chosen provider at cost. If you work in Sublime Text and want an agent that actually edits code, the cost and fit favour Limitcode Pro.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Limitcode Pro vs Tabnine: a Sublime Text agent or an enterprise AI coding platform?",
+      description:
+        "Tabnine is an enterprise coding platform for teams; Limitcode Pro is a native Sublime Text agent. Compare editor support, deployment, governance, and pricing.",
+      datePublished: "2026-08-26",
+      dateModified: "2026-08-26",
+      author: { "@id": "https://jawuil.dev/#organization" },
+      publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+      mainEntityOfPage: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-tabnine/",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://limitcode.jawuil.dev/" },
+        { "@type": "ListItem", position: 2, name: "Blog", item: "https://limitcode.jawuil.dev/blog/" },
+        { "@type": "ListItem", position: 3, name: "Limitcode Pro vs Tabnine" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ],
+};
+---
+
+<Layout
+  title="Limitcode Pro vs Tabnine: Sublime Text Agent or Enterprise Platform?"
+  description="Tabnine is an enterprise AI coding platform for teams; Limitcode Pro is a native Sublime Text agent. Compare editor support, deployment, governance, and pricing."
+  canonicalPath="/blog/limitcode-pro-vs-tabnine/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head-extra" />
+  <Nav />
+  <main>
+    <section class="post-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Comparison · Aug 2026</span>
+        <h1 class="reveal d1">Limitcode Pro vs Tabnine</h1>
+        <p class="lead reveal d2">
+          Both are legitimate, well-built tools — but they sit at opposite ends
+          of the stack. Tabnine is a platform a company deploys; Limitcode Pro
+          is an agent a developer installs. The right choice depends on whether
+          you're equipping a team or making Sublime Text agentic.
+        </p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="verdict reveal d3">
+        <span class="verdict-label">Short answer</span>
+        <p>
+          <strong>Tabnine</strong> is an enterprise AI coding platform: code
+          completions, chat, agentic workflows and a CLI that an organization
+          purchases per seat and deploys to SaaS, VPC, on-premises, or fully
+          air-gapped — with SSO, usage analytics, and IP indemnification.
+          <strong>Limitcode Pro</strong> is a single agent that lives inside
+          Sublime Text and actually does work: it inspects your project,
+          proposes edits you approve, and runs approved commands.
+          For a developer who wants Sublime Text itself to be agentic,
+          <a href="/#pricing">Limitcode Pro</a> is the fit. Tabnine is the pick
+          when an enterprise wants one governed, deploy-anywhere platform.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="tldr">
+      <div class="section-head">
+        <span class="section-num">01 — At a glance</span>
+        <h2>The short version.</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Aspect</span></th>
+              <th scope="col" class="col-pro">Limitcode Pro</th>
+              <th scope="col">Tabnine</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tldr.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td class="col-pro">{row.pro}</td>
+                <td>{row.tm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="post-section container" id="what-is-tabnine">
+      <div class="section-head">
+        <span class="section-num">02 — The contender</span>
+        <h2>What is Tabnine?</h2>
+        <p>
+          <a href="https://www.tabnine.com/" target="_blank" rel="noopener">Tabnine</a> is
+          one of the original AI coding assistants, now an enterprise platform
+          after its acquisition by Tricentis. Its Code Assistant tier delivers
+          line and multi-line completions plus AI chat grounded in your
+          codebase, integrated into the major IDEs and informed by Atlassian
+          Jira. Its Agentic Platform adds autonomous agents, a Tabnine CLI, and
+          the Context Engine — knowledge of your org's architecture and coding
+          standards via connections to Git, Jira, Confluence, and more.
+        </p>
+        <p>
+          What sets Tabnine apart in 2026 is its enterprise posture: SaaS, VPC,
+          on-premises, or fully air-gapped deployment, zero code retention and
+          no training on your code, end-to-end encryption, SSO, compliance with
+          GDPR/SOC 2/ISO 27001, usage analytics, LLM access control, and IP
+          indemnification. That is a compelling proposition for regulated teams.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="what-is-limitcode">
+      <div class="section-head">
+        <span class="section-num">03 — The challenger</span>
+        <h2>What is Limitcode Pro?</h2>
+        <p>
+          Limitcode Pro is a coding agent that lives inside Sublime Text — not a
+          platform you deploy, an agent you install. You give it a task and it
+          searches across your project, proposes targeted edits for approval,
+          runs shell commands under permission rules you configure, searches the
+          web, loads skills, calls MCP servers, and spawns focused subagents,
+          all in a side-by-side view. There is no daemon running when you are
+          not using it.
+        </p>
+        <p>
+          You bring the intelligence: API keys from OpenAI, Anthropic, Gemini,
+          DeepSeek, OpenRouter or any OpenAI-compatible endpoint, account
+          sign-in with GitHub Copilot, OpenAI Codex or Google Antigravity, or
+          fully local models via Ollama and LM Studio. Snapshots give you
+          undo/redo over every change. See the full list on the
+          <a href="/providers/">Providers page</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="dark-section">
+      <div class="container">
+        <div class="section-head light">
+          <span class="section-num">04 — The core difference</span>
+          <h2>A platform you deploy vs an agent you install.</h2>
+          <p>
+            The honest framing is scope. Tabnine solves a team problem: how do we
+            give every developer AI assistance, keep it governed, meet
+            compliance, and deploy the whole thing where our code is allowed to
+            live? That requires per-seat subscriptions, SSO, analytics, and
+            air-gapped deployment — real strengths, and exactly what you need
+            inside a large or regulated organization.
+          </p>
+          <p>
+            Limitcode Pro solves a different problem: how do you make the editor
+            you already use agentic? It does not care about your org chart. It
+            reads your project, edits under permission rules, and keeps
+            snapshots. And critically for Sublime Text users — Tabnine's modern,
+            fully-supported IDEs are VS Code, JetBrains, Eclipse and Visual
+            Studio. Sublime Text is not among them. Limitcode Pro is built for
+            Sublime Text first.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="post-section container" id="features-compared">
+      <div class="section-head">
+        <span class="section-num">05 — Feature by feature</span>
+        <h2>Side by side.</h2>
+        <p>
+          "BYO provider" means Limitcode Pro does not store or train on your
+          code — you choose and pay the model provider directly. "Vendor" under
+          Tabnine reflects provider access managed by the platform.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="cmp cmp-tight">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Feature</span></th>
+              <th scope="col" class="col-pro">Limitcode Pro</th>
+              <th scope="col">Tabnine</th>
+            </tr>
+          </thead>
+          <tbody>
+            {features.map((row) => (
+              <tr>
+                <th scope="row">{row.f}</th>
+                <td class="col-pro">{row.pro === true ? "✓" : row.pro}</td>
+                <td>{row.tm === true ? "✓" : row.tm === false ? "—" : row.tm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="post-section container" id="pricing-compared">
+      <div class="section-head">
+        <span class="section-num">06 — Pricing</span>
+        <h2>Per-seat subscription vs one-time.</h2>
+        <p>
+          Tabnine is billed per user per month on annual plans: $39 for the Code
+          Assistant and $59 for the Agentic Platform, plus an optional
+          Enterprise Context Engine. At those rates a single user costs roughly
+          $468–$708 a year, forever. Limitcode Pro is a
+          <a href="/#pricing">one-time license valid on up to three devices</a>;
+          after that, your provider bills you only for what you use, at cost.
+          The open-source Limitcode edition stays free for pair programming.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="which-one">
+      <div class="section-head">
+        <span class="section-num">07 — The honest verdict</span>
+        <h2>Which one should you pick?</h2>
+      </div>
+      <div class="pick-grid">
+        <article class="pick-card">
+          <h3>Tabnine makes sense if…</h3>
+          <ul>
+            <li>You're equipping an organization and need SSO, governance, and usage analytics.</li>
+            <li>Your code must live in a VPC, on-premises, or fully air-gapped.</li>
+            <li>You want IP indemnification and license-safe AI output.</li>
+            <li>Your team works across VS Code, JetBrains, Eclipse, or Visual Studio.</li>
+          </ul>
+        </article>
+        <article class="pick-card pick-card-pro">
+          <span class="pick-flag">Our pick for Sublime Text</span>
+          <h3>Limitcode Pro makes sense if…</h3>
+          <ul>
+            <li>You want Sublime Text itself to inspect, edit, and run code as an agent.</li>
+            <li>You want a choice of any model — cloud APIs or local — under your own keys.</li>
+            <li>You prefer an agent that acts only on request, under permission rules.</li>
+            <li>You would rather pay once than add a per-seat subscription per developer.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="post-section container" id="faq">
+      <div class="section-head">
+        <span class="section-num">08 — FAQ</span>
+        <h2>Questions people actually ask.</h2>
+      </div>
+      <div class="faq-list">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="container post-related-wrap">
+      <aside class="related">
+        <span class="related-label">Keep reading</span>
+        <a href="/blog/limitcode-pro-vs-copilot">Limitcode Pro vs GitHub Copilot →</a>
+        <a href="/blog/limitcode-pro-vs-termmate">Limitcode Pro vs TermMate →</a>
+        <a href="/blog">All posts →</a>
+      </aside>
+    </section>
+
+    <section class="container post-cta-wrap">
+      <div class="about-cta">
+        <div>
+          <h3>Make Sublime Text agentic.</h3>
+          <p>Limitcode Pro: a full coding agent inside the Sublime Text window you already have open.</p>
+        </div>
+        <div class="about-cta-links">
+          <a class="btn btn-primary" href="/#pricing">Get Limitcode Pro <span class="arrow">→</span></a>
+          <a class="btn btn-quiet" href="/docs">Read the docs →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .post-hero h1 {
+    max-width: 16ch;
+    margin: 18px 0 22px;
+  }
+
+  .lead {
+    max-width: 58ch;
+  }
+
+  .verdict {
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--signal);
+    background: var(--paper-deep);
+    padding: 28px 32px;
+    max-width: 860px;
+  }
+
+  .verdict-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+  }
+
+  .verdict p {
+    margin-top: 12px;
+    max-width: 68ch;
+  }
+
+  .post-section {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+    border-top: 1px solid var(--hairline);
+    margin-top: clamp(24px, 3vw, 40px);
+  }
+
+  .post-section .section-head p {
+    max-width: 66ch;
+  }
+
+  .post-section .section-head p + p {
+    margin-top: 12px;
+  }
+
+  .dark-section {
+    margin-top: clamp(24px, 3vw, 40px);
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+    background: var(--editor);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .dark-section h2 {
+    color: var(--paper);
+  }
+
+  .dark-section .section-num {
+    color: rgba(243, 239, 229, 0.6);
+  }
+
+  .dark-section p {
+    color: rgba(243, 239, 229, 0.78);
+    max-width: 66ch;
+    margin-top: 12px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: clamp(28px, 4vw, 44px);
+    border: 1px solid var(--hairline);
+  }
+
+  table.cmp {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+  }
+
+  table.cmp th,
+  table.cmp td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    font-size: 0.92rem;
+  }
+
+  table.cmp tbody tr:last-child th,
+  table.cmp tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.cmp thead th {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--paper-deep);
+  }
+
+  table.cmp tbody th[scope="row"] {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  td.col-pro {
+    border-left: 1px solid var(--hairline);
+  }
+
+  thead th.col-pro {
+    color: var(--signal);
+    box-shadow: inset 0 3px 0 var(--signal);
+  }
+
+  .cmp-tight th,
+  .cmp-tight td {
+    padding: 10px 18px;
+  }
+
+  .pick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(32px, 5vw, 52px);
+  }
+
+  .pick-card {
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .pick-card h3 {
+    font-size: var(--step-1);
+    margin-bottom: 16px;
+  }
+
+  .pick-card ul {
+    padding-left: 18px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .pick-card li {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .pick-card-pro {
+    border-color: var(--signal);
+    position: relative;
+  }
+
+  .pick-flag {
+    position: absolute;
+    top: -11px;
+    left: 24px;
+    background: var(--signal);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+  }
+
+  .faq-list {
+    margin-top: clamp(28px, 4vw, 44px);
+    max-width: 820px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 18px 0;
+    list-style-position: outside;
+  }
+
+  .faq-item p {
+    padding-bottom: 20px;
+    max-width: 64ch;
+    color: var(--ink-soft);
+  }
+
+  .post-related-wrap {
+    margin-top: clamp(40px, 5vw, 72px);
+  }
+
+  .related {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .related-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .related a {
+    font-weight: 600;
+  }
+
+  .post-cta-wrap {
+    margin-top: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 800px) {
+    .pick-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .post-hero {
+      padding-top: clamp(48px, 12vw, 72px);
+    }
+
+    .post-hero h1 {
+      font-size: var(--step-3);
+    }
+
+    .verdict {
+      padding: 22px 20px;
+    }
+
+    .post-section .section-head h2 {
+      font-size: var(--step-3);
+    }
+  }
+</style>

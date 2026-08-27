@@ -1,0 +1,209 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const posts = [
+  {
+    url: "/blog/limitcode-pro-vs-copilot",
+    date: "Aug 2026",
+    tag: "Comparison",
+    title: "Limitcode Pro vs GitHub Copilot",
+    description:
+      "GitHub Copilot has no Sublime Text plugin and its agent mode excludes Sublime. Limitcode Pro is built for Sublime Text. Models, billing, and workflow compared.",
+    cta: "Read the comparison",
+  },
+  {
+    url: "/blog/limitcode-pro-vs-tabnine",
+    date: "Aug 2026",
+    tag: "Comparison",
+    title: "Limitcode Pro vs Tabnine",
+    description:
+      "Tabnine is an enterprise AI coding platform for teams; Limitcode Pro is a native Sublime Text agent. Editor support, deployment, governance, and pricing compared.",
+    cta: "Read the comparison",
+  },
+  {
+    url: "/blog/limitcode-pro-vs-termmate",
+    date: "Aug 2026",
+    tag: "Comparison",
+    title: "Limitcode Pro vs TermMate",
+    description:
+      "Both bring AI agents to Sublime Text — but one hosts external CLIs and the other is the agent. Architecture, providers, permissions, and pricing compared.",
+    cta: "Read the comparison",
+  },
+  {
+    url: "/blog/limitcode-pro-vs-pieces",
+    date: "Aug 2026",
+    tag: "Comparison",
+    title: "Limitcode Pro vs Pieces",
+    description:
+      "Pieces remembers everything you do across your apps; Limitcode Pro acts on your code inside Sublime Text. Memory layer or coding agent — which do you need?",
+    cta: "Read the comparison",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Limitcode Pro Blog",
+  url: "https://limitcode.jawuil.dev/blog/",
+  publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+  blogPost: posts.map((p) => ({
+    "@type": "BlogPosting",
+    headline: p.title,
+    url: "https://limitcode.jawuil.dev" + p.url + "/",
+  })),
+};
+---
+
+<Layout
+  title="Blog — Comparisons & Guides | Limitcode Pro"
+  description="Comparisons and guides about coding agents for Sublime Text: Limitcode Pro vs TermMate, Limitcode Pro vs Pieces, provider setup, and agentic workflow tips."
+  canonicalPath="/blog/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head-extra" />
+  <Nav />
+  <main>
+    <section class="post-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Blog</span>
+        <h1 class="reveal d1">Comparisons & guides.</h1>
+        <p class="lead reveal d2">
+          How Limitcode Pro stacks up against other developer tools, and how to
+          get the most out of an agent that lives inside Sublime Text.
+        </p>
+      </div>
+    </section>
+
+    <section class="container post-list-wrap">
+      <div class="post-grid">
+        {posts.map((p) => (
+          <article class="post-card">
+            <div class="post-meta">
+              <span class="post-tag">{p.tag}</span>
+              <span class="post-date">{p.date}</span>
+            </div>
+            <h2><a href={p.url}>{p.title}</a></h2>
+            <p>{p.description}</p>
+            <a class="read-more" href={p.url}>{p.cta} →</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="container post-cta-wrap">
+      <div class="about-cta">
+        <div>
+          <h3>New here?</h3>
+          <p>Limitcode Pro: a full coding agent inside the Sublime Text window you already have open.</p>
+        </div>
+        <div class="about-cta-links">
+          <a class="btn btn-primary" href="/#pricing">Get Limitcode Pro <span class="arrow">→</span></a>
+          <a class="btn btn-quiet" href="/#features">See capabilities →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+
+  .post-hero h1 {
+    max-width: 16ch;
+    margin: 18px 0 22px;
+  }
+
+  .lead {
+    max-width: 56ch;
+  }
+
+  .post-list-wrap {
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(28px, 4vw, 44px);
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .post-tag {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .post-card h2 {
+    font-size: var(--step-2);
+    line-height: 1.25;
+  }
+
+  .post-card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-card h2 a:hover {
+    color: var(--signal);
+  }
+
+  .post-card p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    flex-grow: 1;
+  }
+
+  .read-more {
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .post-cta-wrap {
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  @media (max-width: 800px) {
+    .post-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .post-hero {
+      padding-top: clamp(48px, 12vw, 72px);
+    }
+
+    .post-hero h1 {
+      font-size: var(--step-3);
+    }
+  }
+</style>
