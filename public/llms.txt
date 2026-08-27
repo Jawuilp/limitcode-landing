@@ -22,7 +22,11 @@ The Pro edition is the fully autonomous version.
 - [Changelog](https://limitcode.jawuil.dev/changelog/) — release notes
 - [News](https://limitcode.jawuil.dev/news/) — announcements
 - [Blog](https://limitcode.jawuil.dev/blog/) — comparisons and guides
-- [Limitcode Pro vs TermMate](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-termmate/) — head-to-head comparison: architecture, providers, permissions, pricing
+- [Limitcode Pro vs TermMate](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-termmate/) - head-to-head comparison: architecture, providers, permissions, pricing
+- [Limitcode Pro vs Claude Code](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-claude-code/) - Sublime Text agent vs terminal CLI: models, pricing, workflow
+- [Limitcode Pro vs OpenCode](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-opencode/) - BYOK agents: editor-native vs terminal-first TUI
+- [Limitcode Pro vs Pi](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pi/) - ready-to-use Sublime agent vs build-your-own harness
+- [Limitcode Pro vs Cursor](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-cursor/) - agent in your editor vs migrating to an AI-first editor
 - [Limitcode Pro vs Pieces](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pieces/) — coding agent vs memory layer: capture model, privacy, pricing
 - [Limitcode Pro vs Tabnine](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-tabnine/) — Sublime Text agent vs enterprise platform: editor support, deployment, pricing
 - [Limitcode Pro vs GitHub Copilot](https://limitcode.jawuil.dev/blog/limitcode-pro-vs-copilot/) — no Copilot Sublime plugin: agent mode, models, billing
@@ -35,7 +39,11 @@ The Pro edition is the fully autonomous version.
 - [Providers](https://limitcode.jawuil.dev/providers.md) — full provider list and connection methods
 - [Quick reference](https://limitcode.jawuil.dev/docs.md) — installation, shortcuts, settings, capabilities
 - [Changelog](https://limitcode.jawuil.dev/changelog.md) — release notes in markdown
-- [Limitcode Pro vs TermMate](https://limitcode.jawuil.dev/limitcode-pro-vs-termmate.md) — comparison article in markdown
+- [Limitcode Pro vs TermMate](https://limitcode.jawuil.dev/limitcode-pro-vs-termmate.md) - comparison article in markdown
+- [Limitcode Pro vs Claude Code](https://limitcode.jawuil.dev/limitcode-pro-vs-claude-code.md) - comparison article in markdown
+- [Limitcode Pro vs OpenCode](https://limitcode.jawuil.dev/limitcode-pro-vs-opencode.md) - comparison article in markdown
+- [Limitcode Pro vs Pi](https://limitcode.jawuil.dev/limitcode-pro-vs-pi.md) - comparison article in markdown
+- [Limitcode Pro vs Cursor](https://limitcode.jawuil.dev/limitcode-pro-vs-cursor.md) - comparison article in markdown
 - [Limitcode Pro vs Pieces](https://limitcode.jawuil.dev/limitcode-pro-vs-pieces.md) — comparison article in markdown
 - [Limitcode Pro vs Tabnine](https://limitcode.jawuil.dev/limitcode-pro-vs-tabnine.md) — comparison article in markdown
 - [Limitcode Pro vs GitHub Copilot](https://limitcode.jawuil.dev/limitcode-pro-vs-copilot.md) — comparison article in markdown

@@ -41,6 +41,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-claude-code/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-opencode/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pi/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-cursor/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pieces/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -83,6 +103,26 @@
   </url>
   <url>
     <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-termmate.md</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-claude-code.md</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-opencode.md</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-pi.md</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-cursor.md</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

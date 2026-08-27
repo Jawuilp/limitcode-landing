@@ -1,0 +1,626 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const tldr = [
+  {
+    label: "What it is",
+    pro: "A coding agent that works inside Sublime Text",
+    tm: "An AI-first code editor (a VS Code fork) with a built-in agent",
+  },
+  {
+    label: "Editor",
+    pro: "Your Sublime Text, unchanged",
+    tm: "Cursor itself — you switch editors",
+  },
+  {
+    label: "Sublime Text support",
+    pro: "Native, first-class",
+    tm: "None — Cursor is a standalone editor",
+  },
+  {
+    label: "Agent mode",
+    pro: "Side-by-side agent with approved edits and commands",
+    tm: "Full agent mode plus background agents",
+  },
+  {
+    label: "Models",
+    pro: "OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Copilot, or local models",
+    tm: "Frontier models routed through Cursor's plans",
+  },
+  {
+    label: "Provider choice",
+    pro: "BYOK — your keys, your accounts, your local endpoints",
+    tm: "Usage goes through Cursor's billing",
+  },
+  {
+    label: "Price",
+    pro: "One-time license, up to 3 devices; provider usage at cost",
+    tm: "Free Hobby, Pro $20/mo, Pro+ $60/mo, Ultra $200/mo, Teams $40/user/mo",
+  },
+];
+
+const features = [
+  { f: "Works in Sublime Text", pro: true, tm: false },
+  { f: "No editor migration required", pro: true, tm: false },
+  { f: "Agent edits files and runs approved commands", pro: true, tm: true },
+  { f: "Multi-step agent mode", pro: true, tm: true },
+  { f: "Background/parallel agents", pro: false, tm: true },
+  { f: "Inline tab completions", pro: false, tm: true },
+  { f: "MCP servers", pro: true, tm: true },
+  { f: "Bring your own keys and accounts", pro: true, tm: false },
+  { f: "Local models (Ollama, LM Studio)", pro: true, tm: false },
+  { f: "Snapshot undo/redo of agent edits", pro: true, tm: false },
+  { f: "Configurable per-tool permission rules", pro: true, tm: "auto/approval flows" },
+  { f: "One-time license (no monthly subscription)", pro: true, tm: false },
+];
+
+const faqs = [
+  {
+    q: "Does Cursor work with Sublime Text?",
+    a: "No. Cursor is not a plugin — it is a standalone AI-first editor built on VS Code. To use it you move your projects, keybindings, and workflow into Cursor. If you want to keep Sublime Text as your editor, Cursor is not an option; Limitcode Pro exists precisely for that case.",
+  },
+  {
+    q: "Is Cursor worth it if I don't use VS Code?",
+    a: "Cursor's value is the whole editor: Tab completions, agent mode, background agents, and its model routing baked into a VS Code fork. If you are happy in Sublime Text, adopting Cursor means changing editors to get an agent — Limitcode Pro gives you the agent inside the editor you already use.",
+  },
+  {
+    q: "How much does Cursor cost?",
+    a: "Cursor has a free Hobby tier (limited completions and agent requests), Pro at $20/month, Pro+ at $60/month, Ultra at $200/month for heavy agent users, and Teams at $40 per user per month. Model usage goes through Cursor's plans and billing. Limitcode Pro is a one-time license valid on up to three devices; you pay your chosen provider directly for what you use.",
+  },
+  {
+    q: "Can I use my own API keys with Cursor?",
+    a: "Cursor routes model usage through its own plans and billing, so provider relationships and usage metering stay with Cursor. Limitcode Pro is the opposite: bring your own keys or accounts — OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Copilot — or point it at local endpoints like Ollama and LM Studio.",
+  },
+  {
+    q: "What is the main difference between Limitcode Pro and Cursor?",
+    a: "Cursor asks you to switch editors; Limitcode Pro does not. Both give you an agentic workflow, but Cursor's lives inside its own AI-first editor while Limitcode Pro's lives inside Sublime Text — with BYOK providers, editor-native tools like Send to Agent, permission rules, and snapshot undo/redo.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Limitcode Pro vs Cursor: Stay in Sublime Without Giving Up AI Agents",
+      description:
+        "Cursor is an AI-first editor you migrate to; Limitcode Pro is an agent inside the Sublime Text you already use. Editor choice, providers, permissions, and pricing compared.",
+      datePublished: "2026-08-27",
+      dateModified: "2026-08-27",
+      author: { "@id": "https://jawuil.dev/#organization" },
+      publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+      mainEntityOfPage: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-cursor/",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://limitcode.jawuil.dev/" },
+        { "@type": "ListItem", position: 2, name: "Blog", item: "https://limitcode.jawuil.dev/blog/" },
+        { "@type": "ListItem", position: 3, name: "Limitcode Pro vs Cursor" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ],
+};
+---
+
+<Layout
+  title="Limitcode Pro vs Cursor: Stay in Sublime Without Giving Up AI Agents"
+  description="Cursor is an AI-first editor you migrate to; Limitcode Pro is an agent inside the Sublime Text you already use. Editor choice, providers, permissions, and pricing compared."
+  canonicalPath="/blog/limitcode-pro-vs-cursor/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head-extra" />
+  <Nav />
+  <main>
+    <section class="post-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Comparison · Aug 2026</span>
+        <h1 class="reveal d1">Limitcode Pro vs Cursor</h1>
+        <p class="lead reveal d2">
+          Cursor is one of the most impressive AI editors ever built — and
+          adopting it means leaving Sublime Text. This comparison is really
+          about one question: do you want a new editor, or an agent in the one
+          you have?
+        </p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="verdict reveal d3">
+        <span class="verdict-label">Short answer</span>
+        <p>
+          <strong>Cursor</strong> is an AI-first editor: Tab completions, agent
+          mode, background agents, and frontier models in a VS Code fork. It is
+          an excellent product — if you are willing to switch editors and pay a
+          monthly plan ($20–$200/mo). <strong>Limitcode Pro</strong> is the
+          other path: a lightweight agent that runs natively inside Sublime
+          Text, brings your own keys and providers, and costs a one-time
+          license. If you want a new editor, try Cursor. If you want to stay in
+          Sublime, <a href="/#pricing">Limitcode Pro</a> is built for you.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="tldr">
+      <div class="section-head">
+        <span class="section-num">01 — At a glance</span>
+        <h2>The short version.</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Aspect</span></th>
+              <th scope="col" class="col-pro">Limitcode Pro</th>
+              <th scope="col">Cursor</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tldr.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td class="col-pro">{row.pro}</td>
+                <td>{row.tm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="post-section container" id="what-is-cursor">
+      <div class="section-head">
+        <span class="section-num">02 — The contender</span>
+        <h2>What is Cursor?</h2>
+        <p>
+          <a href="https://cursor.com" target="_blank" rel="noopener">Cursor</a>
+          is an AI-first code editor built on VS Code by Anysphere. It
+          integrates fast Tab completions, an in-editor agent mode that plans
+          and executes multi-step tasks, parallel background agents, MCP
+          support, and access to frontier models — all as first-class parts of
+          the editor rather than a bolted-on extension.
+        </p>
+        <p>
+          The model is subscription-based: a free Hobby tier, Pro at $20/month,
+          Pro+ at $60/month, Ultra at $200/month for all-day agent use, and
+          Teams at $40 per user per month. Model usage flows through Cursor's
+          plans. And because Cursor is a standalone editor, using it means
+          migrating away from your current one — there is no Sublime Text
+          plugin.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="what-is-limitcode">
+      <div class="section-head">
+        <span class="section-num">03 — The challenger</span>
+        <h2>What is Limitcode Pro?</h2>
+        <p>
+          Limitcode Pro is a lightweight coding agent that lives inside Sublime
+          Text (builds 4050+) — no separate AI IDE, no editor migration, and no
+          separate agent daemon required for direct API providers. In a
+          side-by-side chat view it inspects project files, proposes targeted
+          edits for approval, runs approved shell commands, searches the web,
+          loads skills, calls MCP servers, and runs focused subagents under
+          configurable permission rules.
+        </p>
+        <p>
+          You keep your Sublime setup exactly as it is and choose the model
+          layer per task: OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter,
+          Copilot, Codex, Antigravity, or local models via Ollama and LM Studio.
+          Agent edits receive snapshots for undo/redo. Details on the{" "}
+          <a href="/providers/">Providers page</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="dark-section">
+      <div class="container">
+        <div class="section-head light">
+          <span class="section-num">04 — The core difference</span>
+          <h2>A new editor vs your editor.</h2>
+          <p>
+            Cursor's product is the editor itself — the AI is woven into every
+            surface, and that is its strength. The implicit ask is migration:
+            your projects, your muscle memory, and your keybindings move into a
+            VS Code fork. For developers open to switching, that trade can be
+            absolutely worth it.
+          </p>
+          <p>
+            Limitcode Pro makes the opposite bet: your editor is already set up
+            the way you like, and the missing piece is the agent. So the agent
+            comes to Sublime Text instead — editor-native context like
+            selection and open files, permission rules you control, snapshot
+            undo/redo, and BYOK providers, without changing anything else about
+            how you work.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="post-section container" id="features-compared">
+      <div class="section-head">
+        <span class="section-num">05 — Feature by feature</span>
+        <h2>Side by side.</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="cmp cmp-tight">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Feature</span></th>
+              <th scope="col" class="col-pro">Limitcode Pro</th>
+              <th scope="col">Cursor</th>
+            </tr>
+          </thead>
+          <tbody>
+            {features.map((row) => (
+              <tr>
+                <th scope="row">{row.f}</th>
+                <td class="col-pro">{row.pro === true ? "✓" : row.pro}</td>
+                <td>{row.tm === true ? "✓" : row.tm === false ? "—" : row.tm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="post-section container" id="pricing-compared">
+      <div class="section-head">
+        <span class="section-num">06 — Pricing</span>
+        <h2>Subscription plans vs one-time license.</h2>
+        <p>
+          Cursor runs from free (Hobby, limited) through Pro at $20/month and
+          Pro+ at $60/month up to Ultra at $200/month, plus Teams at $40 per
+          user per month — with model usage metered through Cursor's billing,
+          so heavy agent months can cost more than the sticker price.
+          Limitcode Pro is a <a href="/#pricing">one-time license valid on up to
+          three devices</a>; you pay your chosen provider directly, at cost, and
+          a local model via Ollama or LM Studio can keep inference costs at your
+          provider of choice — or near zero. The open-source Limitcode edition
+          remains free for pair programming.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="which-one">
+      <div class="section-head">
+        <span class="section-num">07 — The honest verdict</span>
+        <h2>Which one should you pick?</h2>
+      </div>
+      <div class="pick-grid">
+        <article class="pick-card">
+          <h3>Cursor makes sense if…</h3>
+          <ul>
+            <li>You are open to switching editors, or already like VS Code.</li>
+            <li>You want Tab completions, agent mode, and background agents as one product.</li>
+            <li>You prefer frontier models routed and billed for you.</li>
+            <li>A monthly plan fits your budget and team.</li>
+          </ul>
+        </article>
+        <article class="pick-card pick-card-pro">
+          <span class="pick-flag">Our pick for Sublime Text</span>
+          <h3>Limitcode Pro makes sense if…</h3>
+          <ul>
+            <li>You want to keep Sublime Text as your editor, period.</li>
+            <li>You want an agent, not a new IDE — lightweight and non-intrusive.</li>
+            <li>You want BYOK providers, including local models.</li>
+            <li>You prefer a one-time license over a subscription.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="post-section container" id="faq">
+      <div class="section-head">
+        <span class="section-num">08 — FAQ</span>
+        <h2>Questions people actually ask.</h2>
+      </div>
+      <div class="faq-list">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="container post-related-wrap">
+      <aside class="related">
+        <span class="related-label">Keep reading</span>
+        <a href="/blog/limitcode-pro-vs-claude-code">Limitcode Pro vs Claude Code →</a>
+        <a href="/blog/limitcode-pro-vs-pi">Limitcode Pro vs Pi →</a>
+        <a href="/blog">All posts →</a>
+      </aside>
+    </section>
+
+    <section class="container post-cta-wrap">
+      <div class="about-cta">
+        <div>
+          <h3>The lightweight agent for Sublime Text.</h3>
+          <p>Limitcode Pro: a full coding agent inside the Sublime Text window you already have open.</p>
+        </div>
+        <div class="about-cta-links">
+          <a class="btn btn-primary" href="/#pricing">Get Limitcode Pro <span class="arrow">→</span></a>
+          <a class="btn btn-quiet" href="/docs">Read the docs →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .post-hero h1 {
+    max-width: 16ch;
+    margin: 18px 0 22px;
+  }
+
+  .lead {
+    max-width: 58ch;
+  }
+
+  .verdict {
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--signal);
+    background: var(--paper-deep);
+    padding: 28px 32px;
+    max-width: 860px;
+  }
+
+  .verdict-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+  }
+
+  .verdict p {
+    margin-top: 12px;
+    max-width: 68ch;
+  }
+
+  .post-section {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+    border-top: 1px solid var(--hairline);
+    margin-top: clamp(24px, 3vw, 40px);
+  }
+
+  .post-section .section-head p {
+    max-width: 66ch;
+  }
+
+  .post-section .section-head p + p {
+    margin-top: 12px;
+  }
+
+  .dark-section {
+    margin-top: clamp(24px, 3vw, 40px);
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+    background: var(--editor);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .dark-section h2 {
+    color: var(--paper);
+  }
+
+  .dark-section .section-num {
+    color: rgba(243, 239, 229, 0.6);
+  }
+
+  .dark-section p {
+    color: rgba(243, 239, 229, 0.78);
+    max-width: 66ch;
+    margin-top: 12px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: clamp(28px, 4vw, 44px);
+    border: 1px solid var(--hairline);
+  }
+
+  table.cmp {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+  }
+
+  table.cmp th,
+  table.cmp td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    font-size: 0.92rem;
+  }
+
+  table.cmp tbody tr:last-child th,
+  table.cmp tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.cmp thead th {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--paper-deep);
+  }
+
+  table.cmp tbody th[scope="row"] {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  td.col-pro {
+    border-left: 1px solid var(--hairline);
+  }
+
+  thead th.col-pro {
+    color: var(--signal);
+    box-shadow: inset 0 3px 0 var(--signal);
+  }
+
+  .cmp-tight th,
+  .cmp-tight td {
+    padding: 10px 18px;
+  }
+
+  .pick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(32px, 5vw, 52px);
+  }
+
+  .pick-card {
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .pick-card h3 {
+    font-size: var(--step-1);
+    margin-bottom: 16px;
+  }
+
+  .pick-card ul {
+    padding-left: 18px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .pick-card li {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .pick-card-pro {
+    border-color: var(--signal);
+    position: relative;
+  }
+
+  .pick-flag {
+    position: absolute;
+    top: -11px;
+    left: 24px;
+    background: var(--signal);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+  }
+
+  .faq-list {
+    margin-top: clamp(28px, 4vw, 44px);
+    max-width: 820px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 18px 0;
+    list-style-position: outside;
+  }
+
+  .faq-item p {
+    padding-bottom: 20px;
+    max-width: 64ch;
+    color: var(--ink-soft);
+  }
+
+  .post-related-wrap {
+    margin-top: clamp(40px, 5vw, 72px);
+  }
+
+  .related {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .related-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .related a {
+    font-weight: 600;
+  }
+
+  .post-cta-wrap {
+    margin-top: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 800px) {
+    .pick-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .post-hero {
+      padding-top: clamp(48px, 12vw, 72px);
+    }
+
+    .post-hero h1 {
+      font-size: var(--step-3);
+    }
+
+    .verdict {
+      padding: 22px 20px;
+    }
+
+    .post-section .section-head h2 {
+      font-size: var(--step-3);
+    }
+  }
+</style>

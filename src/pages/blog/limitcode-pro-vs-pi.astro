@@ -1,0 +1,619 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const tldr = [
+  {
+    label: "What it is",
+    pro: "A ready-to-use coding agent inside Sublime Text",
+    tm: "A minimal, extensible agent harness for building your own workflow",
+  },
+  {
+    label: "Philosophy",
+    pro: "Packaged experience: install, connect a provider, work",
+    tm: "Small core you extend and assemble yourself",
+  },
+  {
+    label: "Interface",
+    pro: "Native side-by-side Sublime Text view",
+    tm: "Terminal-first",
+  },
+  {
+    label: "Sublime Text integration",
+    pro: "Native, first-class",
+    tm: "None official — hosts like TermMate can dock the CLI",
+  },
+  {
+    label: "Provider model",
+    pro: "BYOK: OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Copilot, local models",
+    tm: "BYOK, configured by you",
+  },
+  {
+    label: "Best for",
+    pro: "Developers who want the agent to just work in Sublime",
+    tm: "Power users who enjoy building their own harness",
+  },
+  {
+    label: "License",
+    pro: "One-time purchase, up to 3 devices",
+    tm: "Open source, free",
+  },
+];
+
+const features = [
+  { f: "Native Sublime Text support", pro: true, tm: false },
+  { f: "Works out of the box (no assembly)", pro: true, tm: false },
+  { f: "Extensible core for custom workflows", pro: "skills, MCP, subagents", tm: true },
+  { f: "Bring your own keys (BYOK)", pro: true, tm: true },
+  { f: "MCP servers", pro: true, tm: true },
+  { f: "Send selection or active file with one shortcut", pro: true, tm: false },
+  { f: "Side-by-side streaming chat view", pro: true, tm: "TUI" },
+  { f: "Configurable per-tool permission rules", pro: true, tm: "configurable" },
+  { f: "Snapshot undo/redo of agent edits", pro: true, tm: false },
+  { f: "Session history per project", pro: true, tm: true },
+  { f: "Cost statistics in the UI", pro: true, tm: "varies" },
+  { f: "One-time license", pro: true, tm: true },
+];
+
+const faqs = [
+  {
+    q: "What is Pi?",
+    a: "Pi is a minimal, highly extensible coding-agent harness. Instead of shipping a finished product, it gives you a small core you can configure and extend — typically from the terminal — to build exactly the agentic workflow you want. It appeals to power users who enjoy assembling their own tooling.",
+  },
+  {
+    q: "Does Pi work with Sublime Text?",
+    a: "Not natively. Pi is terminal-first, and there is no official Sublime Text plugin. Hosts such as TermMate can dock the Pi CLI inside an editor panel, but the agent doing the work is still the CLI with its own runtime and approvals. Limitcode Pro is a native Sublime package — no CLI or bridge involved.",
+  },
+  {
+    q: "Which is more extensible?",
+    a: "It depends on the kind of extensibility you want. Pi is designed for building your own harness from a small core — maximum freedom, maximum assembly. Limitcode Pro extends through supported mechanisms: reusable skills, MCP servers, focused subagents, configurable permission rules, and provider switching. Less freedom to rewire the core, far less to maintain.",
+  },
+  {
+    q: "Is Pi free?",
+    a: "Yes — Pi is open source and free; you pay your model provider for usage. Limitcode Pro is a one-time license on top of the same BYOK model-usage rule, and the open-source Limitcode edition remains free for pair programming.",
+  },
+  {
+    q: "Which should I pick?",
+    a: "If part of the fun is building the harness itself — wiring tools, tuning the loop, owning every piece — Pi is a great fit. If you want a finished agentic workflow inside Sublime Text that works the day you install it, Limitcode Pro is built for that.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Limitcode Pro vs Pi: Ready-to-Use Sublime Agent vs Build-Your-Own AI Harness",
+      description:
+        "Pi is a minimal, extensible agent harness for power users; Limitcode Pro is a packaged agent that lives natively inside Sublime Text. Extensibility, integration, and pricing compared.",
+      datePublished: "2026-08-27",
+      dateModified: "2026-08-27",
+      author: { "@id": "https://jawuil.dev/#organization" },
+      publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+      mainEntityOfPage: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pi/",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://limitcode.jawuil.dev/" },
+        { "@type": "ListItem", position: 2, name: "Blog", item: "https://limitcode.jawuil.dev/blog/" },
+        { "@type": "ListItem", position: 3, name: "Limitcode Pro vs Pi" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ],
+};
+---
+
+<Layout
+  title="Limitcode Pro vs Pi: Ready-to-Use Sublime Agent vs Build-Your-Own Harness"
+  description="Pi is a minimal, extensible agent harness for power users; Limitcode Pro is a packaged agent that lives natively inside Sublime Text. Extensibility, integration, and pricing compared."
+  canonicalPath="/blog/limitcode-pro-vs-pi/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head-extra" />
+  <Nav />
+  <main>
+    <section class="post-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Comparison · Aug 2026</span>
+        <h1 class="reveal d1">Limitcode Pro vs Pi</h1>
+        <p class="lead reveal d2">
+          One is a finished tool; the other is a workshop. Pi hands you the
+          parts to build your own agentic harness — Limitcode Pro is the agent,
+          installed and working inside Sublime Text on day one.
+        </p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="verdict reveal d3">
+        <span class="verdict-label">Short answer</span>
+        <p>
+          <strong>Pi</strong> is a minimal, highly extensible agent harness —
+          terminal-first, free, and built for developers who want to assemble
+          their own workflow from a small core. <strong>Limitcode Pro</strong>
+          takes the opposite trade: a packaged, ready-to-use agent that runs
+          natively inside Sublime Text with BYOK providers, permission rules,
+          snapshot undo/redo, and a one-time license. If building the harness is
+          part of the fun, Pi may be the better fit. If you want the agent to
+          just work where you already edit, <a href="/#pricing">Limitcode Pro</a>
+          is designed for that.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="tldr">
+      <div class="section-head">
+        <span class="section-num">01 — At a glance</span>
+        <h2>The short version.</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Aspect</span></th>
+              <th scope="col" class="col-pro">Limitcode Pro</th>
+              <th scope="col">Pi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tldr.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td class="col-pro">{row.pro}</td>
+                <td>{row.tm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="post-section container" id="what-is-pi">
+      <div class="section-head">
+        <span class="section-num">02 — The contender</span>
+        <h2>What is Pi?</h2>
+        <p>
+          Pi is a coding-agent harness with a deliberately small core. Rather
+          than shipping opinions about your workflow, it exposes the pieces —
+          tools, sessions, extensions — and lets you compose the agent you
+          want. It runs in the terminal, connects to providers with your own
+          keys, and is free and open source. For power users, that minimalism
+          is the product.
+        </p>
+        <p>
+          The trade-off is assembly: the workflow you get out is the workflow
+          you build. There is no official Sublime Text integration; hosts like
+          TermMate can dock the Pi CLI in an editor panel, but the runtime,
+          approvals, and setup remain the CLI's own.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="what-is-limitcode">
+      <div class="section-head">
+        <span class="section-num">03 — The challenger</span>
+        <h2>What is Limitcode Pro?</h2>
+        <p>
+          Limitcode Pro is a lightweight coding agent that lives inside Sublime
+          Text (builds 4050+) — no separate AI IDE, and no separate agent daemon
+          required for direct API providers. In a side-by-side chat view it
+          inspects project files, proposes targeted edits for approval, runs
+          approved shell commands, searches the web, loads skills, calls MCP
+          servers, and runs focused subagents under configurable permission
+          rules.
+        </p>
+        <p>
+          It is extensible where it counts — skills, MCP, subagents, provider
+          switching (OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Copilot,
+          local models via Ollama and LM Studio) — without requiring you to
+          build the harness first. Details on the{" "}
+          <a href="/providers/">Providers page</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="dark-section">
+      <div class="container">
+        <div class="section-head light">
+          <span class="section-num">04 — The core difference</span>
+          <h2>Build the harness vs install the agent.</h2>
+          <p>
+            Pi's bet is that the best agent is the one you construct: every
+            piece visible, every behavior tunable, nothing you did not put
+            there yourself. For developers who think of their tooling as a
+            project of its own, that is genuinely appealing.
+          </p>
+          <p>
+            Limitcode Pro's bet is different: the harness should disappear into
+            the editor. The agent lives where your files live, the workflow
+            works on install, and extension happens through supported seams —
+            skills, MCP, permission rules, provider choice — rather than by
+            rewiring the core. Less freedom at the bottom, much less to
+            maintain at the top.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="post-section container" id="features-compared">
+      <div class="section-head">
+        <span class="section-num">05 — Feature by feature</span>
+        <h2>Side by side.</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="cmp cmp-tight">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Feature</span></th>
+              <th scope="col" class="col-pro">Limitcode Pro</th>
+              <th scope="col">Pi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {features.map((row) => (
+              <tr>
+                <th scope="row">{row.f}</th>
+                <td class="col-pro">{row.pro === true ? "✓" : row.pro}</td>
+                <td>{row.tm === true ? "✓" : row.tm === false ? "—" : row.tm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="post-section container" id="pricing-compared">
+      <div class="section-head">
+        <span class="section-num">06 — Pricing</span>
+        <h2>Free core vs one-time license.</h2>
+        <p>
+          Pi is free and open source — your cost is the model usage you bring.
+          Limitcode Pro is a <a href="/#pricing">one-time license valid on up to
+          three devices</a>, with model usage paid directly to your chosen
+          provider at cost. The open-source Limitcode edition remains free for
+          pair programming if you want to start there.
+        </p>
+      </div>
+    </section>
+
+    <section class="post-section container" id="which-one">
+      <div class="section-head">
+        <span class="section-num">07 — The honest verdict</span>
+        <h2>Which one should you pick?</h2>
+      </div>
+      <div class="pick-grid">
+        <article class="pick-card">
+          <h3>Pi makes sense if…</h3>
+          <ul>
+            <li>You enjoy building and maintaining your own agent harness.</li>
+            <li>You want a minimal core with maximum freedom to extend it.</li>
+            <li>You work terminal-first and like it that way.</li>
+            <li>You prefer free, open-source tooling assembled to taste.</li>
+          </ul>
+        </article>
+        <article class="pick-card pick-card-pro">
+          <span class="pick-flag">Our pick for Sublime Text</span>
+          <h3>Limitcode Pro makes sense if…</h3>
+          <ul>
+            <li>You want a finished agentic workflow inside Sublime Text.</li>
+            <li>You prefer configuring supported seams (skills, MCP, permissions) over building the core.</li>
+            <li>You want editor-native tools: Send to Agent, snapshot undo/redo, LSP feedback.</li>
+            <li>You want a one-time license and a support channel behind it.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="post-section container" id="faq">
+      <div class="section-head">
+        <span class="section-num">08 — FAQ</span>
+        <h2>Questions people actually ask.</h2>
+      </div>
+      <div class="faq-list">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="container post-related-wrap">
+      <aside class="related">
+        <span class="related-label">Keep reading</span>
+        <a href="/blog/limitcode-pro-vs-opencode">Limitcode Pro vs OpenCode →</a>
+        <a href="/blog/limitcode-pro-vs-cursor">Limitcode Pro vs Cursor →</a>
+        <a href="/blog">All posts →</a>
+      </aside>
+    </section>
+
+    <section class="container post-cta-wrap">
+      <div class="about-cta">
+        <div>
+          <h3>The lightweight agent for Sublime Text.</h3>
+          <p>Limitcode Pro: a full coding agent inside the Sublime Text window you already have open.</p>
+        </div>
+        <div class="about-cta-links">
+          <a class="btn btn-primary" href="/#pricing">Get Limitcode Pro <span class="arrow">→</span></a>
+          <a class="btn btn-quiet" href="/docs">Read the docs →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .post-hero h1 {
+    max-width: 16ch;
+    margin: 18px 0 22px;
+  }
+
+  .lead {
+    max-width: 58ch;
+  }
+
+  .verdict {
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--signal);
+    background: var(--paper-deep);
+    padding: 28px 32px;
+    max-width: 860px;
+  }
+
+  .verdict-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+  }
+
+  .verdict p {
+    margin-top: 12px;
+    max-width: 68ch;
+  }
+
+  .post-section {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+    border-top: 1px solid var(--hairline);
+    margin-top: clamp(24px, 3vw, 40px);
+  }
+
+  .post-section .section-head p {
+    max-width: 66ch;
+  }
+
+  .post-section .section-head p + p {
+    margin-top: 12px;
+  }
+
+  .dark-section {
+    margin-top: clamp(24px, 3vw, 40px);
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+    background: var(--editor);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .dark-section h2 {
+    color: var(--paper);
+  }
+
+  .dark-section .section-num {
+    color: rgba(243, 239, 229, 0.6);
+  }
+
+  .dark-section p {
+    color: rgba(243, 239, 229, 0.78);
+    max-width: 66ch;
+    margin-top: 12px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: clamp(28px, 4vw, 44px);
+    border: 1px solid var(--hairline);
+  }
+
+  table.cmp {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+  }
+
+  table.cmp th,
+  table.cmp td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    font-size: 0.92rem;
+  }
+
+  table.cmp tbody tr:last-child th,
+  table.cmp tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.cmp thead th {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--paper-deep);
+  }
+
+  table.cmp tbody th[scope="row"] {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  td.col-pro {
+    border-left: 1px solid var(--hairline);
+  }
+
+  thead th.col-pro {
+    color: var(--signal);
+    box-shadow: inset 0 3px 0 var(--signal);
+  }
+
+  .cmp-tight th,
+  .cmp-tight td {
+    padding: 10px 18px;
+  }
+
+  .pick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(32px, 5vw, 52px);
+  }
+
+  .pick-card {
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .pick-card h3 {
+    font-size: var(--step-1);
+    margin-bottom: 16px;
+  }
+
+  .pick-card ul {
+    padding-left: 18px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .pick-card li {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .pick-card-pro {
+    border-color: var(--signal);
+    position: relative;
+  }
+
+  .pick-flag {
+    position: absolute;
+    top: -11px;
+    left: 24px;
+    background: var(--signal);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+  }
+
+  .faq-list {
+    margin-top: clamp(28px, 4vw, 44px);
+    max-width: 820px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 18px 0;
+    list-style-position: outside;
+  }
+
+  .faq-item p {
+    padding-bottom: 20px;
+    max-width: 64ch;
+    color: var(--ink-soft);
+  }
+
+  .post-related-wrap {
+    margin-top: clamp(40px, 5vw, 72px);
+  }
+
+  .related {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .related-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .related a {
+    font-weight: 600;
+  }
+
+  .post-cta-wrap {
+    margin-top: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 800px) {
+    .pick-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .post-hero {
+      padding-top: clamp(48px, 12vw, 72px);
+    }
+
+    .post-hero h1 {
+      font-size: var(--step-3);
+    }
+
+    .verdict {
+      padding: 22px 20px;
+    }
+
+    .post-section .section-head h2 {
+      font-size: var(--step-3);
+    }
+  }
+</style>
