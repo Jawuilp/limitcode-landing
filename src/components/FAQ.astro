@@ -1,8 +1,16 @@
 ---
 const faqs = [
   {
-    q: "Why not just use a terminal coding agent?",
-    a: "Terminal agents like Claude Code, Codex, Pi, or OpenCode are excellent for terminal-first workflows, and Limitcode is not trying to replace them. Limitcode is for developers who want the agent inside Sublime Text: side-by-side chat, editor-native tools like Send to Agent, permission rules, and undo/redo of agent edits — without moving to a heavy AI IDE.",
+    q: "Why not just use Claude Code, Codex, Pi or OpenCode in a terminal?",
+    a: "If you prefer a terminal-first workflow, those tools may be a better fit — Limitcode is not trying to replace them. Limitcode is designed for developers who want agentic coding integrated directly into Sublime Text. A realistic setup: Limitcode as the lightweight default agent inside Sublime, while still using terminal agents when a specialized workflow calls for them.",
+  },
+  {
+    q: "Does Limitcode require another background agent process?",
+    a: "Direct API providers work without a separate Limitcode agent daemon. Limitcode runs through Sublime's plugin environment, while optional CLI, account, and local integrations may use their respective runtimes.",
+  },
+  {
+    q: "Does Limitcode support diffs?",
+    a: "Yes. Limitcode supports basic change previews (diffs) so you can see proposed edits before they are applied.",
   },
   {
     q: "Does it work with my Sublime Text version?",
@@ -22,7 +30,7 @@ const faqs = [
   },
   {
     q: "What happens before an edit or shell command?",
-    a: "Read, list, and search tools are allowed by default. File writes, diffs, shell commands, web search, page fetching, and MCP calls ask by default. You can change those rules in Limitcode settings, cancel an active run, and use Limitcode Undo or Redo for agent edits during the session.",
+    a: "Read, list, and search tools are allowed by default. File writes, change previews, shell commands, web search, page fetching, and MCP calls ask by default. You can change those rules in Limitcode settings, cancel an active run, and use Limitcode Undo or Redo for agent edits during the session.",
   },
   {
     q: "What leaves my machine?",
