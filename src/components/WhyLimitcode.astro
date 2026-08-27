@@ -1,0 +1,135 @@
+---
+const editorNative = [
+  {
+    label: "Send to Agent",
+    body: "Pass the current selection or the active file to the agent explicitly, with one shortcut — not by pasting content back and forth.",
+  },
+  {
+    label: "Permission rules",
+    body: "Reads and searches can stay frictionless while writes, shell commands, web access, and MCP calls ask by default. You set the boundaries.",
+  },
+  {
+    label: "Undo / Redo",
+    body: "Agent edits receive snapshots, so you can undo or redo them during the session without leaving the editor.",
+  },
+  {
+    label: "LSP diagnostics",
+    body: "After an edit, syntax and type errors from Sublime's LSP feed back to the agent — the editor itself stays part of the loop.",
+  },
+  {
+    label: "Scoped modes",
+    body: "Code, Architect, Ask, and Debug modes give each step a different toolset, instead of one always-maximal configuration.",
+  },
+  {
+    label: "Visible costs",
+    body: "Provider, model, reasoning effort, context, and per-session cost statistics are always one status bar away.",
+  },
+];
+---
+
+<section id="why-limitcode" class="why-lc">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num reveal">02 — Why Limitcode</span>
+      <h2 class="reveal d1">Why not just use Claude Code, Codex, Pi or OpenCode in a terminal?</h2>
+      <p class="reveal d2">
+        Terminal agents are excellent for terminal-first workflows — and Limitcode
+        is not trying to replace them. It is built for developers who want the
+        agent to live where they already work: inside Sublime Text.
+      </p>
+    </div>
+
+    <div class="why-grid">
+      <article class="why-card reveal d1">
+        <h3>If your workflow is terminal-first, keep it.</h3>
+        <p>
+          Running a coding agent in a shell, next to any editor, is a proven way
+          to work. Claude Code, Codex, Pi, and OpenCode do that well, and
+          Limitcode does not attempt to re-create every terminal-first workflow.
+        </p>
+        <p>
+          Limitcode exists for the other case: you want the agent inside the
+          editor you already have open — reading the project on disk, applying
+          approved edits, running approved commands — without adopting a
+          terminal-centric loop or a separate AI IDE.
+        </p>
+      </article>
+
+      <article class="why-card reveal d2">
+        <h3>More than a terminal embedded in Sublime.</h3>
+        <p>
+          The chat is a native Sublime view working against the project on disk,
+          not a wrapped shell. That shows up in the details:
+        </p>
+        <ul class="why-list">
+          {editorNative.map((item) => (
+            <li>
+              <strong>{item.label}.</strong> {item.body}
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-lc {
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(36px, 5vw, 60px);
+  }
+
+  .why-card {
+    padding: clamp(26px, 3.5vw, 40px);
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .why-card h3 {
+    font-size: var(--step-1);
+    max-width: 24ch;
+    margin-bottom: 16px;
+  }
+
+  .why-card p {
+    max-width: 52ch;
+  }
+
+  .why-card p + p {
+    margin-top: 12px;
+  }
+
+  .why-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .why-list li {
+    padding: 12px 0;
+    border-top: 1px solid var(--hairline-soft);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .why-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  @media (max-width: 800px) {
+    .why-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

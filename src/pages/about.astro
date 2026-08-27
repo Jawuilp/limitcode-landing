@@ -24,7 +24,7 @@ const limits = [
 
 <Layout
   title="Why Limitcode? — Limitcode Pro"
-  description="The story behind the Limitcode name: a coding agent that works within the limits you control."
+  description="The story behind the Limitcode name: a lightweight coding agent that works inside Sublime Text, within the limits you control — and who it is (and is not) for."
   canonicalPath="/about/"
 >
   <Nav />
@@ -90,6 +90,38 @@ const limits = [
           to do it. When the agent finishes, you are exactly where you started:
           inside your project, with the change in front of you.
         </p>
+        <p>
+          And it is built to stay lightweight: no separate AI IDE to move into,
+          no separate agent daemon for direct API providers, and no takeover of
+          your editor when the agent is idle. The workflow you already have
+          remains the workflow.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-section container">
+      <div class="section-head">
+        <span class="section-num">04 — Who it is for</span>
+        <h2>Built for some workflows, not all of them.</h2>
+      </div>
+      <div class="fit-grid">
+        <div class="fit-card">
+          <h3>Limitcode is for you if…</h3>
+          <ul>
+            <li>You work in Sublime Text and want an agentic workflow without moving to a heavy AI IDE.</li>
+            <li>You prefer the agent to live where your files are, not in a separate terminal loop.</li>
+            <li>You want to bring your own keys or accounts and switch providers per task.</li>
+            <li>You want permission rules you control: reads frictionless, writes and commands asking first.</li>
+          </ul>
+        </div>
+        <div class="fit-card fit-card-off">
+          <h3>It is probably not for you if…</h3>
+          <ul>
+            <li>Your workflow is terminal-first and you are happy there — Claude Code, Codex, Pi, or OpenCode already do that well.</li>
+            <li>You want a full AI IDE that replaces your editor rather than extending it.</li>
+            <li>You need an always-on autonomous pipeline running unattended across many tasks.</li>
+          </ul>
+        </div>
       </div>
 
       <div class="about-cta">
@@ -166,6 +198,54 @@ const limits = [
     color: var(--ink-soft);
   }
 
+  .fit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: clamp(36px, 5vw, 60px);
+  }
+
+  .fit-card {
+    padding: 28px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .fit-card-off {
+    background: transparent;
+  }
+
+  .fit-card h3 {
+    font-size: var(--step-1);
+    margin-bottom: 14px;
+  }
+
+  .fit-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fit-card li {
+    padding: 10px 0;
+    border-top: 1px solid var(--hairline-soft);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .fit-card li::before {
+    content: "→";
+    font-family: var(--font-mono);
+    color: var(--signal);
+    margin-right: 10px;
+  }
+
+  .fit-card-off li::before {
+    color: var(--muted);
+  }
+
   .about-cta {
     margin-top: clamp(36px, 5vw, 60px);
     display: flex;
@@ -201,6 +281,10 @@ const limits = [
 
   @media (max-width: 800px) {
     .limit-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .fit-grid {
       grid-template-columns: 1fr;
     }
 

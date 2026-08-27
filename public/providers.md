@@ -1,7 +1,8 @@
-# Providers — Limitcode
+# Providers - Limitcode
 
 Limitcode connects to AI providers in four ways: API keys, account sign-in,
-CLI sessions, and local runtimes.
+CLI sessions, and local runtimes. Direct API providers need no separate
+agent daemon - the plugin connects from inside Sublime Text with your own key.
 
 ## Direct API keys
 - OpenAI

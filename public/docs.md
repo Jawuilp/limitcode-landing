@@ -1,7 +1,8 @@
-# Limitcode — Quick Reference
+# Limitcode - Quick Reference
 
-Limitcode is a coding agent for Sublime Text (builds 4050+). Two editions:
-open source (pair programming, open files only) and Limitcode Pro (autonomous).
+Limitcode is a lightweight AI coding agent for Sublime Text (builds 4050+).
+Two editions: open source (pair programming, open files only) and Limitcode
+Pro (autonomous).
 
 ## Install
 1. Place the package in Sublime Text's `Packages/` directory (or `Installed Packages`).

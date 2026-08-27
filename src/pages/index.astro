@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import ProofStrip from "../components/ProofStrip.astro";
+import WhyLimitcode from "../components/WhyLimitcode.astro";
+import Lightweight from "../components/Lightweight.astro";
 import Capabilities from "../components/Capabilities.astro";
 import AgentWorkflow from "../components/AgentWorkflow.astro";
 import Providers from "../components/Providers.astro";
@@ -22,7 +24,7 @@ import Footer from "../components/Footer.astro";
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows, macOS",
     "applicationSubCategory": "Coding agent for Sublime Text",
-    "description": "A coding-agent workflow inside Sublime Text: inspect project files, apply approved edits, run approved commands, and use skills, MCP servers, and web search under configurable permissions.",
+    "description": "A lightweight coding-agent workflow inside Sublime Text: stay in your editor while Limitcode inspects project files, applies approved edits, runs approved commands, and uses skills, MCP servers, and web search under configurable permissions.",
     "url": "https://limitcode.jawuil.dev/",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "publisher": { "@id": "https://limitcode.jawuil.dev/#organization" },
@@ -32,6 +34,8 @@ import Footer from "../components/Footer.astro";
   <main>
     <Hero />
     <ProofStrip />
+    <WhyLimitcode />
+    <Lightweight />
     <Capabilities />
     <AgentWorkflow />
     <Providers />

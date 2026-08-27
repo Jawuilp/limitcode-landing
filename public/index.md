@@ -1,6 +1,8 @@
 # What is Limitcode?
 
-Limitcode is a coding agent that runs inside Sublime Text (builds 4050+). It
+Limitcode is a lightweight AI coding agent that runs inside Sublime Text
+(builds 4050+). It is built for developers who want an agentic workflow
+without moving to a heavy AI IDE or adopting a terminal-first workflow. It
 works in a side-by-side chat view and can inspect project files, apply
 approved edits, run approved commands, search the web, load skills, call MCP
 servers, and run focused subagents under configurable permission rules.
@@ -22,11 +24,19 @@ It comes in two editions:
 
 ## Why it exists
 Sublime Text was never built to host a coding agent. Limitcode exists to push
-Sublime Text to its limit — a full agentic workflow natively inside the
+Sublime Text to its limit - a full agentic workflow natively inside the
 editor, not beside it.
 
+## Who it is for (and who it is not)
+Limitcode is for Sublime Text users who want the agent to live where they
+already work, bring their own keys or accounts, and keep permission rules
+under their control. It is not trying to replace terminal-first workflows:
+terminal agents such as Claude Code, Codex, Pi, and OpenCode are excellent
+for developers who work in the shell, and Limitcode is not a full AI IDE
+that replaces your editor.
+
 ## Quick facts
-- Runs entirely inside Sublime Text; no daemon or separate service
+- Runs inside Sublime Text; no separate agent daemon required for direct API providers
 - Providers: OpenAI, Anthropic, Gemini, OpenRouter, DeepSeek, Copilot,
   Ollama, LM Studio, and OpenAI-compatible endpoints
 - Every mutating action follows configurable permission rules

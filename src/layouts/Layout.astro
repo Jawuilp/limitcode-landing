@@ -10,8 +10,8 @@ export interface Props {
 }
 
 const {
-  title = 'Limitcode Pro: The AI Coding Agent for Sublime Text',
-  description = 'A coding-agent workflow for Sublime Text. Read and search project files, apply approved edits, and run approved commands with the provider you connect.',
+  title = 'Limitcode Pro: The Lightweight AI Coding Agent for Sublime Text',
+  description = 'A lightweight AI coding agent for Sublime Text. Stay in your editor: multiple providers, approved edits and commands, and an agentic workflow without a separate AI IDE.',
   image = '/og.png',
   imageAlt = 'Limitcode Pro coding agent running in a side-by-side Sublime Text workflow.',
   canonicalPath = '/',
@@ -82,7 +82,7 @@ const ogImage = site + image;
           "@id": site + "/#website",
           "url": site,
           "name": "Limitcode Pro",
-          "description": "A coding-agent workflow for Sublime Text: inspect files, apply approved edits, and run approved commands from a side-by-side chat.",
+          "description": "A lightweight coding-agent workflow for Sublime Text: inspect files, apply approved edits, and run approved commands from a side-by-side chat, without a separate AI IDE.",
           "publisher": { "@id": site + "/#organization" },
           "inLanguage": "en"
         }
@@ -97,6 +97,7 @@ const ogImage = site + image;
       })(window, document, "clarity", "script", "y3fvhsr853");
     </script>
     <title>{title}</title>
+    <slot name="head-extra" />
   </head>
   <body>
     <slot />
