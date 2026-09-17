@@ -1124,12 +1124,33 @@ footer::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
   font-family: var(--font-mono);
   font-size: 0.74rem;
   color: #6E7B88;
   letter-spacing: 0.04em;
 }
-@media (max-width: 600px) { .footer-colophon { flex-direction: column; gap: 10px; align-items: flex-start; } }
+
+.footer-colophon-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-badges {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.footer-badges img {
+  display: block;
+}
+@media (max-width: 600px) { .footer-colophon { flex-direction: column; gap: 14px; align-items: flex-start; } .footer-badges { margin-left: 0; justify-content: flex-start; } }
 
 /* =========================================================
    Selection
