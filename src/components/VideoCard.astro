@@ -4,14 +4,17 @@ interface Props {
   poster?: string;
   caption?: string;
   duration?: string;
+  alt?: string;
 }
 
-const { src, poster, caption, duration } = Astro.props;
+const { src, poster, caption, duration, alt } = Astro.props;
+const posterAlt =
+  alt ?? caption ?? "Limitcode Pro running inside Sublime Text (video preview)";
 ---
 
 <div class="video-card">
   <div class="video-frame" data-video-card>
-    <img class="video-poster" src={poster ?? "/og.png"} alt="" loading="lazy" />
+    <img class="video-poster" src={poster ?? "/og.png"} alt={posterAlt} loading="lazy" />
     <button class="video-play" type="button" aria-label="Play demo video">
       <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
         <path d="M8 5v14l11-7z" />
