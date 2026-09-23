@@ -26,19 +26,19 @@ const quickSteps = [
 
 const capabilities = [
   {
+    name: "What Limitcode is",
+    body: "An agentic coding assistant that lives inside Sublime Text: a streaming chat plus an agent loop that can read, write, and edit files, run commands, search the web, and extend itself. Nothing runs in a separate IDE.",
+    meta: ["native Sublime panel", "agent loop", "tool calling"],
+  },
+  {
     name: "Work against the project on disk",
-    body: "List, read, and search files, create targeted edits, apply diffs, and run build or test commands — all from the same conversation, operating on the files in your project.",
+    body: "The agent lists, reads, and searches your actual project files, creates targeted edits, applies diffs, and runs build or test commands — all from the same conversation.",
     meta: ["list", "read", "search", "edit", "patch", "run"],
   },
   {
-    name: "Stay inside your editor",
-    body: "The chat is a native side-by-side Sublime view, not a wrapped terminal. Send the current selection or the active file to the agent with a shortcut, and keep working in the same window.",
-    meta: ["side-by-side chat", "Send to Agent", "Ctrl+Alt+A"],
-  },
-  {
     name: "Approval boundaries you control",
-    body: "Reads and searches can stay frictionless while writes, change previews, shell commands, web access, and MCP calls ask by default. Tool rules and file allow/deny globs are configurable.",
-    meta: ["allow / ask / deny", "file globs", "toggle permissions"],
+    body: "Reads and searches can stay frictionless while writes, change previews, shell commands, web access, and MCP calls ask by default. Rules are set per tool and per file.",
+    meta: ["allow / ask / deny", "file globs", "per tool"],
   },
   {
     name: "Scoped modes",
@@ -47,17 +47,17 @@ const capabilities = [
   },
   {
     name: "Review before it lands",
-    body: "See a diff before an edit is applied, and Undo or Redo any agent edit during the session. After an edit, syntax and type errors from Sublime's LSP feed back to the agent.",
+    body: "See a native diff before an edit is applied, and undo or redo any agent edit during the session. After an edit, syntax and type errors from Sublime's LSP feed back to the agent.",
     meta: ["diffs", "undo / redo", "LSP diagnostics"],
   },
   {
     name: "Context that survives long sessions",
-    body: "Conversations are saved by project, and long sessions compact automatically, so you can pick a task back up without losing the thread.",
-    meta: ["per-project sessions", "auto-compaction", "chat history"],
+    body: "Conversations are saved by project and long sessions compact automatically near the model's context limit, so you can pick a task back up without losing the thread.",
+    meta: ["per-project sessions", "auto-compaction", "typed messages"],
   },
   {
     name: "Web search and page fetching",
-    body: "Built-in web search and URL fetching let the agent check docs and current information; both ask for permission by default.",
+    body: "Built-in web search and URL fetching let the agent check docs and current information; both ask for permission by default. Some providers also expose native search.",
     meta: ["web search", "fetch URL", "opt-in"],
   },
   {
@@ -72,13 +72,62 @@ const capabilities = [
   },
   {
     name: "Bring your own model",
-    body: "Direct APIs, account sign-in, existing CLI logins, or local OpenAI-compatible runtimes such as Ollama, LM Studio, and LiteLLM. You pay your provider directly.",
-    meta: ["OpenAI", "Anthropic", "Gemini", "Copilot", "OpenRouter", "local"],
+    body: "More than 40 registered providers: direct APIs, account sign-in, existing CLI logins, or local OpenAI-compatible runtimes such as Ollama, LM Studio, and LiteLLM. You pay your provider directly.",
+    meta: ["40+ providers", "OAuth", "CLI bridges", "local"],
   },
   {
     name: "Know the cost",
-    body: "Provider, model, reasoning effort, context, and per-session cost statistics are always one status bar away.",
+    body: "Provider, model, reasoning effort, context, and per-session cost statistics are always one status bar away, with an optional budget alert.",
     meta: ["provider", "model", "reasoning effort", "session cost"],
+  },
+];
+
+const tools = [
+  { name: "read_file", desc: "Read a file, optionally a line range." },
+  { name: "write_to_file", desc: "Create or overwrite a whole file." },
+  { name: "edit_file", desc: "Targeted old → new replacement, with fuzzy matching." },
+  { name: "apply_diff", desc: "Apply a unified diff patch to a file." },
+  { name: "list_files", desc: "List the files in a directory." },
+  { name: "search_files", desc: "Search patterns across files (ripgrep, grep, or Python fallback)." },
+  { name: "execute_command", desc: "Run a shell command — builds, tests, git. Supports background jobs." },
+  { name: "background_job", desc: "Inspect or stop a job started earlier by execute_command." },
+  { name: "web_search", desc: "Real web search (Brave, Tavily, DuckDuckGo, Sogou)." },
+  { name: "web_fetch", desc: "Fetch and parse a URL (HTML → Markdown, SSRF-guarded)." },
+  { name: "skill", desc: "Load a skill's full instructions and resources." },
+  { name: "skill_manager", desc: "List, create, install, or search Agent Skills." },
+  { name: "mcp", desc: "List tools from an MCP server, or call one." },
+  { name: "task", desc: "Launch a subagent for focused work." },
+  { name: "batch", desc: "Run several independent tool calls in parallel." },
+  { name: "update_checklist", desc: "Publish the task list to the live checklist in the chat." },
+];
+
+const modes = [
+  { name: "Code", desc: "General coding tasks.", tools: "read, write, edit, diff, list, search, execute, background, skill, mcp, checklist" },
+  { name: "Architect", desc: "Planning and technical design.", tools: "read, write, list, search, skill, mcp" },
+  { name: "Ask", desc: "Questions and explanations (read-only).", tools: "read, list, search, skill, mcp" },
+  { name: "Debug", desc: "Diagnosis and fixes.", tools: "read, write, edit, diff, search, execute, background, skill, mcp" },
+];
+
+const subagents = [
+  { name: "explore", role: "Explore structure and find information.", tools: "read, list, search", iter: "10" },
+  { name: "general", role: "Research and summarize.", tools: "read, list, search", iter: "25" },
+  { name: "implement", role: "Scoped code task — create or edit.", tools: "read, list, search, write, edit, diff", iter: "15" },
+  { name: "plan", role: "Write a detailed Markdown plan.", tools: "read, list, search", iter: "15" },
+  { name: "test", role: "Run tests and report.", tools: "read, execute_command, list", iter: "10" },
+];
+
+const providerGroups = [
+  {
+    name: "OpenAI-compatible endpoints",
+    body: "One adapter over any /chat/completions endpoint: OpenAI, Groq, Mistral, xAI (Grok), DeepSeek, Cerebras, DeepInfra, Together AI, Venice AI, Cloudflare Workers AI, GitLab, SAP AI Core, Perplexity, Vercel AI Gateway, Alibaba DashScope, Helicone, NVIDIA NIM, Moonshot/Kimi, Alibaba, and any custom base URL — plus local runtimes Ollama, LM Studio, and LiteLLM.",
+  },
+  {
+    name: "Providers with a native handler",
+    body: "Anthropic and Vertex Anthropic, Google Gemini and Vertex (native generateContent), Azure OpenAI, Amazon Bedrock (Converse), Cohere, OpenRouter (a proxy over 500+ models), and GitHub Copilot.",
+  },
+  {
+    name: "Account, CLI, and OAuth routes",
+    body: "Sign in with GitHub Copilot, OpenAI Codex, or Google Antigravity (OAuth). The Claude Code and Codex CLI bridges reuse an existing local CLI login. Credentials live in Sublime Text settings.",
   },
 ];
 
@@ -89,11 +138,15 @@ const paletteGroups = [
   },
   {
     name: "Agent & configuration",
-    commands: ["Send to Agent", "Change Provider", "Change Model", "Set Reasoning Effort", "Setup Provider API Key", "Toggle Permissions", "Show Instructions", "Show Cost Statistics"],
+    commands: ["Send to Agent", "Change Provider", "Change Model", "Change Mode", "Set Reasoning Effort", "Setup Provider API Key", "Toggle Permissions", "Show Instructions", "Show Cost Statistics", "Open MCP Settings"],
   },
   {
     name: "Account sign-in",
-    commands: ["Login with GitHub Copilot (OAuth)", "Login with Codex (OAuth)", "Login with Google Antigravity (OAuth)", "Logout OAuth"],
+    commands: ["Login with GitHub Copilot (OAuth)", "Login with Claude Code", "Login with Codex (OAuth)", "Login with Google Antigravity (OAuth)", "Logout OAuth"],
+  },
+  {
+    name: "Edit safety",
+    commands: ["Undo Last Agent Edit", "Redo Last Agent Edit", "Show Snapshot History"],
   },
   {
     name: "Limitcode Pro",
@@ -104,11 +157,58 @@ const paletteGroups = [
 const shortcuts = [
   { keys: "Ctrl+Alt+L", action: "Open chat" },
   { keys: "Ctrl+Alt+A", action: "Send selection or file to the agent" },
+  { keys: "Ctrl+Alt+N", action: "New chat" },
+  { keys: "Ctrl+Alt+H", action: "Chat history" },
+  { keys: "Ctrl+Alt+Y", action: "Rename session" },
+  { keys: "Ctrl+Alt+D", action: "Delete session" },
   { keys: "Ctrl+Alt+M", action: "Change model" },
   { keys: "Ctrl+Alt+P", action: "Change provider" },
-  { keys: "Ctrl+Shift+C", action: "Cancel the active request" },
-  { keys: "Enter", action: "Send the message (in the chat view)" },
-  { keys: "Escape", action: "Stop the agent (chat focused)" },
+  { keys: "Ctrl+Alt+Shift+M", action: "Change mode" },
+  { keys: "Ctrl+Alt+R", action: "Set reasoning effort" },
+  { keys: "Ctrl+Alt+T", action: "Toggle show thoughts" },
+  { keys: "Ctrl+Alt+K", action: "Setup provider API key" },
+  { keys: "Ctrl+Alt+S", action: "Open settings" },
+  { keys: "Ctrl+Alt+Q", action: "Open MCP settings" },
+  { keys: "Ctrl+Alt+G", action: "Open skills folder" },
+  { keys: "Ctrl+Alt+O", action: "Toggle permissions" },
+  { keys: "Ctrl+Alt+Shift+Y", action: "Trust agent (allow all)" },
+  { keys: "Ctrl+Alt+Shift+U", action: "Untrust agent (ask all)" },
+  { keys: "Ctrl+Alt+F", action: "Show instructions" },
+  { keys: "Ctrl+Alt+C", action: "Clear chat" },
+  { keys: "Ctrl+Alt+U", action: "Undo last agent edit" },
+  { keys: "Ctrl+Alt+Shift+R", action: "Redo last agent edit" },
+  { keys: "Ctrl+Alt+Shift+V", action: "Show snapshot history" },
+  { keys: "Ctrl+Alt+Shift+C", action: "Show cost statistics" },
+  { keys: "Ctrl+Alt+B", action: "Login with GitHub Copilot" },
+  { keys: "Ctrl+Alt+E", action: "Login with Claude Code" },
+  { keys: "Ctrl+Alt+Z", action: "Login with Codex" },
+  { keys: "Ctrl+Alt+Shift+G", action: "Login with Google Antigravity" },
+  { keys: "Ctrl+Alt+Shift+L", action: "Logout OAuth" },
+  { keys: "Ctrl+Alt+X", action: "Cancel the active request" },
+  { keys: "Ctrl+Alt+Shift+X", action: "Stop the agent" },
+  { keys: "Enter", action: "Send the message (chat focused)" },
+  { keys: "↑ / ↓", action: "Input history in the chat" },
+];
+
+const settingsKeys = [
+  { key: "default_provider / default_model", desc: "Active provider and model." },
+  { key: "api_keys", desc: "Credentials per provider." },
+  { key: "provider_base_urls", desc: "Base URLs per provider." },
+  { key: "temperature", desc: "Generation temperature." },
+  { key: "max_tokens", desc: "Output cap (integer) or \"auto\" for the model's native limit." },
+  { key: "max_iterations", desc: "Maximum agent-loop iterations." },
+  { key: "reasoning_effort", desc: "off / low / medium / high." },
+  { key: "permission", desc: "Allow / deny / ask rules (tool and file)." },
+  { key: "web_search", desc: "provider, API keys, max_results." },
+  { key: "skip_dirs / skip_extensions", desc: "Exclusions for listing and search." },
+  { key: "instruction_files", desc: "Instruction files to discover." },
+  { key: "auto_discover_instructions", desc: "Auto-discover AGENTS.md and similar." },
+  { key: "skills / mcp", desc: "Skills and MCP servers." },
+  { key: "chat_style / chat_font_size", desc: "Chat styling and font size." },
+  { key: "show_thoughts / show_cost_estimate", desc: "Reasoning display and cost estimate." },
+  { key: "terminal_shell", desc: "Shell used by execute_command." },
+  { key: "streaming / timeout", desc: "Streaming and network timeout." },
+  { key: "debug_log / debug_console_log", desc: "Sanitized JSON log and console mirror." },
 ];
 
 const settingsExample = `{
@@ -121,6 +221,7 @@ const settingsExample = `{
   "max_tokens": 4096,
   "max_iterations": 25,
   "permission": {
+    "outside_project": "ask",
     "tool": {
       "read_file": "allow",
       "list_files": "allow",
@@ -128,11 +229,14 @@ const settingsExample = `{
       "write_to_file": "ask",
       "edit_file": "ask",
       "apply_diff": "ask",
-      "execute_command": "ask"
+      "execute_command": "ask",
+      "web_search": "ask",
+      "web_fetch": "ask",
+      "mcp": "ask"
     },
     "file": {
       "allow": ["src/**", "lib/**", "app/**", "*.py", "*.js", "*.ts", "*.md"],
-      "deny": ["**/*.lock", ".env", "**/node_modules/**", "**/.git/**", "**/__pycache__/**"]
+      "deny": ["**/*.lock", ".env", "**/*.pem", "**/*.key", "**/node_modules/**", "**/.git/**"]
     }
   }
 }`;
@@ -160,11 +264,15 @@ const faq = [
   },
   {
     q: "Can Limitcode search the web?",
-    a: "Yes. Web search and URL fetching are built-in tools that ask for permission by default. The search backend is configurable in Limitcode settings.",
+    a: "Yes. Web search and URL fetching are built-in tools that ask for permission by default. The search backend is configurable, and some providers also expose their own native web search.",
   },
   {
     q: "Can I use skills and MCP servers?",
     a: "Yes. Skills load specialized instructions on demand, and any MCP server you configure becomes callable as a tool — both under the same permission rules as the rest of the agent.",
+  },
+  {
+    q: "Can I change how much the agent is allowed to do?",
+    a: "Yes. Modes (Code, Architect, Ask, Debug) scope the toolset, and permissions scope tools and files. You can raise or lower both per task.",
   },
   {
     q: "Can I use local models?",
@@ -179,7 +287,7 @@ const faq = [
 
 <Layout
   title="Docs — Limitcode Pro"
-  description="Installation, commands, settings, shortcuts, and FAQ for Limitcode Pro."
+  description="What Limitcode can do, plus installation, tools, modes, subagents, permissions, settings, commands, shortcuts, and FAQ for Limitcode Pro."
   canonicalPath="/docs/"
 >
   <!-- FAQPage schema: lets AI engines extract the Q&A directly -->
@@ -197,10 +305,11 @@ const faq = [
     <section class="docs-hero">
       <div class="container">
         <span class="eyebrow reveal"><span class="dot"></span>Documentation</span>
-        <h1 class="reveal d1">Install, configure, and go.</h1>
+        <h1 class="reveal d1">Everything Limitcode can do.</h1>
         <p class="lead reveal d2">
-          Everything needed to run Limitcode Pro in Sublime Text: setup, Command Palette
-          reference, settings, keyboard shortcuts, and answers to common questions.
+          The full surface of Limitcode Pro in Sublime Text: capabilities, the agent's tools,
+          modes, subagents, skills and MCP, permissions, sessions and cost, review and safety,
+          providers, the Command Palette, shortcuts, and settings.
         </p>
       </div>
     </section>
@@ -246,7 +355,263 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">03 — Command Palette</span>
+        <span class="section-num">03 — The agent's tools</span>
+        <h2>Sixteen tools it can call.</h2>
+        <p>
+          The agent works through a fixed catalogue of tools. Each mode exposes a subset, and
+          every call runs under your permission rules. Independent calls can run together with{" "}
+          <code class="inline-code">batch</code>, and long-running commands can be tracked with{" "}
+          <code class="inline-code">background_job</code>.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr><th>Tool</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            {tools.map((t) => (
+              <tr><td><code>{t.name}</code></td><td>{t.desc}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">04 — Modes</span>
+        <h2>Scope the toolset per task.</h2>
+        <p>
+          A mode decides which tools the agent may use. Switch with{" "}
+          <code class="inline-code">Limitcode: Change Mode</code> (<code class="inline-code">Ctrl+Alt+Shift+M</code>).
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr><th>Mode</th><th>Best for</th><th>Tools</th></tr>
+          </thead>
+          <tbody>
+            {modes.map((m) => (
+              <tr><td><code>{m.name}</code></td><td>{m.desc}</td><td>{m.tools}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">05 — Subagents</span>
+        <h2>Delegate focused work.</h2>
+        <p>
+          A subagent is a child session with its own agent and a restricted toolset. Subagents
+          cannot spawn other subagents, and their permissions derive from the parent.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr><th>Type</th><th>Role</th><th>Tools</th><th>Max iterations</th></tr>
+          </thead>
+          <tbody>
+            {subagents.map((s) => (
+              <tr><td><code>{s.name}</code></td><td>{s.role}</td><td>{s.tools}</td><td>{s.iter}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">06 — Instructions, skills, and MCP</span>
+        <h2>Teach it your project.</h2>
+      </div>
+      <div class="sub-groups">
+        <div class="sub-group">
+          <h3>Repository instructions</h3>
+          <p>
+            Limitcode walks up the directory tree and auto-discovers instruction files:{" "}
+            <code class="inline-code">AGENTS.md</code>, <code class="inline-code">CLAUDE.md</code>,{" "}
+            <code class="inline-code">.limitcode.md</code>, <code class="inline-code">.kilocode.md</code>, and{" "}
+            <code class="inline-code">INSTRUCTIONS.md</code>. Run{" "}
+            <code class="inline-code">Limitcode: Show Instructions</code> to see what was found.
+          </p>
+        </div>
+        <div class="sub-group">
+          <h3>Agent Skills</h3>
+          <p>
+            A skill is a bundle of instructions with optional resources — a{" "}
+            <code class="inline-code">SKILL.md</code> plus <code class="inline-code">scripts/</code>,{" "}
+            <code class="inline-code">templates/</code>, and <code class="inline-code">references/</code>.
+            Skills are discovered bundled with the plugin, in the project (
+            <code class="inline-code">.agents/skills/&lt;name&gt;/SKILL.md</code>), or globally (
+            <code class="inline-code">~/.agents/skills/</code>). The <code class="inline-code">skill</code>{" "}
+            tool loads one when a task matches; <code class="inline-code">skill_manager</code> lists,
+            creates, installs, and searches them.
+          </p>
+        </div>
+        <div class="sub-group">
+          <h3>MCP servers</h3>
+          <p>
+            Connect Model Context Protocol servers so their tools become callable. Both local
+            (stdio, started as a process) and remote (Streamable HTTP with an API key) are
+            supported, with <code class="inline-code">{"{env:VAR}"}</code> expansion for secrets. Open the
+            config with <code class="inline-code">Limitcode: Open MCP Settings</code> (
+            <code class="inline-code">Ctrl+Alt+Q</code>).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">07 — Permissions</span>
+        <h2>You approve what mutates.</h2>
+        <p>
+          Permissions use <code class="inline-code">allow</code>, <code class="inline-code">ask</code>, and{" "}
+          <code class="inline-code">deny</code> actions on <code class="inline-code">{"{permission, pattern, action}"}</code>{" "}
+          rules with last-match-wins semantics. They apply per tool and per file, and match flexibly
+          (absolute paths, basenames, relative suffixes like <code class="inline-code">src/**</code> or{" "}
+          <code class="inline-code">*.py</code>).
+        </p>
+      </div>
+      <div class="perm-grid">
+        <div>
+          <h3>By default</h3>
+          <p>
+            Reads, listings, and searches are allowed; writes, change previews, shell commands,
+            web access, skills, and MCP calls ask first. <code class="inline-code">outside_project</code>{" "}
+            controls access beyond the workspace, and <code class="inline-code">allowed_external_paths</code>{" "}
+            authorizes specific external paths.
+          </p>
+        </div>
+        <div>
+          <h3>At runtime</h3>
+          <p>
+            An <code class="inline-code">always allow</code> choice is scoped to the session and not
+            persisted. Use <code class="inline-code">Limitcode: Toggle Permissions</code>, or the
+            trust commands to allow or ask for everything. If you deny an action, the agent is told
+            not to retry it through another tool.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">08 — Sessions, memory, and cost</span>
+        <h2>Picks up where you left off.</h2>
+      </div>
+      <div class="sub-groups">
+        <div class="sub-group">
+          <h3>History and memory</h3>
+          <p>
+            Each chat is saved as Markdown under the project, and the agent keeps typed message
+            memory for the session — text, reasoning, tool calls, files and images, iteration
+            steps, and errors. The Command Palette offers{" "}
+            <code class="inline-code">New Chat</code>, <code class="inline-code">Chat History</code>,{" "}
+            <code class="inline-code">Rename Session</code>, and <code class="inline-code">Delete Session</code>.
+          </p>
+        </div>
+        <div class="sub-group">
+          <h3>Auto-compaction</h3>
+          <p>
+            As the conversation approaches the model's context limit, a dedicated compaction agent
+            summarizes it while preserving critical technical detail, and the summary is re-injected
+            as the main context. You keep working without a manual reset.
+          </p>
+        </div>
+        <div class="sub-group">
+          <h3>Cost</h3>
+          <p>
+            Limitcode tracks session cost, input/output tokens, and last context usage, using
+            per-model pricing. See it with <code class="inline-code">Limitcode: Show Cost Statistics</code>{" "}
+            (<code class="inline-code">Ctrl+Alt+Shift+C</code>); an optional budget alert warns when you pass a set limit.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">09 — Review and safety</span>
+        <h2>Nothing changes behind your back.</h2>
+      </div>
+      <div class="sub-groups">
+        <div class="sub-group">
+          <h3>Native diffs</h3>
+          <p>
+            The agent proposes changes as a diff you review before applying, opened in Sublime's own
+            diff view with Accept, Reject, Next, and Prev.
+          </p>
+        </div>
+        <div class="sub-group">
+          <h3>Snapshots and undo</h3>
+          <p>
+            Before editing, Limitcode snapshots the file. That powers{" "}
+            <code class="inline-code">Undo Last Agent Edit</code> and{" "}
+            <code class="inline-code">Redo Last Agent Edit</code>, a file watcher for external changes, and
+            protection against stale edits. <code class="inline-code">Show Snapshot History</code> lists them.
+          </p>
+        </div>
+        <div class="sub-group">
+          <h3>LSP feedback</h3>
+          <p>
+            After an edit, Limitcode waits briefly for fresh LSP diagnostics and reports any errors
+            back to the model, so it can self-correct. It degrades gracefully when no LSP is present.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">10 — Providers &amp; reasoning</span>
+        <h2>Bring the model access you already use.</h2>
+        <p>
+          A unified selector lists the models of everything you have configured and saves the
+          provider and model together, so they never drift apart.
+        </p>
+      </div>
+      <div class="sub-groups">
+        {providerGroups.map((g) => (
+          <div class="sub-group">
+            <h3>{g.name}</h3>
+            <p>{g.body}</p>
+          </div>
+        ))}
+        <div class="sub-group">
+          <h3>Reasoning effort</h3>
+          <p>
+            <code class="inline-code">Limitcode: Set Reasoning Effort</code> switches between off, low,
+            medium, and high, mapped to each provider's native parameter — Anthropic effort, OpenAI{" "}
+            <code class="inline-code">reasoning_effort</code>, Gemini thinking budget, DeepSeek and Kimi
+            thinking, and normalized effort through OpenRouter. Models without support ignore it
+            without breaking the request.
+          </p>
+        </div>
+      </div>
+      <div class="prov-cta">
+        <p>Account routes depend on provider-controlled behavior. Google Antigravity in particular carries elevated account risk — prefer a secondary Google account and use it at your own responsibility.</p>
+        <a class="btn btn-primary" href="/providers">Full providers guide <span class="arrow">→</span></a>
+      </div>
+
+      <div class="integ-video">
+        <VideoCard
+          src="/limit-use-mcp.mp4?v=3"
+          poster="/limit-use-mcp-poster.jpg"
+          duration="0:53"
+          caption="Limitcode Pro driving a Playwright MCP server to run real tests."
+        />
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">11 — Command Palette</span>
         <h2>Everything starts with <code class="inline-code">Limitcode:</code>.</h2>
         <p>Open the Command Palette with <code class="inline-code">Ctrl+Shift+P</code> and type any command prefix.</p>
       </div>
@@ -266,7 +631,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">04 — Keyboard shortcuts</span>
+        <span class="section-num">12 — Keyboard shortcuts</span>
         <h2>Built-in shortcuts.</h2>
       </div>
       <div class="shortcut-list">
@@ -281,7 +646,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">05 — Settings</span>
+        <span class="section-num">13 — Settings</span>
         <h2>Reference settings file.</h2>
         <p>
           Open <code class="inline-code">Preferences → Package Settings → Limitcode → Settings</code>.
@@ -291,55 +656,23 @@ const faq = [
       </div>
       <pre class="codeblock"><code>{settingsExample}</code></pre>
 
-      <div class="perm-grid">
-        <div>
-          <h3>Tool permissions</h3>
-          <p>
-            Reads and searches can stay frictionless (<code class="inline-code">allow</code>)
-            while mutating tools ask by default (<code class="inline-code">ask</code>), or are
-            denied. Use <code class="inline-code">Limitcode: Toggle Permissions</code> or the
-            trust commands per agent.
-          </p>
-        </div>
-        <div>
-          <h3>File allow / deny</h3>
-          <p>
-            Glob patterns decide which files the agent can touch. Deny lists protect
-            lockfiles, environment files, dependencies, and version-control folders by
-            default in the example above.
-          </p>
-        </div>
+      <div class="table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr><th>Key</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            {settingsKeys.map((s) => (
+              <tr><td><code>{s.key}</code></td><td>{s.desc}</td></tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">06 — Providers &amp; accounts</span>
-        <h2>Bring the model access you already use.</h2>
-        <p>
-          Direct APIs (OpenAI, Anthropic, Gemini, OpenRouter, Mistral AI, DeepSeek, and compatible
-          gateways), account sign-in (GitHub Copilot, OpenAI Codex, Google Antigravity),
-          existing CLI sessions, and local OpenAI-compatible runtimes.
-        </p>
-      </div>
-      <div class="prov-cta">
-        <p>Account routes depend on provider-controlled behavior. Google Antigravity in particular carries elevated account risk — prefer a secondary Google account and use it at your own responsibility.</p>
-        <a class="btn btn-primary" href="/providers">Full providers guide <span class="arrow">→</span></a>
-      </div>
-
-      <div class="integ-video">
-        <VideoCard
-          src="/limit-use-mcp.mp4?v=3"
-          poster="/limit-use-mcp-poster.jpg"
-          duration="0:53"
-          caption="Limitcode Pro driving a Playwright MCP server to run real tests."
-        />
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">07 — FAQ</span>
+        <span class="section-num">14 — FAQ</span>
         <h2>Common questions.</h2>
       </div>
       <div class="faq-list">
@@ -371,12 +704,12 @@ const faq = [
   }
 
   .docs-hero h1 {
-    max-width: 14ch;
+    max-width: 16ch;
     margin: 18px 0 22px;
   }
 
   .docs-hero .lead {
-    max-width: 56ch;
+    max-width: 62ch;
   }
 
   .docs-section {
@@ -399,10 +732,10 @@ const faq = [
   }
 
   .quick-card .ord {
-    font-family: var(--font-mono);
+    font-family: var(--font-prose);
     font-size: 0.72rem;
     color: var(--signal);
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
   }
 
   .quick-card h3 {
@@ -441,6 +774,115 @@ const faq = [
     color: var(--ink);
   }
 
+  /* Capability list */
+  .cap-list {
+    margin-top: clamp(36px, 5vw, 60px);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .cap-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .cap-num {
+    font-family: var(--font-prose);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--signal);
+    padding-top: 3px;
+  }
+
+  .cap-body h3 {
+    font-size: var(--step-1);
+    margin-bottom: 8px;
+  }
+
+  .cap-body p {
+    max-width: 64ch;
+    color: var(--ink-soft);
+  }
+
+  .cap-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .cap-meta code {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline-soft);
+    padding: 3px 7px;
+    border-radius: 3px;
+  }
+
+  /* Tables (tools, modes, subagents, settings) */
+  .table-wrap {
+    margin-top: clamp(28px, 4vw, 44px);
+    overflow-x: auto;
+  }
+
+  .docs-table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+  }
+
+  .docs-table th,
+  .docs-table td {
+    text-align: left;
+    padding: 12px 20px 12px 0;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 0.9rem;
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+
+  .docs-table thead th {
+    font-family: var(--font-prose);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .docs-table td:first-child {
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  .docs-table code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--ink);
+  }
+
+  /* Sub-groups (instructions, skills, MCP, sessions, safety, providers) */
+  .sub-groups {
+    margin-top: clamp(28px, 4vw, 44px);
+    display: grid;
+    gap: 30px;
+    max-width: 880px;
+  }
+
+  .sub-group h3 {
+    font-size: var(--step-0);
+    margin-bottom: 8px;
+  }
+
+  .sub-group p {
+    color: var(--ink-soft);
+    max-width: 72ch;
+  }
+
   .palette-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -455,9 +897,9 @@ const faq = [
   }
 
   .palette-group h3 {
-    font-family: var(--font-mono);
+    font-family: var(--font-prose);
     font-size: 0.74rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
     margin-bottom: 16px;
@@ -484,14 +926,14 @@ const faq = [
   .shortcut-list {
     margin-top: clamp(36px, 5vw, 60px);
     border-top: 1px solid var(--hairline);
-    max-width: 720px;
+    max-width: 760px;
   }
 
   .shortcut-row {
     display: flex;
     align-items: center;
     gap: 28px;
-    padding: 16px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--hairline);
   }
 
@@ -504,7 +946,7 @@ const faq = [
     border-bottom-width: 2px;
     border-radius: 5px;
     padding: 4px 10px;
-    min-width: 120px;
+    min-width: 150px;
     text-align: center;
     white-space: nowrap;
   }
@@ -570,8 +1012,6 @@ const faq = [
     margin-top: 28px;
     max-width: 720px;
   }
-
-  .integ-video { max-width: 720px; }
 
   .integ-video p {
     margin-top: 10px;
@@ -643,55 +1083,6 @@ const faq = [
 
   .docs-boundary .btn {
     margin-top: 28px;
-  }
-
-  /* Capability list — "What Limitcode can do" */
-  .cap-list {
-    margin-top: clamp(36px, 5vw, 60px);
-    border-top: 1px solid var(--hairline);
-  }
-
-  .cap-row {
-    display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
-    gap: 24px;
-    padding: 26px 0;
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .cap-num {
-    font-family: var(--font-prose);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: var(--signal);
-    padding-top: 3px;
-  }
-
-  .cap-body h3 {
-    font-size: var(--step-1);
-    margin-bottom: 8px;
-  }
-
-  .cap-body p {
-    max-width: 62ch;
-    color: var(--ink-soft);
-  }
-
-  .cap-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 14px;
-  }
-
-  .cap-meta code {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--ink-soft);
-    background: var(--paper-deep);
-    border: 1px solid var(--hairline-soft);
-    padding: 3px 7px;
-    border-radius: 3px;
   }
 
   @media (max-width: 640px) {
