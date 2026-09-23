@@ -82,6 +82,84 @@ const capabilities = [
   },
 ];
 
+const workflows = [
+  {
+    name: "Ask about your code",
+    how: "Open the chat with Ctrl+Alt+L, switch to Ask mode, and ask your question. It answers with read-only tools (read, list, search) against the real project, not a guess.",
+    meta: ["Ctrl+Alt+L", "Ask mode", "read-only"],
+  },
+  {
+    name: "Send a selection or the active file",
+    how: "Select the code, or open the file you mean, and press Ctrl+Alt+A to hand it to the agent. Then describe the task — no copy-pasting between windows.",
+    meta: ["Ctrl+Alt+A", "selection", "active file"],
+  },
+  {
+    name: "Make an edit and review the diff",
+    how: "In Code mode, describe the change. Limitcode proposes a diff in Sublime's native diff view — accept or reject it. Every edit is snapshotted, so Ctrl+Alt+U undoes the last agent edit.",
+    meta: ["Code mode", "diff accept / reject", "Ctrl+Alt+U"],
+  },
+  {
+    name: "Run a build, tests, or any command",
+    how: "Ask it to run the command. Shell commands ask first, so you approve once or for the session; long-running jobs keep going in the background while you work.",
+    meta: ["execute_command", "approve once / session", "background job"],
+  },
+  {
+    name: "Search the codebase",
+    how: "Ask where something is handled. The agent searches your files (ripgrep, grep, or a Python fallback) and reads the matches before it answers.",
+    meta: ["search_files", "list_files"],
+  },
+  {
+    name: "Show it a screenshot",
+    how: "Paste an image straight into the chat with Ctrl+V, then ask about it — a UI bug, a diagram, a design mockup. Image-capable models read it.",
+    meta: ["Ctrl+V", "vision"],
+  },
+  {
+    name: "Look something up online",
+    how: "Ask it to check the docs or the latest information. Web search and page fetching ask for permission first; some providers also expose native search.",
+    meta: ["web_search", "web_fetch", "opt-in"],
+  },
+  {
+    name: "Add your project rules",
+    how: "Drop an AGENTS.md (or CLAUDE.md / .limitcode.md) in the repo. Limitcode discovers it up the tree and folds it into the system prompt. Run Show Instructions to see what loaded.",
+    meta: ["AGENTS.md", "Ctrl+Alt+F"],
+  },
+  {
+    name: "Add a skill",
+    how: "Create .agents/skills/your-skill/SKILL.md in the project (or ~/.agents/skills for global). When a task matches, the skill tool loads its instructions and resources.",
+    meta: [".agents/skills", "skill_manager"],
+  },
+  {
+    name: "Connect an MCP server",
+    how: "Add the server under \"mcp\" in Limitcode settings, then open the config with Ctrl+Alt+Q. Its tools become callable and follow the same permission rules.",
+    meta: ["settings", "Ctrl+Alt+Q", "local / remote"],
+  },
+  {
+    name: "Change model, provider, or reasoning",
+    how: "Swap the model with Ctrl+Alt+M, the provider with Ctrl+Alt+P, and the reasoning effort with Ctrl+Alt+R. The unified selector saves provider and model together.",
+    meta: ["Ctrl+Alt+M", "Ctrl+Alt+P", "Ctrl+Alt+R"],
+  },
+  {
+    name: "Control what it can do",
+    how: "Switch modes with Ctrl+Alt+Shift+M to scope the toolset, and Ctrl+Alt+O to toggle permissions. The trust commands allow or ask for everything at once.",
+    meta: ["Ctrl+Alt+Shift+M", "Ctrl+Alt+O"],
+  },
+];
+
+const mcpExample = `{
+  "mcp": {
+    "local-example": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-everything"],
+      "enabled": true
+    },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com",
+      "headers": { "Authorization": "Bearer {env:STRIPE_RESTRICTED_KEY}" }
+    }
+  }
+}`;
+
 const tools = [
   { name: "read_file", desc: "Read a file, optionally a line range." },
   { name: "write_to_file", desc: "Create or overwrite a whole file." },
@@ -307,9 +385,9 @@ const faq = [
         <span class="eyebrow reveal"><span class="dot"></span>Documentation</span>
         <h1 class="reveal d1">Everything Limitcode can do.</h1>
         <p class="lead reveal d2">
-          The full surface of Limitcode Pro in Sublime Text: capabilities, the agent's tools,
-          modes, subagents, skills and MCP, permissions, sessions and cost, review and safety,
-          providers, the Command Palette, shortcuts, and settings.
+          The full surface of Limitcode Pro in Sublime Text: capabilities, everyday workflows,
+          the agent's tools, modes, subagents, skills and MCP, permissions, sessions and cost,
+          review and safety, providers, the Command Palette, shortcuts, and settings.
         </p>
       </div>
     </section>
@@ -355,7 +433,29 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">03 — The agent's tools</span>
+        <span class="section-num">03 — Everyday workflows</span>
+        <h2>How to use it.</h2>
+        <p>Every capability above has a concrete way to run it. These are the tasks you will reach for most, from asking a question to connecting a server.</p>
+      </div>
+      <div class="cap-list">
+        {workflows.map((w, i) => (
+          <article class="cap-row">
+            <span class="cap-num">{String(i + 1).padStart(2, "0")}</span>
+            <div class="cap-body">
+              <h3>{w.name}</h3>
+              <p>{w.how}</p>
+              <div class="cap-meta">
+                {w.meta.map((m) => <code>{m}</code>)}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">04 — The agent's tools</span>
         <h2>Sixteen tools it can call.</h2>
         <p>
           The agent works through a fixed catalogue of tools. Each mode exposes a subset, and
@@ -380,7 +480,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">04 — Modes</span>
+        <span class="section-num">05 — Modes</span>
         <h2>Scope the toolset per task.</h2>
         <p>
           A mode decides which tools the agent may use. Switch with{" "}
@@ -403,7 +503,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">05 — Subagents</span>
+        <span class="section-num">06 — Subagents</span>
         <h2>Delegate focused work.</h2>
         <p>
           A subagent is a child session with its own agent and a restricted toolset. Subagents
@@ -426,7 +526,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">06 — Instructions, skills, and MCP</span>
+        <span class="section-num">07 — Instructions, skills, and MCP</span>
         <h2>Teach it your project.</h2>
       </div>
       <div class="sub-groups">
@@ -462,13 +562,14 @@ const faq = [
             config with <code class="inline-code">Limitcode: Open MCP Settings</code> (
             <code class="inline-code">Ctrl+Alt+Q</code>).
           </p>
+          <pre class="codeblock codeblock-sm"><code>{mcpExample}</code></pre>
         </div>
       </div>
     </section>
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">07 — Permissions</span>
+        <span class="section-num">08 — Permissions</span>
         <h2>You approve what mutates.</h2>
         <p>
           Permissions use <code class="inline-code">allow</code>, <code class="inline-code">ask</code>, and{" "}
@@ -502,7 +603,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">08 — Sessions, memory, and cost</span>
+        <span class="section-num">09 — Sessions, memory, and cost</span>
         <h2>Picks up where you left off.</h2>
       </div>
       <div class="sub-groups">
@@ -537,7 +638,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">09 — Review and safety</span>
+        <span class="section-num">10 — Review and safety</span>
         <h2>Nothing changes behind your back.</h2>
       </div>
       <div class="sub-groups">
@@ -569,7 +670,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">10 — Providers &amp; reasoning</span>
+        <span class="section-num">11 — Providers &amp; reasoning</span>
         <h2>Bring the model access you already use.</h2>
         <p>
           A unified selector lists the models of everything you have configured and saves the
@@ -611,7 +712,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">11 — Command Palette</span>
+        <span class="section-num">12 — Command Palette</span>
         <h2>Everything starts with <code class="inline-code">Limitcode:</code>.</h2>
         <p>Open the Command Palette with <code class="inline-code">Ctrl+Shift+P</code> and type any command prefix.</p>
       </div>
@@ -631,7 +732,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">12 — Keyboard shortcuts</span>
+        <span class="section-num">13 — Keyboard shortcuts</span>
         <h2>Built-in shortcuts.</h2>
       </div>
       <div class="shortcut-list">
@@ -646,7 +747,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">13 — Settings</span>
+        <span class="section-num">14 — Settings</span>
         <h2>Reference settings file.</h2>
         <p>
           Open <code class="inline-code">Preferences → Package Settings → Limitcode → Settings</code>.
@@ -672,7 +773,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">14 — FAQ</span>
+        <span class="section-num">15 — FAQ</span>
         <h2>Common questions.</h2>
       </div>
       <div class="faq-list">
@@ -971,6 +1072,15 @@ const faq = [
     line-height: 1.65;
     color: #e8e2d4;
     white-space: pre;
+  }
+
+  .codeblock-sm {
+    margin-top: 18px;
+    padding: 20px;
+  }
+
+  .codeblock-sm code {
+    font-size: 0.76rem;
   }
 
   .perm-grid {
