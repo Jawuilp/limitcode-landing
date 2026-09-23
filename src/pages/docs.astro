@@ -24,6 +24,64 @@ const quickSteps = [
   },
 ];
 
+const capabilities = [
+  {
+    name: "Work against the project on disk",
+    body: "List, read, and search files, create targeted edits, apply diffs, and run build or test commands — all from the same conversation, operating on the files in your project.",
+    meta: ["list", "read", "search", "edit", "patch", "run"],
+  },
+  {
+    name: "Stay inside your editor",
+    body: "The chat is a native side-by-side Sublime view, not a wrapped terminal. Send the current selection or the active file to the agent with a shortcut, and keep working in the same window.",
+    meta: ["side-by-side chat", "Send to Agent", "Ctrl+Alt+A"],
+  },
+  {
+    name: "Approval boundaries you control",
+    body: "Reads and searches can stay frictionless while writes, change previews, shell commands, web access, and MCP calls ask by default. Tool rules and file allow/deny globs are configurable.",
+    meta: ["allow / ask / deny", "file globs", "toggle permissions"],
+  },
+  {
+    name: "Scoped modes",
+    body: "Code, Architect, Ask, and Debug modes give each step a different toolset, instead of one always-maximal configuration.",
+    meta: ["Code", "Architect", "Ask", "Debug"],
+  },
+  {
+    name: "Review before it lands",
+    body: "See a diff before an edit is applied, and Undo or Redo any agent edit during the session. After an edit, syntax and type errors from Sublime's LSP feed back to the agent.",
+    meta: ["diffs", "undo / redo", "LSP diagnostics"],
+  },
+  {
+    name: "Context that survives long sessions",
+    body: "Conversations are saved by project, and long sessions compact automatically, so you can pick a task back up without losing the thread.",
+    meta: ["per-project sessions", "auto-compaction", "chat history"],
+  },
+  {
+    name: "Web search and page fetching",
+    body: "Built-in web search and URL fetching let the agent check docs and current information; both ask for permission by default.",
+    meta: ["web search", "fetch URL", "opt-in"],
+  },
+  {
+    name: "See images",
+    body: "Paste a screenshot or image into the chat and image-capable models can reason about it — inspect UI bugs, diagrams, or design mockups.",
+    meta: ["paste image", "vision"],
+  },
+  {
+    name: "Extend it: instructions, skills, MCP, subagents",
+    body: "Load repository instructions, reusable skills, and any MCP server you configure, and delegate focused work to subagents — all under the same permission rules.",
+    meta: ["instructions", "skills", "MCP", "subagents"],
+  },
+  {
+    name: "Bring your own model",
+    body: "Direct APIs, account sign-in, existing CLI logins, or local OpenAI-compatible runtimes such as Ollama, LM Studio, and LiteLLM. You pay your provider directly.",
+    meta: ["OpenAI", "Anthropic", "Gemini", "Copilot", "OpenRouter", "local"],
+  },
+  {
+    name: "Know the cost",
+    body: "Provider, model, reasoning effort, context, and per-session cost statistics are always one status bar away.",
+    meta: ["provider", "model", "reasoning effort", "session cost"],
+  },
+];
+
 const paletteGroups = [
   {
     name: "Session",
@@ -166,7 +224,29 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">02 — Command Palette</span>
+        <span class="section-num">02 — Capabilities</span>
+        <h2>What Limitcode can do.</h2>
+        <p>Limitcode is a coding agent that lives inside Sublime Text. Here is the full surface — what it does, and the boundaries it works under.</p>
+      </div>
+      <div class="cap-list">
+        {capabilities.map((cap, i) => (
+          <article class="cap-row">
+            <span class="cap-num">{String(i + 1).padStart(2, "0")}</span>
+            <div class="cap-body">
+              <h3>{cap.name}</h3>
+              <p>{cap.body}</p>
+              <div class="cap-meta">
+                {cap.meta.map((m) => <code>{m}</code>)}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="docs-section container">
+      <div class="section-head">
+        <span class="section-num">03 — Command Palette</span>
         <h2>Everything starts with <code class="inline-code">Limitcode:</code>.</h2>
         <p>Open the Command Palette with <code class="inline-code">Ctrl+Shift+P</code> and type any command prefix.</p>
       </div>
@@ -186,7 +266,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">03 — Keyboard shortcuts</span>
+        <span class="section-num">04 — Keyboard shortcuts</span>
         <h2>Built-in shortcuts.</h2>
       </div>
       <div class="shortcut-list">
@@ -201,7 +281,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">04 — Settings</span>
+        <span class="section-num">05 — Settings</span>
         <h2>Reference settings file.</h2>
         <p>
           Open <code class="inline-code">Preferences → Package Settings → Limitcode → Settings</code>.
@@ -234,7 +314,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">05 — Providers &amp; accounts</span>
+        <span class="section-num">06 — Providers &amp; accounts</span>
         <h2>Bring the model access you already use.</h2>
         <p>
           Direct APIs (OpenAI, Anthropic, Gemini, OpenRouter, Mistral AI, DeepSeek, and compatible
@@ -259,7 +339,7 @@ const faq = [
 
     <section class="docs-section container">
       <div class="section-head">
-        <span class="section-num">06 — FAQ</span>
+        <span class="section-num">07 — FAQ</span>
         <h2>Common questions.</h2>
       </div>
       <div class="faq-list">
@@ -563,6 +643,67 @@ const faq = [
 
   .docs-boundary .btn {
     margin-top: 28px;
+  }
+
+  /* Capability list — "What Limitcode can do" */
+  .cap-list {
+    margin-top: clamp(36px, 5vw, 60px);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .cap-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .cap-num {
+    font-family: var(--font-prose);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--signal);
+    padding-top: 3px;
+  }
+
+  .cap-body h3 {
+    font-size: var(--step-1);
+    margin-bottom: 8px;
+  }
+
+  .cap-body p {
+    max-width: 62ch;
+    color: var(--ink-soft);
+  }
+
+  .cap-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .cap-meta code {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline-soft);
+    padding: 3px 7px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .cap-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 22px 0;
+    }
+
+    .cap-num {
+      padding-top: 0;
+    }
   }
 
   @media (max-width: 800px) {
