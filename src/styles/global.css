@@ -987,6 +987,17 @@ section[id]:not(.post-section) {
 }
 @media (max-width: 760px) { .pricing-buy { align-items: flex-start; } }
 
+.pricing-alt-payment {
+  font-family: var(--font-prose);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  text-align: right;
+  margin: 0;
+  line-height: 1.5;
+}
+.pricing-alt-payment a { color: var(--signal); text-decoration: underline; }
+@media (max-width: 760px) { .pricing-alt-payment { text-align: left; } }
+
 .pricing-price {
   font-family: var(--font-display);
   font-size: 3.4rem;
