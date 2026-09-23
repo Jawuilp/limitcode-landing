@@ -1,0 +1,271 @@
+---
+// ─────────────────────────────────────────────────────────────
+// WALL OF LOVE — real buyer feedback.
+//
+// To add a new testimonial, push another object into the array
+// below. The layout adapts automatically:
+//   1 review  -> centered spotlight card
+//   2+        -> responsive grid (1 / 2 / 3 columns)
+//
+// Fields:
+//   quote     the buyer's words, verbatim
+//   name      display name (GitHub handle, first name, etc.)
+//   location  optional, shown as "from <location>"
+//   role      optional short label
+//   source    where it came from, used in the "View on …" link
+//   href      link to the source (e.g. the Gumroad product page)
+//   github    optional profile URL (links the name)
+//   avatar    optional image URL
+//   initials  monogram fallback if the avatar fails to load
+// ─────────────────────────────────────────────────────────────
+const testimonials = [
+  {
+    quote:
+      "An excellent plugin; it has significantly boosted my development efficiency. From font to color customization, these two adjustments have significantly improved my experience!",
+    name: "sunnyAfterSnow",
+    location: "China",
+    role: "Programmer",
+    source: "Gumroad",
+    href: "https://pjawuil.gumroad.com/l/limitcode",
+    github: "https://github.com/sunnyAfterSnow",
+    avatar: "https://github.com/sunnyAfterSnow.png?size=96",
+    initials: "S",
+  },
+];
+
+const single = testimonials.length === 1;
+const count = `${testimonials.length} ${testimonials.length === 1 ? "review" : "reviews"}`;
+---
+
+<section id="testimonials" class="container">
+  <div class="section-head">
+    <span class="section-num reveal">09 — Wall of love</span>
+    <h2 class="reveal d1">What buyers are saying.</h2>
+    <p class="reveal d2">
+      Real feedback from the people using Limitcode Pro in Sublime Text. This wall
+      is new — more reviews get pinned here as they come in.
+    </p>
+  </div>
+
+  <div class="wall-meta reveal">
+    <span class="tag"><span class="dot"></span>{count}</span>
+    <span class="wall-note">Every entry links back to where the buyer left it.</span>
+  </div>
+
+  <div id="testimonials-wall" class:list={["wall", single && "wall--single"]}>
+    {testimonials.map((t) => (
+      <figure class="love-card reveal">
+        <span class="love-mark" aria-hidden="true">&ldquo;</span>
+
+        <blockquote class="love-quote">{t.quote}</blockquote>
+
+        <figcaption class="love-who">
+          {t.avatar && (
+            <img
+              class="love-avatar"
+              src={t.avatar}
+              alt=""
+              width="48"
+              height="48"
+              loading="lazy"
+              onerror="this.style.display='none';var m=this.parentNode.querySelector('.love-initials');if(m){m.style.display='inline-flex';}"
+            />
+          )}
+          <span
+            class="love-initials"
+            style={t.avatar ? "display:none" : "display:inline-flex"}
+            aria-hidden="true">{t.initials}</span>
+
+          <span class="love-id">
+            <span class="love-name">
+              {t.github ? (
+                <a href={t.github} target="_blank" rel="noopener">{t.name}</a>
+              ) : (
+                t.name
+              )}
+            </span>
+            <span class="love-meta">
+              {t.location ? `from ${t.location}` : ""}
+              {t.location && t.role ? " · " : ""}
+              {t.role ? t.role : ""}
+            </span>
+          </span>
+
+          {t.href && (
+            <a class="love-view" href={t.href} target="_blank" rel="noopener" aria-label={`View this review on ${t.source}`}>
+              View on {t.source} ↗
+            </a>
+          )}
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+<style>
+  .wall-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .wall-note {
+    font-family: var(--font-prose);
+    font-size: 0.74rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  #testimonials-wall {
+    scroll-margin-top: clamp(88px, 16vh, 200px);
+  }
+
+  .wall {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+
+  .wall--single {
+    grid-template-columns: minmax(0, 720px);
+    justify-content: center;
+  }
+
+  .love-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: clamp(26px, 3vw, 38px);
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-paper);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .love-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 0 rgba(23, 33, 43, 0.06), 0 30px 70px -34px rgba(23, 33, 43, 0.28);
+  }
+
+  .love-mark {
+    position: absolute;
+    top: 10px;
+    right: 22px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 4.6rem;
+    line-height: 1;
+    color: var(--signal);
+    opacity: 0.14;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .love-quote {
+    margin: 0;
+    font-size: 1.12rem;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  .wall--single .love-quote {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    max-width: 40ch;
+  }
+
+  .love-who {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    margin-top: auto;
+    border-top: 1px solid var(--hairline-soft);
+  }
+
+  .love-avatar,
+  .love-initials {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid var(--hairline);
+  }
+
+  .love-avatar {
+    object-fit: cover;
+    background: var(--paper-deep);
+  }
+
+  .love-initials {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-prose);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper-deep);
+  }
+
+  .love-id {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .love-name {
+    font-weight: 600;
+    font-size: 0.96rem;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  .love-name a {
+    color: inherit;
+  }
+
+  .love-name a:hover {
+    color: var(--signal-deep);
+  }
+
+  .love-meta {
+    font-family: var(--font-prose);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .love-view {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-prose);
+    font-size: 0.72rem;
+    color: var(--sublime);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .love-view:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 520px) {
+    .love-who {
+      flex-wrap: wrap;
+    }
+
+    .love-view {
+      margin-left: 62px;
+    }
+  }
+</style>

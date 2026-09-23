@@ -5,7 +5,7 @@
    confident orange purchase accent.
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap');
 
 :root {
   /* Palette */
@@ -22,7 +22,7 @@
   --signal-deep: #C44E25;
   --sublime: #4E89D6;
   --sage: #7DAA8B;
-  --muted: #69747C;
+  --muted: #6A6559;
   --hairline: rgba(23, 33, 43, 0.14);
   --hairline-soft: rgba(23, 33, 43, 0.08);
   --hairline-dark: rgba(243, 239, 229, 0.10);
@@ -32,6 +32,8 @@
   --font-display: 'Manrope', ui-sans-serif, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'JetBrains Mono', monospace;
   --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  /* Reading serif for small labels and prose; IBM Plex Mono stays for code. */
+  --font-prose: 'Source Serif 4', Georgia, 'Iowan Old Style', 'Charter', serif;
 
   /* Layout */
   --max-w: 1180px;
@@ -124,10 +126,10 @@ p { font-size: var(--step-0); color: var(--ink-soft); }
 .lead { font-size: var(--step-2); line-height: 1.35; color: var(--ink); font-weight: 500; letter-spacing: -0.012em; max-width: 36ch; }
 
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -146,9 +148,9 @@ p { font-size: var(--step-0); color: var(--ink-soft); }
 .muted { color: var(--muted); }
 
 .section-num {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.78rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
   color: var(--muted);
   display: inline-flex;
   align-items: center;
@@ -183,7 +185,11 @@ p { font-size: var(--step-0); color: var(--ink-soft); }
 section { padding: clamp(80px, 11vw, 140px) 0; position: relative; }
 section + section { border-top: 1px solid var(--hairline-soft); }
 section.container { padding: clamp(80px, 11vw, 140px) var(--gutter); }
-section[id] { scroll-margin-top: 76px; }
+/* Anchor landings: offset each section by its own top padding so the
+   heading settles just below the sticky nav instead of on empty space. */
+section[id]:not(.post-section) {
+  scroll-margin-top: calc(88px - clamp(80px, 11vw, 140px));
+}
 
 .section-head {
   display: grid;
@@ -262,7 +268,7 @@ section[id] { scroll-margin-top: 76px; }
   align-items: center;
   gap: 8px;
   padding: 5px 10px;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   color: var(--ink);
@@ -311,7 +317,7 @@ section[id] { scroll-margin-top: 76px; }
   border-radius: 4px;
 }
 .wordmark .pro {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.7rem;
   color: var(--muted);
   font-weight: 500;
@@ -458,7 +464,7 @@ section[id] { scroll-margin-top: 76px; }
 
 .hero-meta {
   display: flex; gap: 22px; flex-wrap: wrap;
-  font-family: var(--font-mono); font-size: 0.78rem;
+  font-family: var(--font-prose); font-size: 0.78rem;
   color: var(--muted); padding-top: 8px;
   border-top: 1px solid var(--hairline);
 }
@@ -670,7 +676,7 @@ section[id] { scroll-margin-top: 76px; }
 /* Annotations around hero screenshot */
 .annot {
   position: absolute;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.7rem;
   color: var(--ink);
   letter-spacing: 0.06em;
@@ -717,7 +723,7 @@ section[id] { scroll-margin-top: 76px; }
   grid-template-columns: auto 1fr;
   gap: 24px;
   align-items: center;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
 }
 .proof-label {
   font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
@@ -780,7 +786,7 @@ section[id] { scroll-margin-top: 76px; }
 }
 .step:last-child { border-bottom: 1px solid rgba(243, 239, 229, 0.10); }
 .step .num {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.84rem;
   color: var(--signal);
   letter-spacing: 0.06em;
@@ -809,7 +815,7 @@ section[id] { scroll-margin-top: 76px; }
 .step p { max-width: 52ch; }
 .step .meta {
   margin-top: 10px;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.74rem;
   color: #8C99A4;
   letter-spacing: 0.04em;
@@ -851,14 +857,14 @@ section[id] { scroll-margin-top: 76px; }
   color: var(--ink);
 }
 .provider .sub {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.74rem;
   color: var(--muted);
   letter-spacing: 0.04em;
 }
 .provider .mark {
   position: absolute; top: 16px; right: 18px;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.66rem;
   color: var(--muted);
   letter-spacing: 0.14em;
@@ -874,7 +880,7 @@ section[id] { scroll-margin-top: 76px; }
   color: var(--ink-soft);
 }
 .note .kicker {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -906,7 +912,7 @@ section[id] { scroll-margin-top: 76px; }
   .install { border-right: 0; }
 }
 .install .ord {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.72rem;
   color: var(--muted);
   letter-spacing: 0.2em;
@@ -931,7 +937,7 @@ section[id] { scroll-margin-top: 76px; }
 .docs-link {
   margin-top: 32px;
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.84rem;
   color: var(--sublime);
   border-bottom: 1px solid currentColor;
@@ -955,7 +961,7 @@ section[id] { scroll-margin-top: 76px; }
 @media (max-width: 760px) { .pricing-card { grid-template-columns: 1fr; gap: 24px; align-items: start; } }
 
 .pricing-meta .tier {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.74rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -968,7 +974,7 @@ section[id] { scroll-margin-top: 76px; }
   margin: 6px 0 10px;
 }
 .pricing-meta .includes {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.84rem;
   color: var(--ink-soft);
   display: inline-flex; gap: 18px; flex-wrap: wrap;
@@ -990,12 +996,12 @@ section[id] { scroll-margin-top: 76px; }
   line-height: 1;
 }
 .pricing-price .currency { color: var(--muted); font-size: 1.4rem; font-weight: 500; margin-right: 4px; }
-.pricing-price .per { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 6px; }
+.pricing-price .per { font-family: var(--font-prose); font-size: 0.78rem; color: var(--muted); font-weight: 400; letter-spacing: 0.04em; text-transform: none; display: block; margin-top: 6px; }
 
 .pricing-notes {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.78rem;
-  color: var(--muted);
+  color: var(--ink-soft);
   margin-top: 36px;
   display: flex;
   gap: 14px 24px;
@@ -1105,7 +1111,7 @@ footer::before {
 @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } }
 
 .footer-col h5 {
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1116,6 +1122,7 @@ footer::before {
 .footer-col p, .footer-col a { color: #B7C0CB; font-size: 0.9rem; line-height: 1.7; }
 .footer-col a:hover { color: var(--paper); }
 .footer-brand .wordmark { color: var(--paper); margin-bottom: 14px; }
+.footer-brand .wordmark .pro { color: #8C99A4; }
 .footer-brand p { max-width: 36ch; }
 
 .footer-colophon {
@@ -1126,7 +1133,7 @@ footer::before {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  font-family: var(--font-mono);
+  font-family: var(--font-prose);
   font-size: 0.74rem;
   color: #6E7B88;
   letter-spacing: 0.04em;

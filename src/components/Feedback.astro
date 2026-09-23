@@ -1,0 +1,119 @@
+---
+const repo = "https://github.com/Jawuilp/Limitcode";
+const issues = repo + "/issues";
+const email = "hola@jawuil.dev";
+---
+
+<section id="feedback" class="container">
+  <div class="section-head">
+    <span class="section-num reveal">11 — Feedback and issues</span>
+    <h2 class="reveal d1">Found a bug, or have a suggestion?</h2>
+    <p class="reveal d2">
+      Have a comment, question, suggestion or bug report? Open an issue in
+      <a href={repo} target="_blank" rel="noopener">this repository</a> — it is the
+      preferred place for anything reproducible and public. You can also reach out
+      by email if you prefer.
+    </p>
+  </div>
+
+  <div class="feedback-grid">
+    <article class="feedback-card reveal">
+      <span class="feedback-kicker">Limitcode Pro reports</span>
+      <h3>Tag it so it is easy to sort.</h3>
+      <p>
+        If your report is about Limitcode Pro, add the <code>[Pro]</code> tag to the
+        end of the title — for example <code>Too many logs in console! [Pro]</code> —
+        so Pro and open-source issues are easy to tell apart.
+      </p>
+    </article>
+
+    <article class="feedback-card reveal d1">
+      <span class="feedback-kicker">By email</span>
+      <h3>Prefer not to post in public?</h3>
+      <p>
+        Write to <a href={`mailto:${email}`}>{email}</a>. Best for anything private
+        or account-related.
+      </p>
+    </article>
+  </div>
+
+  <div class="note feedback-warn reveal">
+    <span class="kicker">Before you post</span>
+    Do not paste provider API keys or tokens, personal data, or logs and screenshots
+    that contain your own code, prompts or file paths. For anything sensitive, use
+    <a href={`mailto:${email}`}>email</a> instead.
+  </div>
+
+  <a class="docs-link feedback-cta reveal" href={issues} target="_blank" rel="noopener">
+    Open an issue on GitHub <span>→</span>
+  </a>
+</section>
+
+<style>
+  .feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  @media (max-width: 780px) {
+    .feedback-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feedback-card {
+    padding: clamp(24px, 3vw, 36px);
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .feedback-kicker {
+    display: block;
+    font-family: var(--font-prose);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .feedback-card h3 {
+    font-size: var(--step-1);
+    max-width: 22ch;
+    margin-bottom: 12px;
+  }
+
+  .feedback-card p {
+    max-width: 48ch;
+  }
+
+  .feedback-card code {
+    font-family: var(--font-mono);
+    font-size: 0.84em;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  #feedback a {
+    color: var(--sublime);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+    transition: color 140ms ease;
+  }
+
+  #feedback a:hover {
+    color: var(--ink);
+  }
+
+  .feedback-warn {
+    margin-top: 24px;
+  }
+
+  .feedback-cta {
+    margin-top: 28px;
+  }
+</style>
