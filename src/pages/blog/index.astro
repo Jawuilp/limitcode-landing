@@ -3,80 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 
-const posts = [
-  {
-    url: "/blog/limitcode-pro-vs-claude-code",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs Claude Code",
-    description:
-      "Claude Code is a terminal-first agent with no official Sublime Text plugin; Limitcode Pro is built for Sublime Text. Models, pricing, and workflow compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-opencode",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs OpenCode",
-    description:
-      "Both are BYOK agents — but OpenCode lives in the terminal and Limitcode Pro lives inside Sublime Text. Integration, permissions, and pricing compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-pi",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs Pi",
-    description:
-      "Pi is a minimal harness you assemble yourself; Limitcode Pro is a ready-to-use agent inside Sublime Text. Extensibility, integration, and pricing compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-cursor",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs Cursor",
-    description:
-      "Cursor is an AI-first editor you migrate to; Limitcode Pro is an agent inside the Sublime Text you already use. Editor choice, providers, and pricing compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-copilot",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs GitHub Copilot",
-    description:
-      "GitHub Copilot has no Sublime Text plugin and its agent mode excludes Sublime. Limitcode Pro is built for Sublime Text. Models, billing, and workflow compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-tabnine",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs Tabnine",
-    description:
-      "Tabnine is an enterprise AI coding platform for teams; Limitcode Pro is a native Sublime Text agent. Editor support, deployment, governance, and pricing compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-termmate",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs TermMate",
-    description:
-      "Both bring AI agents to Sublime Text — but one hosts external CLIs and the other is the agent. Architecture, providers, permissions, and pricing compared.",
-    cta: "Read the comparison",
-  },
-  {
-    url: "/blog/limitcode-pro-vs-pieces",
-    date: "Aug 2026",
-    tag: "Comparison",
-    title: "Limitcode Pro vs Pieces",
-    description:
-      "Pieces remembers everything you do across your apps; Limitcode Pro acts on your code inside Sublime Text. Memory layer or coding agent — which do you need?",
-    cta: "Read the comparison",
-  },
-];
+import { posts } from "../../data/posts";
 
 const schema = {
   "@context": "https://schema.org",
@@ -108,6 +35,9 @@ const schema = {
           How Limitcode Pro stacks up against other developer tools, and how to
           get the most out of an agent that lives inside Sublime Text.
         </p>
+        <p class="feed-link reveal d3">
+          <a href="/rss.xml">Subscribe via RSS →</a>
+        </p>
       </div>
     </section>
 
@@ -117,7 +47,7 @@ const schema = {
           <article class="post-card">
             <div class="post-meta">
               <span class="post-tag">{p.tag}</span>
-              <span class="post-date">{p.date}</span>
+              <span class="post-date">{p.dateLabel}</span>
             </div>
             <h2><a href={p.url}>{p.title}</a></h2>
             <p>{p.description}</p>
@@ -156,6 +86,23 @@ const schema = {
 
   .lead {
     max-width: 56ch;
+  }
+
+  .feed-link {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+
+  .feed-link a {
+    color: var(--signal);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .feed-link a:hover {
+    border-bottom-color: var(--signal);
   }
 
   .post-list-wrap {

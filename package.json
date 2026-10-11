@@ -14,6 +14,7 @@
     "indexnow:remote": "node scripts/submit-indexnow.js --sitemap https://limitcode.jawuil.dev/sitemap.xml"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.19",
     "astro": "^5.1.0"
   },
   "devDependencies": {

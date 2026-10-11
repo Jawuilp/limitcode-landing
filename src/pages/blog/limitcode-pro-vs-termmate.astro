@@ -87,6 +87,16 @@ const faqs = [
   },
 ];
 
+const toc = [
+  { id: "tldr", label: "At a glance" },
+  { id: "what-is-termmate", label: "What is TermMate?" },
+  { id: "what-is-limitcode", label: "What is Limitcode Pro?" },
+  { id: "features-compared", label: "Feature by feature" },
+  { id: "pricing-compared", label: "Pricing" },
+  { id: "which-one", label: "The honest verdict" },
+  { id: "faq", label: "FAQ" },
+];
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -97,15 +107,20 @@ const faqSchema = {
         "A detailed comparison of Limitcode Pro and TermMate for Sublime Text: architecture, providers, permissions, pricing, and day-to-day workflow.",
       datePublished: "2026-08-23",
       dateModified: "2026-08-23",
-      author: { "@id": "https://jawuil.dev/#organization" },
-      publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+      author: { "@type": "Person", name: "Jawuil Pineda", url: "https://jawuil.dev" },
+      publisher: {
+        "@type": "Organization",
+        name: "Limitcode",
+        url: "https://limitcode.jawuil.dev",
+        brand: { "@type": "Brand", name: "Limitcode" },
+      },
       mainEntityOfPage: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-termmate/",
     },
     {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: "https://limitcode.jawuil.dev/" },
-        { "@type": "ListItem", position: 2, name: "Blog", item: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-termmate/" },
+        { "@type": "ListItem", position: 2, name: "Blog", item: "https://limitcode.jawuil.dev/blog/" },
         { "@type": "ListItem", position: 3, name: "Limitcode Pro vs TermMate" },
       ],
     },
@@ -159,6 +174,15 @@ const faqSchema = {
         </p>
       </div>
     </section>
+
+    <nav class="container toc" aria-label="Table of contents">
+      <span class="toc-label">On this page</span>
+      <ol>
+        {toc.map((item) => (
+          <li><a href={"#" + item.id}>{item.label}</a></li>
+        ))}
+      </ol>
+    </nav>
 
     <section class="post-section container" id="tldr">
       <div class="section-head">
@@ -321,7 +345,7 @@ const faqSchema = {
           </ul>
         </article>
         <article class="pick-card pick-card-pro">
-          <span class="pick-flag">Our pick for Sublime</span>
+          <span class="pick-flag">Our pick for Sublime Text</span>
           <h3>Limitcode Pro makes sense if…</h3>
           <ul>
             <li>You want one install and one consistent agentic workflow in Sublime Text.</li>
@@ -408,6 +432,53 @@ const faqSchema = {
   .verdict p {
     margin-top: 12px;
     max-width: 68ch;
+  }
+
+  .toc {
+    margin-top: clamp(28px, 4vw, 44px);
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toc ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-top: 12px;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+  }
+
+  .toc a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+
+  .toc a::before {
+    content: counter(toc, decimal-leading-zero) " ";
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--signal);
+    margin-right: 4px;
+  }
+
+  .toc a:hover {
+    color: var(--signal);
   }
 
   /* Sections */

@@ -42,21 +42,21 @@ const tldr = [
 ];
 
 const features = [
-  { f: "Edits project files", pro: true, pc: false },
-  { f: "Runs approved shell commands", pro: true, pc: false },
-  { f: "Project-wide code search", pro: true, pc: false },
-  { f: "Web search", pro: true, pc: false },
-  { f: "Skills and subagents", pro: true, pc: false },
-  { f: "Snapshot undo/redo of changes", pro: true, pc: false },
-  { f: "MCP support", pro: true, pc: true },
-  { f: "Local model option", pro: true, pc: true },
-  { f: "Consistent permission rules", pro: true, pc: false },
-  { f: "No daemon running all day", pro: true, pc: false },
-  { f: "Screen activity timeline", pro: false, pc: true },
-  { f: "Clipboard history", pro: false, pc: true },
-  { f: "Meeting capture (opt-in)", pro: false, pc: true },
-  { f: "Recall across every app", pro: false, pc: true },
-  { f: "Auto-generated standups and briefs", pro: false, pc: true },
+  { f: "Edits project files", pro: true, tm: false },
+  { f: "Runs approved shell commands", pro: true, tm: false },
+  { f: "Project-wide code search", pro: true, tm: false },
+  { f: "Web search", pro: true, tm: false },
+  { f: "Skills and subagents", pro: true, tm: false },
+  { f: "Snapshot undo/redo of changes", pro: true, tm: false },
+  { f: "MCP support", pro: true, tm: true },
+  { f: "Local model option", pro: true, tm: true },
+  { f: "Consistent permission rules", pro: true, tm: false },
+  { f: "No daemon running all day", pro: true, tm: false },
+  { f: "Screen activity timeline", pro: false, tm: true },
+  { f: "Clipboard history", pro: false, tm: true },
+  { f: "Meeting capture (opt-in)", pro: false, tm: true },
+  { f: "Recall across every app", pro: false, tm: true },
+  { f: "Auto-generated standups and briefs", pro: false, tm: true },
 ];
 
 const faqs = [
@@ -86,6 +86,16 @@ const faqs = [
   },
 ];
 
+const toc = [
+  { id: "tldr", label: "At a glance" },
+  { id: "what-is-pieces", label: "What is Pieces?" },
+  { id: "what-is-limitcode", label: "What is Limitcode Pro?" },
+  { id: "features-compared", label: "Feature by feature" },
+  { id: "pricing-compared", label: "Pricing" },
+  { id: "which-one", label: "The honest verdict" },
+  { id: "faq", label: "FAQ" },
+];
+
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -96,8 +106,13 @@ const schema = {
         "Pieces records everything you do across apps; Limitcode Pro acts on your code inside Sublime Text. We compare architecture, privacy, pricing, and workflow.",
       datePublished: "2026-08-23",
       dateModified: "2026-08-23",
-      author: { "@id": "https://jawuil.dev/#organization" },
-      publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+      author: { "@type": "Person", name: "Jawuil Pineda", url: "https://jawuil.dev" },
+      publisher: {
+        "@type": "Organization",
+        name: "Limitcode",
+        url: "https://limitcode.jawuil.dev",
+        brand: { "@type": "Brand", name: "Limitcode" },
+      },
       mainEntityOfPage: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pieces/",
     },
     {
@@ -156,6 +171,15 @@ const schema = {
         </p>
       </div>
     </section>
+
+    <nav class="container toc" aria-label="Table of contents">
+      <span class="toc-label">On this page</span>
+      <ol>
+        {toc.map((item) => (
+          <li><a href={"#" + item.id}>{item.label}</a></li>
+        ))}
+      </ol>
+    </nav>
 
     <section class="post-section container" id="tldr">
       <div class="section-head">
@@ -275,7 +299,7 @@ const schema = {
               <tr>
                 <th scope="row">{row.f}</th>
                 <td class="col-pro">{row.pro ? "✓" : "—"}</td>
-                <td>{row.pc ? "✓" : "—"}</td>
+                <td>{row.tm ? "✓" : "—"}</td>
               </tr>
             ))}
           </tbody>
@@ -290,7 +314,7 @@ const schema = {
         <p>
           Pieces Pro costs $18.99 per user per month (billed monthly; about 25%
           less on yearly billing) after a 7-day trial, and Enterprise is
-          $22.99 per user per month. That is roughly $170–$230 per user, every
+          $22.99 per user per month. That is roughly $170–$228 per user, every
           year, forever. Limitcode Pro is a
           <a href="/#pricing">one-time license valid on up to three devices</a> —
           after that, your provider bills you directly for what you use, at
@@ -401,6 +425,53 @@ const schema = {
   .verdict p {
     margin-top: 12px;
     max-width: 68ch;
+  }
+
+  .toc {
+    margin-top: clamp(28px, 4vw, 44px);
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toc ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-top: 12px;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+  }
+
+  .toc a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+
+  .toc a::before {
+    content: counter(toc, decimal-leading-zero) " ";
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--signal);
+    margin-right: 4px;
+  }
+
+  .toc a:hover {
+    color: var(--signal);
   }
 
   .post-section {

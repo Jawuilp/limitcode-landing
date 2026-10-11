@@ -53,7 +53,7 @@ const features = [
   { f: "LSP diagnostics fed back to the agent", pro: true, tm: false },
   { f: "Permission rules with editor prompts", pro: true, tm: "in-TUI prompts" },
   { f: "Session history per project", pro: true, tm: true },
-  { f: "One-time license (open source core also available)", pro: true, tm: true },
+  { f: "One-time license (open source core also available)", pro: true, tm: false },
 ];
 
 const faqs = [
@@ -79,6 +79,16 @@ const faqs = [
   },
 ];
 
+const toc = [
+  { id: "tldr", label: "At a glance" },
+  { id: "what-is-opencode", label: "What is OpenCode?" },
+  { id: "what-is-limitcode", label: "What is Limitcode Pro?" },
+  { id: "features-compared", label: "Feature by feature" },
+  { id: "pricing-compared", label: "Pricing" },
+  { id: "which-one", label: "The honest verdict" },
+  { id: "faq", label: "FAQ" },
+];
+
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -89,8 +99,13 @@ const schema = {
         "Both are BYOK coding agents, but OpenCode lives in the terminal and Limitcode Pro lives inside Sublime Text. Integration, permissions, recovery, and pricing compared.",
       datePublished: "2026-08-27",
       dateModified: "2026-08-27",
-      author: { "@id": "https://jawuil.dev/#organization" },
-      publisher: { "@id": "https://limitcode.jawuil.dev/#organization" },
+      author: { "@type": "Person", name: "Jawuil Pineda", url: "https://jawuil.dev" },
+      publisher: {
+        "@type": "Organization",
+        name: "Limitcode",
+        url: "https://limitcode.jawuil.dev",
+        brand: { "@type": "Brand", name: "Limitcode" },
+      },
       mainEntityOfPage: "https://limitcode.jawuil.dev/blog/limitcode-pro-vs-opencode/",
     },
     {
@@ -148,6 +163,15 @@ const schema = {
         </p>
       </div>
     </section>
+
+    <nav class="container toc" aria-label="Table of contents">
+      <span class="toc-label">On this page</span>
+      <ol>
+        {toc.map((item) => (
+          <li><a href={"#" + item.id}>{item.label}</a></li>
+        ))}
+      </ol>
+    </nav>
 
     <section class="post-section container" id="tldr">
       <div class="section-head">
@@ -386,6 +410,53 @@ const schema = {
   .verdict p {
     margin-top: 12px;
     max-width: 68ch;
+  }
+
+  .toc {
+    margin-top: clamp(28px, 4vw, 44px);
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toc ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-top: 12px;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+  }
+
+  .toc a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+
+  .toc a::before {
+    content: counter(toc, decimal-leading-zero) " ";
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--signal);
+    margin-right: 4px;
+  }
+
+  .toc a:hover {
+    color: var(--signal);
   }
 
   .post-section {

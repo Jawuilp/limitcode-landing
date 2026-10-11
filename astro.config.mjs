@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://limitcode-pro.pages.dev',
+  site: 'https://limitcode.jawuil.dev',
   server: {
     host: true,
     port: 4321,
