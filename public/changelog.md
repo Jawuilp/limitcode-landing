@@ -1,5 +1,55 @@
 # Limitcode Pro — Changelog
 
+## v1.1.10 (2026-09-29) — Permission engine fixes
+
+Trust and always-allow decisions now work everywhere, with full visibility
+into every permission prompt and decision.
+
+Fixed:
+- Always-allow decisions and Trust Agent are now honored outside the project boundary (no more prompt loops)
+- `permission.always_allowed` entries from Limitcode.sublime-settings are now loaded (previously ignored)
+- git-bash `/c/...` paths are normalized to Windows form only when terminal_shell is git-bash
+- File denies (`.env`, `*.pem`, ...) still win over Trust
+
+Changed:
+- Trust Agent applies instantly mid-run and covers all tools, outside_project access and the active session; Untrust reverts everything
+
+Added:
+- Every permission prompt and decision is logged with its reason (`[PERMISSION] ask/decision/denied`)
+- Six permission regression tests
+
+## v1.1.9 (2026-09-27) — Stable LimitcodePro package and installers
+
+The installed package is now LimitcodePro with a single version source of
+truth and one-click installers per platform.
+
+Changed:
+- Installed package renamed to `LimitcodePro.sublime-package`, fixing a Python module import error
+
+Added:
+- `VERSION.txt` as the single source of truth for the release version
+- `build_release_bundle.py` producing one Gumroad bundle for both py38 and plugin hosts
+- `install.ps1` (Windows) and `install.sh` (macOS/Linux) with automatic host detection
+- Manual installation instructions in `dist/INSTALL.md`
+- Lifecycle, provider, and settings-command automated tests
+
+Fixed:
+- Settings resource paths corrected to `Packages/LimitcodePro` in commands and menus
+
+## v1.1.8 (2026-09-22) — Console cleanup and LSP diagnostics
+
+Chat stays quiet during typing, and diagnostics are read through the
+official LSP package API.
+
+Added:
+- New `debug_log` setting (off by default) gating the sanitized JSON log file and status-bar error messages
+
+Changed:
+- Diagnostics are now read through the LSP package session API with guarded optional imports and polling instead of a fixed sleep
+
+Fixed:
+- Removed a leftover print in `on_query_completions` that flooded the console on every keystroke in the chat view
+
 ## v1.1.7 (2026-09-17) — Chat style customization
 
 The chat status bar can now follow your Sublime Text theme without changing
@@ -86,6 +136,41 @@ Changed:
 
 Fixed:
 - Improved plugin loading and command registration after the package restructure
+
+## v1.0.2 (2026-08-18) — Stable tool status
+
+Long-running tools now keep their progress indicator and Stop control in
+one stable place while output streams.
+
+Added:
+- Animated spinner inside the active tool card, so long commands show they are still working
+- Stop control moved into the running tool card instead of a separate floating status line
+
+Fixed:
+- Fixed the jumping/flashing status line during long command output (e.g. pnpm build)
+- Tool cards are restored in chronological order when reloading a chat history
+
+## v1.0.1 (2026-08-18) — History and loader fixes
+
+Chat history restores tool calls where they happened, and running tools
+animate while they work.
+
+Added:
+- Persisted tool-call position inside assistant responses, so reloaded chats show calls in the order the agent made them
+
+Fixed:
+- Long-running tools now show an animated loader instead of a static dot
+
+## v1.0.0 (2026-08-18) — First stable release
+
+The first packaged Limitcode Pro release, with license activation and
+image support across platforms.
+
+Added:
+- Clipboard image paste on macOS and Linux, matching the existing Windows support
+- Multimodal image attachments in chat, supported by image-capable models
+- License activation against the Limitcode Pro license service with device limits and offline grants
+- Separate downloads for current and next-generation Sublime plugin hosts
 
 ## v1.0.0-rc.1 (2026-08-10) — V1 release candidate
 

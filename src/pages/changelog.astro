@@ -18,6 +18,47 @@ interface Entry {
 
 const entries: Entry[] = [
   {
+    version: "1.1.10",
+    date: "2026-09-29",
+    title: "Permission engine fixes",
+    body: "Trust and always-allow decisions now work everywhere, with full visibility into every permission prompt and decision.",
+    changes: [
+      { type: "fixed", text: "Always-allow decisions and Trust Agent are now honored outside the project boundary (no more prompt loops)" },
+      { type: "changed", text: "Trust Agent applies instantly mid-run and covers all tools, outside_project access and the active session; Untrust reverts everything" },
+      { type: "fixed", text: "permission.always_allowed entries from Limitcode.sublime-settings are now loaded (previously ignored)" },
+      { type: "added", text: "Every permission prompt and decision is logged with its reason ([PERMISSION] ask/decision/denied)" },
+      { type: "fixed", text: "git-bash /c/... paths are normalized to Windows form only when terminal_shell is git-bash" },
+      { type: "fixed", text: "File denies (.env, *.pem, ...) still win over Trust" },
+      { type: "added", text: "Six permission regression tests" },
+    ],
+  },
+  {
+    version: "1.1.9",
+    date: "2026-09-27",
+    title: "Stable LimitcodePro package and installers",
+    body: "The installed package is now LimitcodePro with a single version source of truth and one-click installers per platform.",
+    changes: [
+      { type: "changed", text: "Installed package renamed to LimitcodePro.sublime-package, fixing a Python module import error" },
+      { type: "added", text: "VERSION.txt as the single source of truth for the release version" },
+      { type: "added", text: "build_release_bundle.py producing one Gumroad bundle for both py38 and plugin hosts" },
+      { type: "added", text: "install.ps1 (Windows) and install.sh (macOS/Linux) with automatic host detection" },
+      { type: "added", text: "Manual installation instructions in dist/INSTALL.md" },
+      { type: "fixed", text: "Settings resource paths corrected to Packages/LimitcodePro in commands and menus" },
+      { type: "added", text: "Lifecycle, provider, and settings-command automated tests" },
+    ],
+  },
+  {
+    version: "1.1.8",
+    date: "2026-09-22",
+    title: "Console cleanup and LSP diagnostics",
+    body: "Chat stays quiet during typing, and diagnostics are read through the official LSP package API.",
+    changes: [
+      { type: "fixed", text: "Removed a leftover print in on_query_completions that flooded the console on every keystroke in the chat view" },
+      { type: "added", text: "New debug_log setting (off by default) gating the sanitized JSON log file and status-bar error messages" },
+      { type: "changed", text: "Diagnostics are now read through the LSP package session API with guarded optional imports and polling instead of a fixed sleep" },
+    ],
+  },
+  {
     version: "1.1.7",
     date: "2026-09-17",
     title: "Chat style customization",
