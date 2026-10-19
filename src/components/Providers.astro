@@ -1,20 +1,20 @@
 ---
 const providers = [
-  { name: "OpenAI", sub: "direct API key", mark: "01" },
-  { name: "Anthropic", sub: "direct API key", mark: "02" },
-  { name: "Google Gemini", sub: "Google AI API key", mark: "03" },
-  { name: "GitHub Copilot", sub: "eligible GitHub account", mark: "04" },
-  { name: "OpenRouter", sub: "models available to your account", mark: "05" },
-  { name: "Mistral AI", sub: "direct API key", mark: "06" },
-  { name: "Local or custom", sub: "OpenAI-compatible endpoint", mark: "07" },
+  { name: "OpenAI & Codex", sub: "API key, OAuth, or Codex CLI", mark: "01" },
+  { name: "Anthropic & Claude", sub: "API key or Claude Code CLI", mark: "02" },
+  { name: "Google Gemini", sub: "API key or Antigravity OAuth", mark: "03" },
+  { name: "GitHub Copilot", sub: "eligible GitHub account (OAuth)", mark: "04" },
+  { name: "OpenRouter", sub: "500+ models with one API key", mark: "05" },
+  { name: "DeepSeek, Mistral & Groq", sub: "direct API keys", mark: "06" },
+  { name: "Local (Ollama / LM Studio)", sub: "private local inference", mark: "07" },
 ];
 ---
 
 <section id="providers" class="container">
   <div class="section-head">
-    <span class="section-num">06 - Providers</span>
-    <h2>Connect the provider that fits the task.</h2>
-    <p>Use a direct API, an eligible account integration, a CLI-backed session, or an OpenAI-compatible endpoint. Model usage and provider subscriptions remain separate from Limitcode Pro.</p>
+    <span class="section-num">07 - Providers</span>
+    <h2>Bring the AI models and accounts you already pay for.</h2>
+    <p>Switch between 40+ providers mid-conversation with <code class="mono">Ctrl+Alt+M</code>. Use direct API keys, OAuth accounts, existing CLI logins, or local models — with zero markup from Limitcode.</p>
   </div>
 
   <div class="providers-grid">
@@ -30,16 +30,16 @@ const providers = [
       </div>
     </div>
     <div>
-      <h3 style="margin-bottom: 16px;">Your provider relationship stays yours.</h3>
-      <p>Provider usage, subscriptions, rate limits, and model availability remain with the provider or endpoint you connect. Change provider or model from the active chat session.</p>
-      <p style="margin-top: 14px;">OpenAI-compatible endpoints such as Ollama, LM Studio, LiteLLM, or a custom gateway can keep inference local.</p>
+      <h3 style="margin-bottom: 16px;">One interface. Every major model.</h3>
+      <p>Your API keys, subscriptions, rate limits, and billing stay strictly between you and your chosen provider. Swap models or adjust reasoning effort (<code class="mono">Ctrl+Alt+R</code>) at any point in a session.</p>
+      <p style="margin-top: 14px;">Prefer 100% local inference? Point Limitcode at Ollama, LM Studio, LiteLLM, or any custom OpenAI-compatible gateway.</p>
 
       <div class="note">
-        <span class="kicker">Data flow</span>
-        Prompts and any context or tool results included in a request go to the provider or endpoint you selected. Credentials are stored in your Sublime Text settings. Activation uses the Limitcode service.
+        <span class="kicker">Direct connection</span>
+        Prompts and project context go straight to the provider or local endpoint you select. Credentials live locally in your Sublime Text settings.
       </div>
 
-      <a class="docs-link" href="/providers">Compare every connection method →</a>
+      <a class="docs-link" href="/providers">Compare all 40+ supported providers →</a>
     </div>
   </div>
 </section>

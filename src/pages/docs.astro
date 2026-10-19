@@ -4,302 +4,267 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import VideoCard from "../components/VideoCard.astro";
 
-const quickSteps = [
+const navGroups = [
   {
-    ord: "01",
-    title: "Download the matching build",
-    body: "After checkout, keep the activation key and download the Limitcode Pro package matched to your Sublime Text build (current or next-generation plugin host).",
+    group: "Getting Started",
+    items: [
+      { id: "overview", label: "What Limitcode Does" },
+      { id: "installation", label: "Installation & Activation" },
+      { id: "connect-provider", label: "Connecting a Provider" },
+      { id: "first-task", label: "Your First Task" },
+    ],
   },
   {
-    ord: "02",
-    title: "Install and activate",
-    body: "Copy the package into Sublime Text's Installed Packages folder, restart Sublime Text, then activate this device from the Command Palette.",
-    code: "Limitcode Pro: Activate License",
+    group: "Using the Chat",
+    items: [
+      { id: "chat-interface", label: "Chat Panel & Sessions" },
+      { id: "passing-context", label: "Passing Files & Code (@ & Selection)" },
+      { id: "images-and-web", label: "Screenshots & Web Search" },
+    ],
   },
   {
-    ord: "03",
-    title: "Connect a provider",
-    body: "Add an API key, sign in with a supported account, reuse an existing CLI login, or point Limitcode at a local endpoint. Then open Limitcode Chat.",
-    code: "Limitcode: Setup Provider API Key",
-  },
-];
-
-const capabilities = [
-  {
-    name: "What Limitcode is",
-    body: "An agentic coding assistant that lives inside Sublime Text: a streaming chat plus an agent loop that can read, write, and edit files, run commands, search the web, and extend itself. Nothing runs in a separate IDE.",
-    meta: ["native Sublime panel", "agent loop", "tool calling"],
+    group: "Working with Code",
+    items: [
+      { id: "editing-files", label: "Creating & Editing Files" },
+      { id: "diffs-and-undo", label: "Native Diffs, Undo & Snapshots" },
+      { id: "running-commands", label: "Running Commands & Tests" },
+    ],
   },
   {
-    name: "Work against the project on disk",
-    body: "The agent lists, reads, and searches your actual project files, creates targeted edits, applies diffs, and runs build or test commands — all from the same conversation.",
-    meta: ["list", "read", "search", "edit", "patch", "run"],
+    group: "Control & Autonomy",
+    items: [
+      { id: "modes", label: "Work Modes (Code, Ask, Architect, Debug)" },
+      { id: "models-reasoning", label: "Models & Reasoning Effort" },
+      { id: "permissions", label: "Permissions & Safety Boundaries" },
+      { id: "subagents", label: "Delegating to Subagents" },
+      { id: "sessions-cost", label: "Long Sessions & Cost Control" },
+    ],
   },
   {
-    name: "Approval boundaries you control",
-    body: "Reads and searches can stay frictionless while writes, change previews, shell commands, web access, and MCP calls ask by default. Rules are set per tool and per file.",
-    meta: ["allow / ask / deny", "file globs", "per tool"],
+    group: "Extending Limitcode",
+    items: [
+      { id: "project-instructions", label: "Project Rules (AGENTS.md)" },
+      { id: "agent-skills", label: "Agent Skills (.agents/skills)" },
+      { id: "mcp-servers", label: "MCP Servers" },
+    ],
   },
   {
-    name: "Scoped modes",
-    body: "Code, Architect, Ask, and Debug modes give each step a different toolset, instead of one always-maximal configuration.",
-    meta: ["Code", "Architect", "Ask", "Debug"],
-  },
-  {
-    name: "Review before it lands",
-    body: "See a native diff before an edit is applied, and undo or redo any agent edit during the session. After an edit, syntax and type errors from Sublime's LSP feed back to the agent.",
-    meta: ["diffs", "undo / redo", "LSP diagnostics"],
-  },
-  {
-    name: "Context that survives long sessions",
-    body: "Conversations are saved by project and long sessions compact automatically near the model's context limit, so you can pick a task back up without losing the thread.",
-    meta: ["per-project sessions", "auto-compaction", "typed messages"],
-  },
-  {
-    name: "Web search and page fetching",
-    body: "Built-in web search and URL fetching let the agent check docs and current information; both ask for permission by default. Some providers also expose native search.",
-    meta: ["web search", "fetch URL", "opt-in"],
-  },
-  {
-    name: "See images",
-    body: "Paste a screenshot or image into the chat and image-capable models can reason about it — inspect UI bugs, diagrams, or design mockups.",
-    meta: ["paste image", "vision"],
-  },
-  {
-    name: "Extend it: instructions, skills, MCP, subagents",
-    body: "Load repository instructions, reusable skills, and any MCP server you configure, and delegate focused work to subagents — all under the same permission rules.",
-    meta: ["instructions", "skills", "MCP", "subagents"],
-  },
-  {
-    name: "Bring your own model",
-    body: "More than 40 registered providers: direct APIs, account sign-in, existing CLI logins, or local OpenAI-compatible runtimes such as Ollama, LM Studio, and LiteLLM. You pay your provider directly.",
-    meta: ["40+ providers", "OAuth", "CLI bridges", "local"],
-  },
-  {
-    name: "Know the cost",
-    body: "Provider, model, reasoning effort, context, and per-session cost statistics are always one status bar away, with an optional budget alert.",
-    meta: ["provider", "model", "reasoning effort", "session cost"],
+    group: "Reference",
+    items: [
+      { id: "actions-reference", label: "All 16 Agent Capabilities" },
+      { id: "commands", label: "Command Palette" },
+      { id: "shortcuts", label: "Keyboard Shortcuts" },
+      { id: "settings", label: "Settings (Limitcode.sublime-settings)" },
+      { id: "faq", label: "Troubleshooting & FAQ" },
+    ],
   },
 ];
 
-const workflows = [
+const modes = [
   {
-    name: "Ask about your code",
-    how: "Open the chat with Ctrl+Alt+L, switch to Ask mode, and ask your question. It answers with read-only tools (read, list, search) against the real project, not a guess.",
-    meta: ["Ctrl+Alt+L", "Ask mode", "read-only"],
+    name: "Code",
+    when: "Everyday feature building, refactoring, and multi-file implementation.",
+    canDo: "Read, search, create, edit, and patch files; run shell commands and background jobs; update the live task checklist; load Skills and MCP tools.",
   },
   {
-    name: "Send a selection or the active file",
-    how: "Select the code, or open the file you mean, and press Ctrl+Alt+A to hand it to the agent. Then describe the task — no copy-pasting between windows.",
-    meta: ["Ctrl+Alt+A", "selection", "active file"],
+    name: "Ask",
+    when: "Exploring an unfamiliar repository, understanding logic, or asking questions with zero risk of modifying files.",
+    canDo: "Read-only access: list directories, search across files, read code, and consult Skills or MCP tools. File edits and shell commands are disabled.",
   },
   {
-    name: "Make an edit and review the diff",
-    how: "In Code mode, describe the change. Limitcode proposes a diff in Sublime's native diff view — accept or reject it. Every edit is snapshotted, so Ctrl+Alt+U undoes the last agent edit.",
-    meta: ["Code mode", "diff accept / reject", "Ctrl+Alt+U"],
+    name: "Architect",
+    when: "Designing a feature, writing technical specs, or planning a complex migration before touching production code.",
+    canDo: "Explore and search the project, read files, and write documentation or plan files without running shell commands.",
   },
   {
-    name: "Run a build, tests, or any command",
-    how: "Ask it to run the command. Shell commands ask first, so you approve once or for the session; long-running jobs keep going in the background while you work.",
-    meta: ["execute_command", "approve once / session", "background job"],
+    name: "Debug",
+    when: "Tracking down a bug, analyzing stack traces, running reproduction scripts, and applying targeted fixes.",
+    canDo: "Search and read files, run diagnostic commands and test suites, apply targeted code edits or diffs, and verify fixes.",
+  },
+];
+
+const subagents = [
+  {
+    name: "explore",
+    purpose: "Map out directory structure and locate where specific logic lives in the codebase.",
+    capabilities: "Read files, list folders, search patterns (read-only)",
   },
   {
-    name: "Search the codebase",
-    how: "Ask where something is handled. The agent searches your files (ripgrep, grep, or a Python fallback) and reads the matches before it answers.",
-    meta: ["search_files", "list_files"],
+    name: "general",
+    purpose: "Investigate a broad question across multiple files and return a concise summary to the main chat.",
+    capabilities: "Read files, list folders, search patterns (read-only)",
   },
   {
-    name: "Show it a screenshot",
-    how: "Paste an image straight into the chat with Ctrl+V, then ask about it — a UI bug, a diagram, a design mockup. Image-capable models read it.",
-    meta: ["Ctrl+V", "vision"],
+    name: "plan",
+    purpose: "Draft a step-by-step implementation plan in Markdown based on your project's actual code.",
+    capabilities: "Read files, list folders, search patterns (read-only)",
   },
   {
-    name: "Look something up online",
-    how: "Ask it to check the docs or the latest information. Web search and page fetching ask for permission first; some providers also expose native search.",
-    meta: ["web_search", "web_fetch", "opt-in"],
+    name: "implement",
+    purpose: "Carry out a self-contained coding subtask (creating or editing specific files).",
+    capabilities: "Read, list, search, create, edit, and patch files",
   },
   {
-    name: "Add your project rules",
-    how: "Drop an AGENTS.md (or CLAUDE.md / .limitcode.md) in the repo. Limitcode discovers it up the tree and folds it into the system prompt. Run Show Instructions to see what loaded.",
-    meta: ["AGENTS.md", "Ctrl+Alt+F"],
+    name: "test",
+    purpose: "Execute your test suite or verification commands and report pass/fail results.",
+    capabilities: "Read files, list folders, run shell commands",
   },
-  {
-    name: "Add a skill",
-    how: "Create .agents/skills/your-skill/SKILL.md in the project (or ~/.agents/skills for global). When a task matches, the skill tool loads its instructions and resources.",
-    meta: [".agents/skills", "skill_manager"],
-  },
-  {
-    name: "Connect an MCP server",
-    how: "Add the server under \"mcp\" in Limitcode settings, then open the config with Ctrl+Alt+Q. Its tools become callable and follow the same permission rules.",
-    meta: ["settings", "Ctrl+Alt+Q", "local / remote"],
-  },
-  {
-    name: "Change model, provider, or reasoning",
-    how: "Swap the model with Ctrl+Alt+M, the provider with Ctrl+Alt+P, and the reasoning effort with Ctrl+Alt+R. The unified selector saves provider and model together.",
-    meta: ["Ctrl+Alt+M", "Ctrl+Alt+P", "Ctrl+Alt+R"],
-  },
-  {
-    name: "Control what it can do",
-    how: "Switch modes with Ctrl+Alt+Shift+M to scope the toolset, and Ctrl+Alt+O to toggle permissions. The trust commands allow or ask for everything at once.",
-    meta: ["Ctrl+Alt+Shift+M", "Ctrl+Alt+O"],
-  },
+];
+
+const agentActions = [
+  { name: "read_file", category: "Project Discovery", desc: "Read the contents of any file in your workspace (or a specific line range) to understand existing code." },
+  { name: "list_files", category: "Project Discovery", desc: "Browse the files and folders inside any directory of your project." },
+  { name: "search_files", category: "Project Discovery", desc: "Search for functions, symbols, text, or patterns across your entire repository." },
+  { name: "write_to_file", category: "Code Editing", desc: "Create a brand-new file or replace the contents of an existing file." },
+  { name: "edit_file", category: "Code Editing", desc: "Make precise, targeted replacements inside an existing file without rewriting the whole file." },
+  { name: "apply_diff", category: "Code Editing", desc: "Apply multi-hunk diff patches to a file." },
+  { name: "execute_command", category: "Terminal & Builds", desc: "Run shell commands such as test suites, linters, compilers, package managers, or git commands." },
+  { name: "background_job", category: "Terminal & Builds", desc: "Monitor the output of, or stop, a long-running command started in the background (like a dev server)." },
+  { name: "web_search", category: "Web & Docs", desc: "Search the live web (via Brave, Tavily, DuckDuckGo, or Sogou) to check up-to-date documentation or solutions." },
+  { name: "web_fetch", category: "Web & Docs", desc: "Open and read a specific documentation URL or web page." },
+  { name: "skill", category: "Extensions", desc: "Load specialized instructions, templates, and reference files from an installed Agent Skill." },
+  { name: "skill_manager", category: "Extensions", desc: "List, search, create, or install Agent Skills in your project or global skills folder." },
+  { name: "mcp", category: "Extensions", desc: "Discover and call tools exposed by your configured Model Context Protocol (MCP) servers." },
+  { name: "task", category: "Orchestration", desc: "Delegate a focused subtask (explore, plan, implement, test, or research) to a child subagent." },
+  { name: "batch", category: "Orchestration", desc: "Run multiple independent actions (such as reading several files at once) in parallel to save time." },
+  { name: "update_checklist", category: "Orchestration", desc: "Create and update the live step-by-step task checklist displayed inside your chat panel." },
 ];
 
 const mcpExample = `{
   "mcp": {
-    "local-example": {
+    "playwright": {
       "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-everything"],
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
       "enabled": true
     },
     "stripe": {
       "type": "remote",
       "url": "https://mcp.stripe.com",
-      "headers": { "Authorization": "Bearer {env:STRIPE_RESTRICTED_KEY}" }
+      "headers": {
+        "Authorization": "Bearer {env:STRIPE_RESTRICTED_KEY}"
+      },
+      "enabled": true
     }
   }
 }`;
 
-const tools = [
-  { name: "read_file", desc: "Read a file, optionally a line range." },
-  { name: "write_to_file", desc: "Create or overwrite a whole file." },
-  { name: "edit_file", desc: "Targeted old → new replacement, with fuzzy matching." },
-  { name: "apply_diff", desc: "Apply a unified diff patch to a file." },
-  { name: "list_files", desc: "List the files in a directory." },
-  { name: "search_files", desc: "Search patterns across files (ripgrep, grep, or Python fallback)." },
-  { name: "execute_command", desc: "Run a shell command — builds, tests, git. Supports background jobs." },
-  { name: "background_job", desc: "Inspect or stop a job started earlier by execute_command." },
-  { name: "web_search", desc: "Real web search (Brave, Tavily, DuckDuckGo, Sogou)." },
-  { name: "web_fetch", desc: "Fetch and parse a URL (HTML → Markdown, SSRF-guarded)." },
-  { name: "skill", desc: "Load a skill's full instructions and resources." },
-  { name: "skill_manager", desc: "List, create, install, or search Agent Skills." },
-  { name: "mcp", desc: "List tools from an MCP server, or call one." },
-  { name: "task", desc: "Launch a subagent for focused work." },
-  { name: "batch", desc: "Run several independent tool calls in parallel." },
-  { name: "update_checklist", desc: "Publish the task list to the live checklist in the chat." },
-];
+const webSearchExample = `{
+  "web_search": {
+    "provider": "auto",
+    "brave_api_key": "BSA...",
+    "tavily_api_key": "tvly-...",
+    "max_results": 5
+  }
+}`;
 
-const modes = [
-  { name: "Code", desc: "General coding tasks.", tools: "read, write, edit, diff, list, search, execute, background, skill, mcp, checklist" },
-  { name: "Architect", desc: "Planning and technical design.", tools: "read, write, list, search, skill, mcp" },
-  { name: "Ask", desc: "Questions and explanations (read-only).", tools: "read, list, search, skill, mcp" },
-  { name: "Debug", desc: "Diagnosis and fixes.", tools: "read, write, edit, diff, search, execute, background, skill, mcp" },
-];
+const providerSetupExample = `{
+  "default_provider": "openrouter",
+  "default_model": "anthropic/claude-sonnet-5",
+  "api_keys": {
+    "openrouter": "sk-or-...",
+    "anthropic": "sk-ant-...",
+    "openai": "sk-...",
+    "gemini": "AIza...",
+    "deepseek": "sk-...",
+    "groq": "gsk_...",
+    "xai": "xai-...",
+    "openai-compatible": "sk-custom-..."
+  },
+  "provider_base_urls": {
+    "openai-compatible": "https://api.example.com/v1",
+    "ollama": "http://localhost:11434/v1"
+  }
+}`;
 
-const subagents = [
-  { name: "explore", role: "Explore structure and find information.", tools: "read, list, search", iter: "10" },
-  { name: "general", role: "Research and summarize.", tools: "read, list, search", iter: "25" },
-  { name: "implement", role: "Scoped code task — create or edit.", tools: "read, list, search, write, edit, diff", iter: "15" },
-  { name: "plan", role: "Write a detailed Markdown plan.", tools: "read, list, search", iter: "15" },
-  { name: "test", role: "Run tests and report.", tools: "read, execute_command, list", iter: "10" },
-];
-
-const providerGroups = [
+const providerCatalog = [
   {
-    name: "OpenAI-compatible endpoints",
-    body: "One adapter over any /chat/completions endpoint: OpenAI, Groq, Mistral, xAI (Grok), DeepSeek, Cerebras, DeepInfra, Together AI, Venice AI, Cloudflare Workers AI, GitLab, SAP AI Core, Perplexity, Vercel AI Gateway, Alibaba DashScope, Helicone, NVIDIA NIM, Moonshot/Kimi, Alibaba, and any custom base URL — plus local runtimes Ollama, LM Studio, and LiteLLM.",
+    category: "Direct API Keys — Frontier & Cloud Providers",
+    subtitle: "Configure via Ctrl+Alt+K using Limitcode: Setup Provider API Key, or add the provider ID under \"api_keys\" in Limitcode.sublime-settings.",
+    items: [
+      { name: "OpenRouter", id: "openrouter", setup: "API key in api_keys.openrouter — unified access to 500+ models across all major labs." },
+      { name: "Anthropic", id: "anthropic", setup: "API key in api_keys.anthropic — direct access to Claude Sonnet 5, Opus 5.5, and Fable 5.1." },
+      { name: "OpenAI", id: "openai", setup: "API key in api_keys.openai — direct access to GPT-6, GPT-6 Astra, GPT-6 Sol, and reasoning models." },
+      { name: "Google Gemini", id: "gemini", setup: "Google AI Studio key in api_keys.gemini — direct access to Gemini 4 Argon and Gemini 3.7 Flash." },
+      { name: "DeepSeek", id: "deepseek", setup: "API key in api_keys.deepseek (api.deepseek.com) — DeepSeek V4 and reasoning series." },
+      { name: "xAI (Grok)", id: "xai", setup: "API key in api_keys.xai (api.x.ai/v1) — Grok 4.20 and coding models." },
+      { name: "Mistral AI", id: "mistral", setup: "API key in api_keys.mistral (api.mistral.ai/v1) — Mistral Large, Codestral, and Devstral." },
+      { name: "Groq", id: "groq", setup: "API key in api_keys.groq (api.groq.com/openai/v1) — ultra-fast LPU inference." },
+      { name: "Cerebras", id: "cerebras", setup: "API key in api_keys.cerebras (api.cerebras.ai/v1) — high-speed wafer-scale inference." },
+      { name: "Together AI", id: "together", setup: "API key in api_keys.together (api.together.xyz/v1) — open-weight coding and chat models." },
+      { name: "DeepInfra", id: "deepinfra", setup: "API key in api_keys.deepinfra (api.deepinfra.com/v1/openai) — serverless open-model inference." },
+      { name: "Moonshot AI / Kimi", id: "moonshot", setup: "API key in api_keys.moonshot (api.moonshot.ai/v1) — Kimi K2.5 and long-context models." },
+      { name: "Alibaba DashScope (Qwen)", id: "alibaba", setup: "API key in api_keys.alibaba (dashscope.aliyuncs.com/compatible-mode/v1) — Qwen3 Coder and Qwen series." },
+      { name: "Xiaomi MiMo", id: "xiaomi", setup: "API key in api_keys.xiaomi — Xiaomi MiMo reasoning and coding models." },
+      { name: "NVIDIA NIM", id: "nvidia", setup: "API key in api_keys.nvidia (integrate.api.nvidia.com/v1) — NVIDIA-hosted inference endpoints." },
+      { name: "Perplexity", id: "perplexity", setup: "API key in api_keys.perplexity (api.perplexity.ai) — Sonar search and reasoning models." },
+      { name: "Venice AI", id: "venice", setup: "API key in api_keys.venice (api.venice.ai/api/v1) — privacy-focused model inference." },
+      { name: "Cohere", id: "cohere", setup: "API key in api_keys.cohere — Command R+ and enterprise Cohere models." },
+      { name: "OpenCode Zen", id: "opencode-zen", setup: "API key in api_keys[\"opencode-zen\"] (opencode.ai/zen/v1) — curated coding gateway." },
+      { name: "OpenCode Go", id: "opencode-go", setup: "API key in api_keys[\"opencode-go\"] (opencode.ai/zen/go/v1) — can also reuse your OpenCode Zen key." },
+    ],
   },
   {
-    name: "Providers with a native handler",
-    body: "Anthropic and Vertex Anthropic, Google Gemini and Vertex (native generateContent), Azure OpenAI, Amazon Bedrock (Converse), Cohere, OpenRouter (a proxy over 500+ models), and GitHub Copilot.",
+    category: "Enterprise Cloud, Gateways & Custom Endpoints",
+    subtitle: "Connect corporate cloud deployments, AI observability proxies, or any custom OpenAI-compatible server.",
+    items: [
+      { name: "Amazon Bedrock", id: "bedrock", setup: "AWS Bedrock Converse API for enterprise-hosted Claude, Llama, and Titan models." },
+      { name: "Azure OpenAI", id: "azure", setup: "Microsoft Azure Cognitive Services endpoint and key." },
+      { name: "Google Cloud Vertex AI", id: "vertex", setup: "Google Cloud Vertex AI native endpoint for Gemini models." },
+      { name: "Vertex AI Anthropic", id: "vertex_anthropic", setup: "Claude models hosted on Google Cloud Vertex AI." },
+      { name: "Cloudflare Workers AI", id: "cloudflare", setup: "API key in api_keys.cloudflare (api.cloudflare.com/client/v4/accounts/{id}/ai/run/{model})." },
+      { name: "Vercel AI Gateway", id: "vercel", setup: "API key in api_keys.vercel (ai-gateway.vercel.sh/v1)." },
+      { name: "Helicone", id: "helicone", setup: "API key in api_keys.helicone (oai.hconeai.com/v1) — proxy and observability gateway." },
+      { name: "GitLab AI", id: "gitlab", setup: "Token in api_keys.gitlab (gitlab.com/api/v4/ai)." },
+      { name: "SAP AI Core", id: "sap", setup: "Credentials for SAP AI Core (api.ai.sap.com/v1)." },
+      { name: "Custom OpenAI-Compatible", id: "openai-compatible / custom", setup: "Set your custom base URL in provider_base_urls and your token in api_keys." },
+    ],
   },
   {
-    name: "Account, CLI, and OAuth routes",
-    body: "Sign in with GitHub Copilot, OpenAI Codex, or Google Antigravity (OAuth). The Claude Code and Codex CLI bridges reuse an existing local CLI login. Credentials live in Sublime Text settings.",
-  },
-];
-
-const paletteGroups = [
-  {
-    name: "Session",
-    commands: ["Open Chat", "New Chat", "Chat History", "Rename Session", "Delete Session", "Clear Chat"],
-  },
-  {
-    name: "Agent & configuration",
-    commands: ["Send to Agent", "Change Provider", "Change Model", "Change Mode", "Set Reasoning Effort", "Setup Provider API Key", "Toggle Permissions", "Show Instructions", "Show Cost Statistics", "Open MCP Settings"],
+    category: "Account Sign-In (OAuth) & Local CLI Sessions",
+    subtitle: "Use your existing subscriptions or authenticated terminal CLIs without generating separate API billing keys.",
+    items: [
+      { name: "GitHub Copilot", id: "copilot", setup: "Run Limitcode: Login with GitHub Copilot via Ctrl+Alt+B and authorize in your browser." },
+      { name: "OpenAI Codex OAuth", id: "codex-oauth", setup: "Run Limitcode: Login with Codex via Ctrl+Alt+Z to sign in with your OpenAI account in the browser." },
+      { name: "Google Antigravity OAuth", id: "google-antigravity", setup: "Run Limitcode: Login with Google Antigravity via Ctrl+Alt+Shift+G (experimental integration; use a secondary account)." },
+      { name: "Claude Code CLI", id: "claude_code_cli", setup: "Reuses an active claude login session from your terminal. Run Limitcode: Login with Claude Code via Ctrl+Alt+E." },
+      { name: "Codex CLI", id: "codex_cli", setup: "Reuses an active codex login session from your terminal." },
+    ],
   },
   {
-    name: "Account sign-in",
-    commands: ["Login with GitHub Copilot (OAuth)", "Login with Claude Code", "Login with Codex (OAuth)", "Login with Google Antigravity (OAuth)", "Logout OAuth"],
+    category: "Local & Self-Hosted Runtimes (Offline-Capable)",
+    subtitle: "Run open-weight models on your own hardware with zero API cost.",
+    items: [
+      { name: "Ollama", id: "ollama", setup: "Connects to http://localhost:11434/v1 by default (customizable in provider_base_urls.ollama)." },
+      { name: "LM Studio", id: "lm-studio", setup: "Connects to http://localhost:1234/v1 by default when LM Studio's local server is running." },
+      { name: "LiteLLM", id: "litellm", setup: "Connects to http://localhost:4000/v1 by default for local or self-hosted LiteLLM proxy servers." },
+    ],
   },
-  {
-    name: "Edit safety",
-    commands: ["Undo Last Agent Edit", "Redo Last Agent Edit", "Show Snapshot History"],
-  },
-  {
-    name: "Limitcode Pro",
-    commands: ["Activate License", "Show License Status", "Deactivate This Device"],
-  },
-];
-
-const shortcuts = [
-  { keys: "Ctrl+Alt+L", action: "Open chat" },
-  { keys: "Ctrl+Alt+A", action: "Send selection or file to the agent" },
-  { keys: "Ctrl+Alt+N", action: "New chat" },
-  { keys: "Ctrl+Alt+H", action: "Chat history" },
-  { keys: "Ctrl+Alt+Y", action: "Rename session" },
-  { keys: "Ctrl+Alt+D", action: "Delete session" },
-  { keys: "Ctrl+Alt+M", action: "Change model" },
-  { keys: "Ctrl+Alt+P", action: "Change provider" },
-  { keys: "Ctrl+Alt+Shift+M", action: "Change mode" },
-  { keys: "Ctrl+Alt+R", action: "Set reasoning effort" },
-  { keys: "Ctrl+Alt+T", action: "Toggle show thoughts" },
-  { keys: "Ctrl+Alt+K", action: "Setup provider API key" },
-  { keys: "Ctrl+Alt+S", action: "Open settings" },
-  { keys: "Ctrl+Alt+Q", action: "Open MCP settings" },
-  { keys: "Ctrl+Alt+G", action: "Open skills folder" },
-  { keys: "Ctrl+Alt+O", action: "Toggle permissions" },
-  { keys: "Ctrl+Alt+Shift+Y", action: "Trust agent (allow all)" },
-  { keys: "Ctrl+Alt+Shift+U", action: "Untrust agent (ask all)" },
-  { keys: "Ctrl+Alt+F", action: "Show instructions" },
-  { keys: "Ctrl+Alt+C", action: "Clear chat" },
-  { keys: "Ctrl+Alt+U", action: "Undo last agent edit" },
-  { keys: "Ctrl+Alt+Shift+R", action: "Redo last agent edit" },
-  { keys: "Ctrl+Alt+Shift+V", action: "Show snapshot history" },
-  { keys: "Ctrl+Alt+Shift+C", action: "Show cost statistics" },
-  { keys: "Ctrl+Alt+B", action: "Login with GitHub Copilot" },
-  { keys: "Ctrl+Alt+E", action: "Login with Claude Code" },
-  { keys: "Ctrl+Alt+Z", action: "Login with Codex" },
-  { keys: "Ctrl+Alt+Shift+G", action: "Login with Google Antigravity" },
-  { keys: "Ctrl+Alt+Shift+L", action: "Logout OAuth" },
-  { keys: "Ctrl+Alt+X", action: "Cancel the active request" },
-  { keys: "Ctrl+Alt+Shift+X", action: "Stop the agent" },
-  { keys: "Enter", action: "Send the message (chat focused)" },
-  { keys: "↑ / ↓", action: "Input history in the chat" },
-];
-
-const settingsKeys = [
-  { key: "default_provider / default_model", desc: "Active provider and model." },
-  { key: "api_keys", desc: "Credentials per provider." },
-  { key: "provider_base_urls", desc: "Base URLs per provider." },
-  { key: "temperature", desc: "Generation temperature." },
-  { key: "max_tokens", desc: "Output cap (integer) or \"auto\" for the model's native limit." },
-  { key: "max_iterations", desc: "Maximum agent-loop iterations." },
-  { key: "reasoning_effort", desc: "off / low / medium / high." },
-  { key: "permission", desc: "Allow / deny / ask rules (tool and file)." },
-  { key: "web_search", desc: "provider, API keys, max_results." },
-  { key: "skip_dirs / skip_extensions", desc: "Exclusions for listing and search." },
-  { key: "instruction_files", desc: "Instruction files to discover." },
-  { key: "auto_discover_instructions", desc: "Auto-discover AGENTS.md and similar." },
-  { key: "skills / mcp", desc: "Skills and MCP servers." },
-  { key: "chat_style / chat_font_size", desc: "Chat styling and font size." },
-  { key: "show_thoughts / show_cost_estimate", desc: "Reasoning display and cost estimate." },
-  { key: "terminal_shell", desc: "Shell used by execute_command." },
-  { key: "streaming / timeout", desc: "Streaming and network timeout." },
-  { key: "debug_log / debug_console_log", desc: "Sanitized JSON log and console mirror." },
 ];
 
 const settingsExample = `{
   "default_provider": "openrouter",
-  "default_model": "anthropic/claude-sonnet-4-20250514",
+  "default_model": "anthropic/claude-sonnet-5",
   "api_keys": {
-    "openrouter": "sk-..."
+    "openrouter": "sk-or-...",
+    "anthropic": "sk-ant-...",
+    "openai": "sk-..."
   },
   "temperature": 0.7,
-  "max_tokens": 4096,
-  "max_iterations": 25,
+  "max_tokens": "auto",
+  "max_iterations": 50,
+  "reasoning_effort": "medium",
+  "chat_font_size": "auto",
+  "show_thoughts": true,
+  "show_cost_estimate": true,
+  "web_search": {
+    "provider": "auto",
+    "brave_api_key": "",
+    "tavily_api_key": "",
+    "max_results": 5
+  },
   "permission": {
     "outside_project": "ask",
+    "allowed_external_paths": [],
     "tool": {
       "read_file": "allow",
       "list_files": "allow",
@@ -314,61 +279,165 @@ const settingsExample = `{
     },
     "file": {
       "allow": ["src/**", "lib/**", "app/**", "*.py", "*.js", "*.ts", "*.md"],
-      "deny": ["**/*.lock", ".env", "**/*.pem", "**/*.key", "**/node_modules/**", "**/.git/**"]
+      "deny": ["**/*.lock", ".env", "**/.env*", "**/*.pem", "**/*.key", "**/node_modules/**"]
     }
   }
 }`;
 
+const settingsKeys = [
+  { key: "default_provider / default_model", desc: "The active AI provider and model used when opening a chat. Updated automatically when you switch models via Ctrl+Alt+M." },
+  { key: "api_keys", desc: "Dictionary of API keys per provider (e.g. openrouter, anthropic, openai, gemini, deepseek, mistral, groq)." },
+  { key: "provider_base_urls", desc: "Custom base URLs per provider (used for self-hosted gateways, proxies, or custom OpenAI-compatible endpoints)." },
+  { key: "reasoning_effort", desc: "Controls how deeply reasoning-capable models think before answering: \"off\", \"low\", \"medium\", or \"high\"." },
+  { key: "temperature", desc: "Sampling temperature for generation (e.g. 0.7), or \"auto\" to use the model's recommended default." },
+  { key: "max_tokens", desc: "Maximum output tokens per response (integer) or \"auto\" to use the model's native limit." },
+  { key: "max_iterations", desc: "Maximum number of autonomous steps the agent can take in a single turn before pausing." },
+  { key: "permission", desc: "Rules controlling which tools and file patterns run automatically (\"allow\"), prompt for confirmation (\"ask\"), or are blocked (\"deny\")." },
+  { key: "web_search", desc: "Configure web search: provider (\"auto\", \"brave\", \"tavily\", \"duckduckgo\", \"sogou\"), brave_api_key, tavily_api_key, and max_results. Works out of the box via DuckDuckGo/Sogou, or upgrades to Brave/Tavily when a key is added." },
+  { key: "instruction_files", desc: "List of project instruction filenames to load automatically (AGENTS.md, CLAUDE.md, .limitcode.md, INSTRUCTIONS.md)." },
+  { key: "auto_discover_instructions", desc: "When true, automatically finds and loads instruction files in your project hierarchy." },
+  { key: "skills / mcp", desc: "Configuration for Agent Skills and connected MCP servers." },
+  { key: "chat_font_size / chat_style", desc: "Set a dedicated font size for the chat view (or \"auto\" to match Sublime) and customize visual accents." },
+  { key: "show_thoughts / show_cost_estimate", desc: "Show or hide collapsible model reasoning blocks and live session cost estimates." },
+  { key: "skip_dirs / skip_extensions", desc: "Folders (like node_modules, .git, dist) and file extensions excluded from directory listings and searches." },
+  { key: "terminal_shell", desc: "Preferred shell for running commands (e.g. \"pwsh\", \"powershell\", \"bash\", \"zsh\", \"git-bash\", \"cmd\")." },
+];
+
+const paletteGroups = [
+  {
+    name: "Chat & Sessions",
+    commands: [
+      "Open Chat",
+      "New Chat",
+      "Chat History",
+      "Rename Session",
+      "Delete Session",
+      "Clear Chat",
+      "Increase Chat Font Size",
+      "Decrease Chat Font Size",
+      "Reset Chat Font Size",
+    ],
+  },
+  {
+    name: "Code, Models & Autonomy",
+    commands: [
+      "Send to Agent",
+      "Change Model",
+      "Change Provider",
+      "Change Mode",
+      "Set Reasoning Effort",
+      "Setup Provider API Key",
+      "Toggle Permissions",
+      "Show Instructions",
+      "Show Cost Statistics",
+      "Open MCP Settings",
+    ],
+  },
+  {
+    name: "Diffs, Undo & Snapshots",
+    commands: [
+      "Undo Last Agent Edit",
+      "Redo Last Agent Edit",
+      "Show Snapshot History",
+    ],
+  },
+  {
+    name: "Account Sign-In (OAuth & CLI)",
+    commands: [
+      "Login with GitHub Copilot (OAuth)",
+      "Login with Claude Code",
+      "Login with Codex (OAuth)",
+      "Login with Google Antigravity (OAuth)",
+      "Logout OAuth",
+    ],
+  },
+  {
+    name: "Limitcode Pro License",
+    commands: [
+      "Activate License",
+      "Show License Status",
+      "Deactivate This Device",
+    ],
+  },
+];
+
+const shortcuts = [
+  { keys: "Ctrl+Alt+L", action: "Open Limitcode Chat" },
+  { keys: "Ctrl+Alt+A", action: "Send current selection or active file to the agent" },
+  { keys: "Ctrl+Alt+N", action: "Start a new chat session" },
+  { keys: "Ctrl+Alt+H", action: "Browse and resume saved project chats" },
+  { keys: "Ctrl+Alt+Y", action: "Rename the current chat session" },
+  { keys: "Ctrl+Alt+D", action: "Delete a saved chat session" },
+  { keys: "Ctrl+Alt+C", action: "Clear the current chat view" },
+  { keys: "Ctrl+Alt+M", action: "Change active model (unified selector)" },
+  { keys: "Ctrl+Alt+P", action: "Change active provider" },
+  { keys: "Ctrl+Alt+Shift+M", action: "Switch work mode (Code, Ask, Architect, Debug)" },
+  { keys: "Ctrl+Alt+R", action: "Set model reasoning effort (off / low / medium / high)" },
+  { keys: "Ctrl+Alt+T", action: "Show or hide model thinking / reasoning blocks" },
+  { keys: "Ctrl+Alt+U", action: "Undo the last file edit made by the agent" },
+  { keys: "Ctrl+Alt+Shift+R", action: "Redo the last undone agent edit" },
+  { keys: "Ctrl+Alt+Shift+V", action: "Open the file snapshot history" },
+  { keys: "Ctrl+Alt+O", action: "Toggle permission prompts" },
+  { keys: "Ctrl+Alt+Shift+Y", action: "Trust agent for this session (Allow All)" },
+  { keys: "Ctrl+Alt+Shift+U", action: "Untrust agent (Ask All)" },
+  { keys: "Ctrl+Alt+K", action: "Configure a provider API key" },
+  { keys: "Ctrl+Alt+S", action: "Open Limitcode settings" },
+  { keys: "Ctrl+Alt+Q", action: "Open MCP servers configuration" },
+  { keys: "Ctrl+Alt+G", action: "Open Agent Skills folder" },
+  { keys: "Ctrl+Alt+F", action: "Inspect active repository instructions (AGENTS.md)" },
+  { keys: "Ctrl+Alt+Shift+C", action: "Show session token usage and cost statistics" },
+  { keys: "Ctrl+Alt+B", action: "Sign in with GitHub Copilot" },
+  { keys: "Ctrl+Alt+E", action: "Connect Claude Code" },
+  { keys: "Ctrl+Alt+Z", action: "Sign in with OpenAI Codex" },
+  { keys: "Ctrl+Alt+Shift+G", action: "Sign in with Google Antigravity" },
+  { keys: "Ctrl+Alt+Shift+L", action: "Log out of OAuth account" },
+  { keys: "Ctrl+Alt+X", action: "Cancel the active response" },
+  { keys: "Ctrl+Alt+Shift+X / Esc", action: "Stop the agent immediately" },
+  { keys: "Enter", action: "Send prompt (when chat input is focused)" },
+  { keys: "↑ / ↓", action: "Cycle through your previous prompts in the chat input" },
+];
+
 const faq = [
   {
-    q: "Does Limitcode need a separate daemon or service?",
-    a: "No. Limitcode runs inside Sublime Text. API-key providers work directly from the plugin; account, CLI, and local integrations use their own optional setup.",
+    q: "Does Limitcode require an external daemon or background service?",
+    a: "No. Limitcode runs directly inside Sublime Text. When you connect an API-key provider, requests go straight from the plugin to your provider with zero background daemons. Close the chat tab and Sublime Text is completely untouched.",
   },
   {
-    q: "Where are my credentials stored?",
-    a: "API keys and OAuth tokens are stored in Sublime Text settings, not an operating-system keychain. Review the provider's terms before connecting a work or primary personal account.",
+    q: "How do I pass unsaved code or a specific function to the agent?",
+    a: "Highlight the lines you want to share (or simply focus the file) and press Ctrl+Alt+A (Limitcode: Send to Agent). That attaches your exact selection or buffer contents to the chat. Note that when the agent reads files on its own, it reads the saved files on disk.",
   },
   {
-    q: "Which Sublime Text builds are supported?",
-    a: "Separate downloads are provided for the current and the next-generation Sublime Text plugin hosts, so you install the package matched to your build.",
+    q: "Can I review changes before they are saved, or revert an edit I don't like?",
+    a: "Yes. You can review proposed edits in Sublime Text's native diff view (with Accept, Reject, Next, and Prev controls). In addition, Limitcode automatically backs up any file before editing it, so pressing Ctrl+Alt+U (Undo Last Agent Edit) immediately restores the previous version.",
   },
   {
-    q: "What happens when I log out of an account provider?",
-    a: "Logout removes the stored credentials from local settings. It does not revoke the token on the provider side — revoke access in the provider's own security settings if you want it invalidated server-side.",
+    q: "Can Limitcode see screenshots and images?",
+    a: "Yes. Copy any image or screenshot to your clipboard and press Ctrl+V (or Cmd+V on macOS) inside the chat view. Vision-capable models can inspect UI bugs, error dialogs, architecture diagrams, or design mockups.",
   },
   {
-    q: "Can Limitcode see images?",
-    a: "Yes. Paste a screenshot or image into the chat (Ctrl+V / Cmd+V on Windows, macOS, and Linux) and image-capable models can see and reason about it, for example to inspect UI bugs, diagrams, or design mockups.",
+    q: "How do I prevent the agent from reading or editing sensitive files like .env?",
+    a: "Add file glob patterns under permission.file.deny in your Limitcode settings (files like .env, *.pem, and *.key are denied by default). Blocked files cannot be read or modified by the agent.",
   },
   {
-    q: "Can Limitcode search the web?",
-    a: "Yes. Web search and URL fetching are built-in tools that ask for permission by default. The search backend is configurable, and some providers also expose their own native web search.",
+    q: "Can I use local models offline with Ollama or LM Studio?",
+    a: "Yes. Select ollama, lm-studio, or litellm as your provider (or configure any custom OpenAI-compatible base URL). Your prompts and code stay on your local machine.",
   },
   {
-    q: "Can I use skills and MCP servers?",
-    a: "Yes. Skills load specialized instructions on demand, and any MCP server you configure becomes callable as a tool — both under the same permission rules as the rest of the agent.",
+    q: "How do I move my Limitcode Pro license to a new computer?",
+    a: "Your license supports up to 3 personal devices at once. To free up a seat on an old machine, open the Command Palette and run Limitcode Pro: Deactivate This Device, then activate on your new computer.",
   },
   {
-    q: "Can I change how much the agent is allowed to do?",
-    a: "Yes. Modes (Code, Architect, Ask, Debug) scope the toolset, and permissions scope tools and files. You can raise or lower both per task.",
-  },
-  {
-    q: "Can I use local models?",
-    a: "Yes. Ollama, LM Studio, LiteLLM, and custom OpenAI-compatible endpoints are supported. Tool calling depends on the endpoint and model implementation.",
-  },
-  {
-    q: "Can account-based integrations change or stop working?",
-    a: "Yes. Codex, Copilot, and Antigravity routes depend on provider-controlled accounts and service behavior. Availability, quotas, and compatibility can change independently of Limitcode. See the Providers page for account-risk notes.",
+    q: "What happens if I lose internet access while traveling?",
+    a: "Once your device is activated, Limitcode Pro caches a signed offline pass that lets you continue working offline for up to 30 days between license checks.",
   },
 ];
 ---
 
 <Layout
-  title="Docs — Limitcode Pro"
-  description="What Limitcode can do, plus installation, tools, modes, subagents, permissions, settings, commands, shortcuts, and FAQ for Limitcode Pro."
+  title="User Guide & Documentation — Limitcode Pro for Sublime Text"
+  description="Complete user guide for Limitcode Pro in Sublime Text: installation, connecting AI providers, using the chat, passing code context, reviewing diffs, modes, permissions, Agent Skills, MCP servers, and shortcuts."
   canonicalPath="/docs/"
 >
-  <!-- FAQPage schema: lets AI engines extract the Q&A directly -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -378,496 +447,1013 @@ const faq = [
       "acceptedAnswer": { "@type": "Answer", "text": item.a },
     })),
   })} />
+
   <Nav />
-  <main>
-    <section class="docs-hero">
+
+  <main class="docs-page">
+    <!-- Top Header -->
+    <header class="docs-hero">
       <div class="container">
-        <span class="eyebrow reveal"><span class="dot"></span>Documentation</span>
-        <h1 class="reveal d1">Everything Limitcode can do.</h1>
-        <p class="lead reveal d2">
-          The full surface of Limitcode Pro in Sublime Text: capabilities, everyday workflows,
-          the agent's tools, modes, subagents, skills and MCP, permissions, sessions and cost,
-          review and safety, providers, the Command Palette, shortcuts, and settings.
+        <span class="eyebrow"><span class="dot"></span>User Manual &amp; Reference</span>
+        <h1>How to use Limitcode Pro.</h1>
+        <p class="lead">
+          Everything you need to install Limitcode in Sublime Text, connect your preferred AI models,
+          collaborate on real codebases, review diffs safely, and customize the agent for your workflow.
         </p>
       </div>
-    </section>
+    </header>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">01 — Quick start</span>
-        <h2>From download to first task.</h2>
-      </div>
-      <div class="quick-grid">
-        {quickSteps.map((s) => (
-          <article class="quick-card">
-            <span class="ord">{s.ord}</span>
-            <h3>{s.title}</h3>
-            <p>{s.body}</p>
-            {s.code && <div class="code"><span class="c">$</span> {s.code}</div>}
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">02 — Capabilities</span>
-        <h2>What Limitcode can do.</h2>
-        <p>Limitcode is a coding agent that lives inside Sublime Text. Here is the full surface — what it does, and the boundaries it works under.</p>
-      </div>
-      <div class="cap-list">
-        {capabilities.map((cap, i) => (
-          <article class="cap-row">
-            <span class="cap-num">{String(i + 1).padStart(2, "0")}</span>
-            <div class="cap-body">
-              <h3>{cap.name}</h3>
-              <p>{cap.body}</p>
-              <div class="cap-meta">
-                {cap.meta.map((m) => <code>{m}</code>)}
-              </div>
+    <!-- Main 2-column Documentation Layout -->
+    <div class="container docs-layout">
+      <!-- Sticky Left Sidebar Navigation -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <div class="sidebar-inner">
+          {navGroups.map((group) => (
+            <div class="sidebar-group">
+              <span class="sidebar-heading">{group.group}</span>
+              <ul>
+                {group.items.map((item) => (
+                  <li>
+                    <a href={`#${item.id}`} data-docs-link>{item.label}</a>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </article>
-        ))}
-      </div>
-    </section>
+          ))}
+          <div class="sidebar-cta">
+            <p>Need Limitcode Pro?</p>
+            <a class="btn btn-primary btn-sm" href="/#pricing">Get Pro — $29 →</a>
+          </div>
+        </div>
+      </aside>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">03 — Everyday workflows</span>
-        <h2>How to use it.</h2>
-        <p>Every capability above has a concrete way to run it. These are the tasks you will reach for most, from asking a question to connecting a server.</p>
-      </div>
-      <div class="cap-list">
-        {workflows.map((w, i) => (
-          <article class="cap-row">
-            <span class="cap-num">{String(i + 1).padStart(2, "0")}</span>
-            <div class="cap-body">
-              <h3>{w.name}</h3>
-              <p>{w.how}</p>
-              <div class="cap-meta">
-                {w.meta.map((m) => <code>{m}</code>)}
-              </div>
+      <!-- Right Documentation Content -->
+      <div class="docs-content">
+
+        <!-- SECTION 1: OVERVIEW -->
+        <section id="overview" class="doc-block">
+          <span class="doc-kicker">Getting Started</span>
+          <h2>What Limitcode Does</h2>
+          <p>
+            Limitcode Pro is an autonomous AI coding assistant that lives directly inside <strong>Sublime Text 4</strong> (builds 4050+).
+            Instead of switching to a heavy Electron IDE or copying snippets into a browser, you open a native Sublime side-by-side view
+            where the assistant can work directly with your project.
+          </p>
+          <p>From a single conversation inside Sublime Text, you can ask Limitcode to:</p>
+          <ul class="doc-bullets">
+            <li><strong>Explore and explain your codebase:</strong> list folders, search for symbols or text across files, and read implementation details.</li>
+            <li><strong>Write and refactor code:</strong> create new files, make targeted edits to existing functions, or apply multi-file patches.</li>
+            <li><strong>Review every change safely:</strong> inspect proposed changes in Sublime's native diff view and undo or redo any edit in one keystroke (<kbd>Ctrl+Alt+U</kbd>).</li>
+            <li><strong>Run commands and tests:</strong> execute your build scripts, test suites, linters, or git commands — and keep long-running dev servers running in the background.</li>
+            <li><strong>Look up docs &amp; inspect screenshots:</strong> search the live web, fetch documentation pages, or analyze screenshots pasted directly into the chat (<kbd>Ctrl+V</kbd>).</li>
+            <li><strong>Follow your team's workflow:</strong> automatically load repository rules (<code class="inline-code">AGENTS.md</code>), reusable <strong>Agent Skills</strong>, external <strong>MCP servers</strong>, and specialized <strong>Subagents</strong>.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 2: INSTALLATION & ACTIVATION -->
+        <section id="installation" class="doc-block">
+          <span class="doc-kicker">Getting Started</span>
+          <h2>Installation &amp; License Activation</h2>
+          <p>
+            Limitcode Pro is distributed as a self-contained <code class="inline-code">.sublime-package</code> file. No external daemon or Python environment setup is required.
+          </p>
+
+          <div class="step-cards">
+            <article class="step-card">
+              <span class="step-badge">Step 1</span>
+              <h3>Download your package</h3>
+              <p>
+                After purchasing on Gumroad, copy your license key from the receipt and download the <code class="inline-code">Limitcode.sublime-package</code> file matched to your Sublime Text 4 build.
+              </p>
+            </article>
+
+            <article class="step-card">
+              <span class="step-badge">Step 2</span>
+              <h3>Place in Installed Packages</h3>
+              <p>
+                In Sublime Text, click <strong>Preferences → Browse Packages…</strong> (or <strong>Sublime Text → Settings → Browse Packages…</strong> on macOS).
+                Go <strong>one folder up</strong> to open the <code class="inline-code">Installed Packages</code> directory, drop <code class="inline-code">Limitcode.sublime-package</code> inside, and restart Sublime Text.
+              </p>
+            </article>
+
+            <article class="step-card">
+              <span class="step-badge">Step 3</span>
+              <h3>Activate your license</h3>
+              <p>
+                Open the Command Palette (<kbd>Ctrl+Shift+P</kbd> on Windows/Linux or <kbd>Cmd+Shift+P</kbd> on macOS), run <code class="inline-code">Limitcode Pro: Activate License</code>, and paste your license key.
+              </p>
+            </article>
+          </div>
+
+          <div class="callout">
+            <strong>Managing your 3 devices &amp; working offline:</strong>
+            Your license can be active on up to <strong>3 personal computers</strong> at the same time. You can check your seat status anytime with <code class="inline-code">Limitcode Pro: Show License Status</code>, or free up a seat to move to another computer using <code class="inline-code">Limitcode Pro: Deactivate This Device</code>. Once activated, you can work offline for up to 30 days between periodic checks.
+          </div>
+        </section>
+
+        <!-- SECTION 3: CONNECTING A PROVIDER -->
+        <section id="connect-provider" class="doc-block">
+          <span class="doc-kicker">Getting Started</span>
+          <h2>Connecting an AI Provider</h2>
+          <p>
+            Limitcode supports over <strong>40 AI providers</strong>. You can connect models in four different ways depending on what you already use:
+          </p>
+
+          <div class="method-grid">
+            <div class="method-card">
+              <h3>1. Direct API Key (Fastest)</h3>
+              <p>
+                Press <kbd>Ctrl+Alt+K</kbd> or run <code class="inline-code">Limitcode: Setup Provider API Key</code>, choose your provider — such as <strong>OpenRouter</strong>, <strong>Anthropic</strong>, <strong>OpenAI</strong>, <strong>Google Gemini</strong>, <strong>DeepSeek</strong>, <strong>Mistral</strong>, <strong>Groq</strong>, or <strong>xAI</strong> — and paste your API key.
+              </p>
             </div>
-          </article>
-        ))}
-      </div>
-    </section>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">04 — The agent's tools</span>
-        <h2>Sixteen tools it can call.</h2>
-        <p>
-          The agent works through a fixed catalogue of tools. Each mode exposes a subset, and
-          every call runs under your permission rules. Independent calls can run together with{" "}
-          <code class="inline-code">batch</code>, and long-running commands can be tracked with{" "}
-          <code class="inline-code">background_job</code>.
-        </p>
-      </div>
-      <div class="table-wrap">
-        <table class="docs-table">
-          <thead>
-            <tr><th>Tool</th><th>What it does</th></tr>
-          </thead>
-          <tbody>
-            {tools.map((t) => (
-              <tr><td><code>{t.name}</code></td><td>{t.desc}</td></tr>
+            <div class="method-card">
+              <h3>2. Account Sign-In (OAuth)</h3>
+              <p>
+                Use an existing subscription without creating an API key. Run <code class="inline-code">Limitcode: Login with GitHub Copilot</code> with <kbd>Ctrl+Alt+B</kbd>, <code class="inline-code">Login with Codex</code> with <kbd>Ctrl+Alt+Z</kbd>, or <code class="inline-code">Login with Google Antigravity</code> with <kbd>Ctrl+Alt+Shift+G</kbd> and complete the browser sign-in.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h3>3. Existing CLI Login</h3>
+              <p>
+                If you already use <strong>Claude Code CLI</strong> or <strong>Codex CLI</strong> in your terminal and are logged in, Limitcode can reuse that session directly. Run <code class="inline-code">Limitcode: Login with Claude Code</code> with <kbd>Ctrl+Alt+E</kbd> or select the CLI provider.
+              </p>
+            </div>
+
+            <div class="method-card">
+              <h3>4. Local Models (Ollama &amp; LM Studio)</h3>
+              <p>
+                To run models 100% locally on your machine, start <strong>Ollama</strong> at <code class="inline-code">http://localhost:11434/v1</code>, <strong>LM Studio</strong> at <code class="inline-code">http://localhost:1234/v1</code>, or <strong>LiteLLM</strong>, then select it with <kbd>Ctrl+Alt+P</kbd> via <code class="inline-code">Limitcode: Change Provider</code>.
+              </p>
+            </div>
+          </div>
+
+          <div class="sub-block" style="margin-top: 28px;">
+            <h3>Complete List of Supported Providers</h3>
+            <p>
+              Below is the full catalogue of AI providers supported in Limitcode, along with the provider ID used in <code class="inline-code">Limitcode.sublime-settings</code> and how each connection works:
+            </p>
+
+            {providerCatalog.map((group) => (
+              <div style="margin-top: 22px;">
+                <h4 style="margin: 0 0 6px; font-size: 1rem; color: var(--ink);">{group.category}</h4>
+                <p style="margin: 0 0 12px; font-size: 0.9rem;">{group.subtitle}</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Provider</th>
+                        <th>Settings ID</th>
+                        <th>How to Configure &amp; Default Endpoint</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {group.items.map((item) => (
+                        <tr>
+                          <td><strong>{item.name}</strong></td>
+                          <td><code class="inline-code">{item.id}</code></td>
+                          <td>{item.setup}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+          </div>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">05 — Modes</span>
-        <h2>Scope the toolset per task.</h2>
-        <p>
-          A mode decides which tools the agent may use. Switch with{" "}
-          <code class="inline-code">Limitcode: Change Mode</code> (<code class="inline-code">Ctrl+Alt+Shift+M</code>).
-        </p>
-      </div>
-      <div class="table-wrap">
-        <table class="docs-table">
-          <thead>
-            <tr><th>Mode</th><th>Best for</th><th>Tools</th></tr>
-          </thead>
-          <tbody>
-            {modes.map((m) => (
-              <tr><td><code>{m.name}</code></td><td>{m.desc}</td><td>{m.tools}</td></tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+          <div class="sub-block" style="margin-top: 24px;">
+            <h3>Configuring Multiple Providers &amp; Custom Base URLs</h3>
+            <p>
+              You can configure as many providers at once as you like inside <code class="inline-code">Preferences → Package Settings → Limitcode → Settings</code>. When you open the unified model selector with <kbd>Ctrl+Alt+M</kbd>, Limitcode combines the available models from all your configured providers into a single list and automatically updates both <code class="inline-code">default_provider</code> and <code class="inline-code">default_model</code> when you pick one:
+            </p>
+            <pre><code>{providerSetupExample}</code></pre>
+          </div>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">06 — Subagents</span>
-        <h2>Delegate focused work.</h2>
-        <p>
-          A subagent is a child session with its own agent and a restricted toolset. Subagents
-          cannot spawn other subagents, and their permissions derive from the parent.
-        </p>
-      </div>
-      <div class="table-wrap">
-        <table class="docs-table">
-          <thead>
-            <tr><th>Type</th><th>Role</th><th>Tools</th><th>Max iterations</th></tr>
-          </thead>
-          <tbody>
-            {subagents.map((s) => (
-              <tr><td><code>{s.name}</code></td><td>{s.role}</td><td>{s.tools}</td><td>{s.iter}</td></tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">07 — Instructions, skills, and MCP</span>
-        <h2>Teach it your project.</h2>
-      </div>
-      <div class="sub-groups">
-        <div class="sub-group">
-          <h3>Repository instructions</h3>
-          <p>
-            Limitcode walks up the directory tree and auto-discovers instruction files:{" "}
-            <code class="inline-code">AGENTS.md</code>, <code class="inline-code">CLAUDE.md</code>,{" "}
-            <code class="inline-code">.limitcode.md</code>, <code class="inline-code">.kilocode.md</code>, and{" "}
-            <code class="inline-code">INSTRUCTIONS.md</code>. Run{" "}
-            <code class="inline-code">Limitcode: Show Instructions</code> to see what was found.
+          <p style="margin-top: 18px;">
+            Want to compare billing, privacy, and account boundaries across connection methods? <a class="text-link" href="/providers/">Read the dedicated Providers Guide →</a>
           </p>
-        </div>
-        <div class="sub-group">
-          <h3>Agent Skills</h3>
+        </section>
+
+        <!-- SECTION 4: FIRST TASK -->
+        <section id="first-task" class="doc-block">
+          <span class="doc-kicker">Getting Started</span>
+          <h2>Running Your First Task</h2>
+          <ol class="numbered-steps">
+            <li>
+              <strong>Open the chat panel:</strong> Press <kbd>Ctrl+Alt+L</kbd> or run <code class="inline-code">Limitcode: Open Chat</code>. A native side-by-side chat view opens next to your code.
+            </li>
+            <li>
+              <strong>Pick your model:</strong> Press <kbd>Ctrl+Alt+M</kbd> or run <code class="inline-code">Limitcode: Change Model</code> to choose from all models available across your configured providers.
+            </li>
+            <li>
+              <strong>Ask a question or request an edit:</strong> Type a prompt such as <em>"Explain how authentication works in @src/auth.py and add unit tests for token expiry"</em> and press <kbd>Enter</kbd>.
+            </li>
+            <li>
+              <strong>Approve or undo:</strong> When Limitcode proposes a file edit or shell command, approve it from the quick prompt. If you want to revert an edit at any point, press <kbd>Ctrl+Alt+U</kbd>.
+            </li>
+          </ol>
+        </section>
+
+        <!-- SECTION 5: USING THE CHAT -->
+        <section id="chat-interface" class="doc-block">
+          <span class="doc-kicker">Using the Chat</span>
+          <h2>The Chat Panel &amp; Session Management</h2>
           <p>
-            A skill is a bundle of instructions with optional resources — a{" "}
-            <code class="inline-code">SKILL.md</code> plus <code class="inline-code">scripts/</code>,{" "}
-            <code class="inline-code">templates/</code>, and <code class="inline-code">references/</code>.
-            Skills are discovered bundled with the plugin, in the project (
-            <code class="inline-code">.agents/skills/&lt;name&gt;/SKILL.md</code>), or globally (
-            <code class="inline-code">~/.agents/skills/</code>). The <code class="inline-code">skill</code>{" "}
-            tool loads one when a task matches; <code class="inline-code">skill_manager</code> lists,
-            creates, installs, and searches them.
+            Limitcode's chat is a native Sublime Text view designed for keyboard-first navigation. Every conversation is automatically saved per project so you can close Sublime and pick up right where you left off.
           </p>
-        </div>
-        <div class="sub-group">
-          <h3>MCP servers</h3>
+
+          <div class="feature-detail-list">
+            <div class="feature-detail">
+              <h3>Managing conversations</h3>
+              <p>
+                Start a fresh conversation anytime with <kbd>Ctrl+Alt+N</kbd> via <code class="inline-code">New Chat</code>. Browse and reopen previous sessions for your project with <kbd>Ctrl+Alt+H</kbd> via <code class="inline-code">Chat History</code>, give a session a memorable title with <kbd>Ctrl+Alt+Y</kbd> via <code class="inline-code">Rename Session</code>, or remove old chats with <kbd>Ctrl+Alt+D</kbd> via <code class="inline-code">Delete Session</code>.
+              </p>
+            </div>
+
+            <div class="feature-detail">
+              <h3>Prompt history &amp; cancelling runs</h3>
+              <p>
+                Inside the chat input box, press the <kbd>↑</kbd> and <kbd>↓</kbd> arrow keys to cycle through your previously sent prompts. If a response is taking too long or heading in the wrong direction, press <kbd>Ctrl+Alt+X</kbd> to cancel the active request, or press <kbd>Ctrl+Alt+Shift+X</kbd> or <kbd>Escape</kbd> to stop the agent immediately. The chat stays ready for your next instruction.
+              </p>
+            </div>
+
+            <div class="feature-detail">
+              <h3>Code blocks, live checklists &amp; status bar</h3>
+              <p>
+                Code snippets generated in the chat include quick actions to <strong>copy the block</strong>, <strong>insert it into your active editor</strong>, or <strong>create a new file</strong>. When the agent tackles a multi-step task, it displays a <strong>Live Task Checklist</strong> in the chat so you can follow its progress step by step. At the bottom of the window, the Sublime status bar always shows your active provider, model, work mode, reasoning effort, context usage, and session cost.
+              </p>
+            </div>
+
+            <div class="feature-detail">
+              <h3>Customizing font size &amp; model thoughts</h3>
+              <p>
+                Want the chat text slightly smaller or larger than your code editor? Run <code class="inline-code">Limitcode: Increase Chat Font Size</code>, <code class="inline-code">Decrease Chat Font Size</code>, or <code class="inline-code">Reset Chat Font Size</code> from the Command Palette. You can also show or hide the model's internal reasoning process anytime by pressing <kbd>Ctrl+Alt+T</kbd> or running <code class="inline-code">Toggle Show Thoughts</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: PASSING CONTEXT -->
+        <section id="passing-context" class="doc-block">
+          <span class="doc-kicker">Using the Chat</span>
+          <h2>Passing Files &amp; Code Context</h2>
           <p>
-            Connect Model Context Protocol servers so their tools become callable. Both local
-            (stdio, started as a process) and remote (Streamable HTTP with an API key) are
-            supported, with <code class="inline-code">{"{env:VAR}"}</code> expansion for secrets. Open the
-            config with <code class="inline-code">Limitcode: Open MCP Settings</code> (
-            <code class="inline-code">Ctrl+Alt+Q</code>).
+            You never have to manually copy and paste code between your editor and the chat. Limitcode gives you three ways to point the agent at the exact code you care about:
+          </p>
+
+          <div class="sub-groups">
+            <div class="sub-group">
+              <h3>1. Mention files with <code class="inline-code">@</code></h3>
+              <p>
+                Type <code class="inline-code">@</code> directly inside the chat input to reference a file or path in your workspace, such as <code class="inline-code">@src/components/Navbar.tsx</code>. Limitcode attaches the file path so the agent knows exactly which file to inspect or modify.
+              </p>
+            </div>
+
+            <div class="sub-group">
+              <h3>2. Send Selection or Active File</h3>
+              <p>
+                Highlight a function, class, or block of lines in any open editor tab and press <kbd>Ctrl+Alt+A</kbd> or run <code class="inline-code">Limitcode: Send to Agent</code>. If nothing is highlighted, pressing <kbd>Ctrl+Alt+A</kbd> sends the entire active file. The code is attached to your chat prompt immediately.
+              </p>
+            </div>
+
+            <div class="sub-group">
+              <h3>3. Let the agent search on its own</h3>
+              <p>
+                Don't know which file handles a feature? Just ask in plain language — for example, <em>"Where do we validate webhook signatures?"</em> Limitcode will search your repository, list relevant directories, and read the matching files automatically.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Tip — Saved files vs. unsaved buffers:</strong>
+            When Limitcode reads or searches files on its own, it reads the saved files on disk. If you have unsaved edits in an open tab that you want the agent to see right now, either save the file first with <kbd>Ctrl+S</kbd> or press <kbd>Ctrl+Alt+A</kbd> to send the live buffer.
+          </div>
+        </section>
+
+        <!-- SECTION 7: SCREENSHOTS & WEB SEARCH -->
+        <section id="images-and-web" class="doc-block">
+          <span class="doc-kicker">Using the Chat</span>
+          <h2>Pasting Screenshots &amp; Configuring Web Search</h2>
+
+          <div class="sub-groups">
+            <div class="sub-group">
+              <h3>1. Inspect images &amp; screenshots</h3>
+              <p>
+                Copy any screenshot, UI glitch, terminal error dialog, database diagram, or Figma mockup to your clipboard and press <kbd>Ctrl+V</kbd> or <kbd>Cmd+V</kbd> on macOS directly inside the chat. Vision-capable models such as Claude Sonnet 5, Claude Opus 5.5, GPT-6, and Gemini 4 will analyze the image alongside your code.
+              </p>
+            </div>
+
+            <div class="sub-group">
+              <h3>2. Built-in Web Search (Works out of the box, no setup required)</h3>
+              <p>
+                You can ask Limitcode to search the web for up-to-date documentation, library changelogs, or error messages — or ask it to fetch and read a specific URL. Both actions ask for your approval before making external requests.
+              </p>
+              <p style="margin-top: 10px;">
+                <strong>Default zero-config search:</strong> Even if you haven't configured any search API key, Limitcode includes a built-in search that works out of the box using <strong>DuckDuckGo</strong> or the Chinese search engine <strong>Sogou</strong>. While convenient for quick lookups without setup, these free default engines are basic and not always the most accurate for deep technical queries.
+              </p>
+            </div>
+
+            <div class="sub-group">
+              <h3>3. How to configure Brave Search or Tavily (Recommended for best results)</h3>
+              <p>
+                For much higher quality and more reliable technical search results, configure <strong>Brave Search</strong> or <strong>Tavily</strong> inside your Limitcode settings by pressing <kbd>Ctrl+Alt+S</kbd> or opening <strong>Preferences → Package Settings → Limitcode → Settings</strong>, and adding the <code class="inline-code">"web_search"</code> block:
+              </p>
+              <pre class="codeblock codeblock-sm"><code>{webSearchExample}</code></pre>
+              <ul class="doc-bullets" style="margin-top: 14px;">
+                <li><strong><code class="inline-code">"provider": "auto"</code> (Default):</strong> Automatically uses <strong>Brave</strong> or <strong>Tavily</strong> as soon as you paste a <code class="inline-code">brave_api_key</code> or <code class="inline-code">tavily_api_key</code>. If both keys are empty, it falls back to the built-in zero-config search with <code class="inline-code">duckduckgo</code> or <code class="inline-code">sogou</code>.</li>
+                <li><strong>Force a specific search engine:</strong> Change <code class="inline-code">"provider"</code> to <code class="inline-code">"brave"</code>, <code class="inline-code">"tavily"</code>, <code class="inline-code">"duckduckgo"</code>, or <code class="inline-code">"sogou"</code>.</li>
+                <li><strong><code class="inline-code">"max_results"</code>:</strong> Controls how many search results are returned to the agent per query. The default is <code class="inline-code">5</code>.</li>
+                <li><strong>Provider-native web search:</strong> Some AI providers, such as Anthropic Claude and Moonshot / Kimi, also offer their own built-in server-side web search, which Limitcode can use automatically when supported by the active model.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: EDITING FILES -->
+        <section id="editing-files" class="doc-block">
+          <span class="doc-kicker">Working with Code</span>
+          <h2>Creating, Editing &amp; Refactoring Files</h2>
+          <p>
+            In <strong>Code</strong> or <strong>Debug</strong> mode, Limitcode can make changes directly to your project files once you approve them:
+          </p>
+          <ul class="doc-bullets">
+            <li><strong>Targeted edits:</strong> Update specific functions, imports, or classes inside large files without rewriting the rest of the file.</li>
+            <li><strong>Multi-file patches:</strong> Apply coordinated diffs across several files during a refactor or feature rollout.</li>
+            <li><strong>New file scaffolding:</strong> Create new modules, components, tests, or configuration files in your project tree.</li>
+            <li><strong>Automatic LSP error self-correction:</strong> If you use Sublime Text's <strong>LSP</strong> package, Limitcode checks for fresh syntax and type diagnostics right after editing a file. If the edit introduced a type error or missing import, those diagnostics are fed back to the agent automatically so it can fix the issue on the spot.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 9: DIFFS & UNDO -->
+        <section id="diffs-and-undo" class="doc-block">
+          <span class="doc-kicker">Working with Code</span>
+          <h2>Native Diff Review, Undo &amp; Snapshot History</h2>
+          <p>
+            You never have to worry about an AI agent silently breaking your working tree. Limitcode gives you three layers of edit safety:
+          </p>
+          <div class="sub-groups">
+            <div class="sub-group">
+              <h3>1. Native Sublime diff view</h3>
+              <p>
+                Proposed changes can be reviewed inside Sublime Text's own diff interface, complete with an inline toolbar to <strong>Accept</strong>, <strong>Reject</strong>, or jump to the <strong>Next / Prev</strong> hunk.
+              </p>
+            </div>
+
+            <div class="sub-group">
+              <h3>2. One-shortcut Undo &amp; Redo</h3>
+              <p>
+                Before Limitcode modifies any file, it saves an automatic snapshot of the file's state. Press <kbd>Ctrl+Alt+U</kbd> or run <code class="inline-code">Limitcode: Undo Last Agent Edit</code> at any time during your session to revert the agent's last change, or press <kbd>Ctrl+Alt+Shift+R</kbd> via <code class="inline-code">Redo Last Agent Edit</code> to re-apply it.
+              </p>
+            </div>
+
+            <div class="sub-group">
+              <h3>3. Full Snapshot History &amp; conflict protection</h3>
+              <p>
+                Want to see every file backup captured during the session? Press <kbd>Ctrl+Alt+Shift+V</kbd> or run <code class="inline-code">Limitcode: Show Snapshot History</code>. Limitcode also watches for external edits so the agent won't accidentally overwrite changes you made manually after it read a file.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: RUNNING COMMANDS -->
+        <section id="running-commands" class="doc-block">
+          <span class="doc-kicker">Working with Code</span>
+          <h2>Running Shell Commands, Builds &amp; Background Jobs</h2>
+          <p>
+            Limitcode can run terminal commands right from the conversation — such as <code class="inline-code">pytest</code>, <code class="inline-code">npm test</code>, <code class="inline-code">cargo check</code>, linters, or <code class="inline-code">git status</code> — and read the output to verify its own work.
+          </p>
+          <ul class="doc-bullets">
+            <li><strong>Approval before execution:</strong> Every shell command asks for your confirmation by default so you can inspect the exact command before it runs.</li>
+            <li><strong>Background jobs:</strong> Need to start a dev server, file watcher, or long build? Limitcode can launch the command as a background job, check its logs later, or stop it when finished — while you keep chatting and editing.</li>
+            <li><strong>Configurable shell:</strong> Choose your preferred shell — <code class="inline-code">pwsh</code>, <code class="inline-code">powershell</code>, <code class="inline-code">bash</code>, <code class="inline-code">zsh</code>, <code class="inline-code">git-bash</code>, or <code class="inline-code">cmd</code> — via the <code class="inline-code">terminal_shell</code> setting.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 11: MODES -->
+        <section id="modes" class="doc-block">
+          <span class="doc-kicker">Control &amp; Autonomy</span>
+          <h2>Work Modes: Scope What the Agent Can Do</h2>
+          <p>
+            Not every prompt should have permission to edit files or run terminal commands. Press <kbd>Ctrl+Alt+Shift+M</kbd> or run <code class="inline-code">Limitcode: Change Mode</code> to switch between four specialized modes depending on your current step:
+          </p>
+
+          <div class="table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Mode</th>
+                  <th>When to use it</th>
+                  <th>What the agent can do</th>
+                </tr>
+              </thead>
+              <tbody>
+                {modes.map((m) => (
+                  <tr>
+                    <td><code>{m.name}</code></td>
+                    <td>{m.when}</td>
+                    <td>{m.canDo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 12: MODELS & REASONING -->
+        <section id="models-reasoning" class="doc-block">
+          <span class="doc-kicker">Control &amp; Autonomy</span>
+          <h2>Switching Models &amp; Adjusting Reasoning Effort</h2>
+          <div class="perm-grid">
+            <div>
+              <h3>Unified Model Selector</h3>
+              <p>
+                Press <kbd>Ctrl+Alt+M</kbd> to see every model available across all of your configured providers in one searchable list. Picking a model updates both the provider and model together, and you can switch models mid-conversation without losing your chat history.
+              </p>
+            </div>
+            <div>
+              <h3>Reasoning Effort</h3>
+              <p>
+                Working on a tricky architectural problem or subtle bug? Press <kbd>Ctrl+Alt+R</kbd> or run <code class="inline-code">Limitcode: Set Reasoning Effort</code> to choose how much thinking time the model spends before answering: <code class="inline-code">off</code>, <code class="inline-code">low</code>, <code class="inline-code">medium</code>, or <code class="inline-code">high</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 13: PERMISSIONS -->
+        <section id="permissions" class="doc-block">
+          <span class="doc-kicker">Control &amp; Autonomy</span>
+          <h2>Permissions &amp; Safety Boundaries</h2>
+          <p>
+            You decide how much autonomy Limitcode has. Every tool and file pattern can be set to <code class="inline-code">allow</code> to run automatically, <code class="inline-code">ask</code> to prompt you first, or <code class="inline-code">deny</code> to block completely.
+          </p>
+
+          <div class="perm-grid">
+            <div>
+              <h3>Safe defaults out of the box</h3>
+              <p>
+                By default, reading files, listing directories, and searching code run automatically so the agent can inspect your project without pestering you. Any action that mutates files, runs a shell command, accesses the web, or calls an MCP server asks for your approval first.
+              </p>
+            </div>
+            <div>
+              <h3>Session approvals &amp; quick toggles</h3>
+              <p>
+                When prompted, you can approve an action <strong>once</strong> or <strong>for the rest of the current session</strong>. Want full speed on a trusted sandbox project? Press <kbd>Ctrl+Alt+Shift+Y</kbd> to run <code class="inline-code">Trust Agent — Allow All</code>. Want maximum caution? Press <kbd>Ctrl+Alt+Shift+U</kbd> to run <code class="inline-code">Untrust Agent — Ask All</code>.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout" style="margin-top: 24px;">
+            <strong>Protecting secrets &amp; external folders:</strong>
+            Use <code class="inline-code">permission.file.deny</code> in settings to block sensitive files (such as <code class="inline-code">.env</code>, <code class="inline-code">**/*.pem</code>, <code class="inline-code">**/*.key</code>), and use <code class="inline-code">outside_project</code> (<code class="inline-code">"ask"</code> or <code class="inline-code">"deny"</code>) to control whether the agent can touch files outside your open Sublime workspace.
+          </div>
+        </section>
+
+        <!-- SECTION 14: SUBAGENTS -->
+        <section id="subagents" class="doc-block">
+          <span class="doc-kicker">Control &amp; Autonomy</span>
+          <h2>Delegating Focused Work to Subagents</h2>
+          <p>
+            When a task involves heavy codebase exploration, writing a detailed plan, or running tests alongside an implementation, Limitcode can delegate that piece of work to a specialized <strong>subagent</strong>. Each subagent works in its own isolated context and reports a clean summary back to your main chat — keeping your primary conversation fast and focused.
+          </p>
+          <div class="table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Subagent</th>
+                  <th>What it is used for</th>
+                  <th>Allowed capabilities</th>
+                </tr>
+              </thead>
+              <tbody>
+                {subagents.map((s) => (
+                  <tr>
+                    <td><code>{s.name}</code></td>
+                    <td>{s.purpose}</td>
+                    <td>{s.capabilities}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 15: LONG SESSIONS & COST -->
+        <section id="sessions-cost" class="doc-block">
+          <span class="doc-kicker">Control &amp; Autonomy</span>
+          <h2>Long Sessions &amp; Cost Control</h2>
+          <div class="perm-grid">
+            <div>
+              <h3>Automatic context management</h3>
+              <p>
+                On long refactors or multi-hour debugging sessions, you don't need to manually reset the chat when approaching a model's token limit. Limitcode automatically summarizes earlier turns while preserving critical technical details, files, and decisions so you can keep working seamlessly.
+              </p>
+            </div>
+            <div>
+              <h3>Live token &amp; cost tracking</h3>
+              <p>
+                Press <kbd>Ctrl+Alt+Shift+C</kbd> or run <code class="inline-code">Limitcode: Show Cost Statistics</code> anytime to inspect input and output tokens, current context window usage, and estimated session cost based on model pricing. You can also configure an optional budget alert to notify you when a session passes your threshold.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 16: PROJECT INSTRUCTIONS -->
+        <section id="project-instructions" class="doc-block">
+          <span class="doc-kicker">Extending Limitcode</span>
+          <h2>Project Rules: <code class="inline-code">AGENTS.md</code></h2>
+          <p>
+            Stop repeating your tech stack, naming conventions, and test commands in every prompt. Place an instruction file in your repository root and Limitcode will discover and load it automatically at the start of every task:
+          </p>
+          <ul class="doc-bullets">
+            <li>Supported filenames: <code class="inline-code">AGENTS.md</code>, <code class="inline-code">CLAUDE.md</code>, <code class="inline-code">.limitcode.md</code>, and <code class="inline-code">INSTRUCTIONS.md</code>.</li>
+            <li>To verify which instruction files are active in your workspace, press <kbd>Ctrl+Alt+F</kbd> or run <code class="inline-code">Limitcode: Show Instructions</code> from the Command Palette.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 17: AGENT SKILLS -->
+        <section id="agent-skills" class="doc-block">
+          <span class="doc-kicker">Extending Limitcode</span>
+          <h2>Agent Skills: <code class="inline-code">.agents/skills</code></h2>
+          <p>
+            <strong>Agent Skills</strong> let you package reusable workflows, domain-specific instructions, code templates, and reference guides that the agent loads on demand only when a task needs them.
+          </p>
+          <ul class="doc-bullets">
+            <li><strong>Project skills:</strong> Place skills in <code class="inline-code">.agents/skills/&lt;skill-name&gt;/SKILL.md</code> inside your repository to share them with your team.</li>
+            <li><strong>Global skills:</strong> Place skills in <code class="inline-code">~/.agents/skills/&lt;skill-name&gt;/SKILL.md</code> to make them available across all your Sublime projects.</li>
+            <li><strong>Manage skills from the chat:</strong> Press <kbd>Ctrl+Alt+G</kbd> to open your skills folder, or simply ask Limitcode in the chat to search for, create, or install a skill for you.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 18: MCP SERVERS -->
+        <section id="mcp-servers" class="doc-block">
+          <span class="doc-kicker">Extending Limitcode</span>
+          <h2>Connecting MCP Servers</h2>
+          <p>
+            Connect external tools and services using the <strong>Model Context Protocol (MCP)</strong> — such as Playwright for browser testing, database inspectors, issue trackers, or Stripe and GitHub APIs.
+          </p>
+          <p>
+            To add an MCP server, press <kbd>Ctrl+Alt+Q</kbd> or run <code class="inline-code">Limitcode: Open MCP Settings</code> from the Command Palette, then add your local command servers or remote HTTP servers under the <code class="inline-code">"mcp"</code> block:
           </p>
           <pre class="codeblock codeblock-sm"><code>{mcpExample}</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">08 — Permissions</span>
-        <h2>You approve what mutates.</h2>
-        <p>
-          Permissions use <code class="inline-code">allow</code>, <code class="inline-code">ask</code>, and{" "}
-          <code class="inline-code">deny</code> actions on <code class="inline-code">{"{permission, pattern, action}"}</code>{" "}
-          rules with last-match-wins semantics. They apply per tool and per file, and match flexibly
-          (absolute paths, basenames, relative suffixes like <code class="inline-code">src/**</code> or{" "}
-          <code class="inline-code">*.py</code>).
-        </p>
-      </div>
-      <div class="perm-grid">
-        <div>
-          <h3>By default</h3>
-          <p>
-            Reads, listings, and searches are allowed; writes, change previews, shell commands,
-            web access, skills, and MCP calls ask first. <code class="inline-code">outside_project</code>{" "}
-            controls access beyond the workspace, and <code class="inline-code">allowed_external_paths</code>{" "}
-            authorizes specific external paths.
+          <p style="margin-top: 14px; font-size: 0.9rem;">
+            Use <code class="inline-code">{"{env:VARIABLE_NAME}"}</code> in headers to reference environment variables without hardcoding secrets in your settings file.
           </p>
-        </div>
-        <div>
-          <h3>At runtime</h3>
-          <p>
-            An <code class="inline-code">always allow</code> choice is scoped to the session and not
-            persisted. Use <code class="inline-code">Limitcode: Toggle Permissions</code>, or the
-            trust commands to allow or ask for everything. If you deny an action, the agent is told
-            not to retry it through another tool.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">09 — Sessions, memory, and cost</span>
-        <h2>Picks up where you left off.</h2>
-      </div>
-      <div class="sub-groups">
-        <div class="sub-group">
-          <h3>History and memory</h3>
-          <p>
-            Each chat is saved as Markdown under the project, and the agent keeps typed message
-            memory for the session — text, reasoning, tool calls, files and images, iteration
-            steps, and errors. The Command Palette offers{" "}
-            <code class="inline-code">New Chat</code>, <code class="inline-code">Chat History</code>,{" "}
-            <code class="inline-code">Rename Session</code>, and <code class="inline-code">Delete Session</code>.
-          </p>
-        </div>
-        <div class="sub-group">
-          <h3>Auto-compaction</h3>
-          <p>
-            As the conversation approaches the model's context limit, a dedicated compaction agent
-            summarizes it while preserving critical technical detail, and the summary is re-injected
-            as the main context. You keep working without a manual reset.
-          </p>
-        </div>
-        <div class="sub-group">
-          <h3>Cost</h3>
-          <p>
-            Limitcode tracks session cost, input/output tokens, and last context usage, using
-            per-model pricing. See it with <code class="inline-code">Limitcode: Show Cost Statistics</code>{" "}
-            (<code class="inline-code">Ctrl+Alt+Shift+C</code>); an optional budget alert warns when you pass a set limit.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">10 — Review and safety</span>
-        <h2>Nothing changes behind your back.</h2>
-      </div>
-      <div class="sub-groups">
-        <div class="sub-group">
-          <h3>Native diffs</h3>
-          <p>
-            The agent proposes changes as a diff you review before applying, opened in Sublime's own
-            diff view with Accept, Reject, Next, and Prev.
-          </p>
-        </div>
-        <div class="sub-group">
-          <h3>Snapshots and undo</h3>
-          <p>
-            Before editing, Limitcode snapshots the file. That powers{" "}
-            <code class="inline-code">Undo Last Agent Edit</code> and{" "}
-            <code class="inline-code">Redo Last Agent Edit</code>, a file watcher for external changes, and
-            protection against stale edits. <code class="inline-code">Show Snapshot History</code> lists them.
-          </p>
-        </div>
-        <div class="sub-group">
-          <h3>LSP feedback</h3>
-          <p>
-            After an edit, Limitcode waits briefly for fresh LSP diagnostics and reports any errors
-            back to the model, so it can self-correct. It degrades gracefully when no LSP is present.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">11 — Providers &amp; reasoning</span>
-        <h2>Bring the model access you already use.</h2>
-        <p>
-          A unified selector lists the models of everything you have configured and saves the
-          provider and model together, so they never drift apart.
-        </p>
-      </div>
-      <div class="sub-groups">
-        {providerGroups.map((g) => (
-          <div class="sub-group">
-            <h3>{g.name}</h3>
-            <p>{g.body}</p>
+          <div class="integ-video">
+            <VideoCard
+              src="/limit-use-mcp.mp4?v=3"
+              poster="/limit-use-mcp-poster.jpg"
+              duration="0:53"
+              caption="Limitcode Pro using a Playwright MCP server to run end-to-end browser verification from Sublime Text."
+            />
           </div>
-        ))}
-        <div class="sub-group">
-          <h3>Reasoning effort</h3>
+        </section>
+
+        <!-- SECTION 19: ACTIONS REFERENCE -->
+        <section id="actions-reference" class="doc-block">
+          <span class="doc-kicker">Reference</span>
+          <h2>All 16 Agent Capabilities</h2>
           <p>
-            <code class="inline-code">Limitcode: Set Reasoning Effort</code> switches between off, low,
-            medium, and high, mapped to each provider's native parameter — Anthropic effort, OpenAI{" "}
-            <code class="inline-code">reasoning_effort</code>, Gemini thinking budget, DeepSeek and Kimi
-            thinking, and normalized effort through OpenRouter. Models without support ignore it
-            without breaking the request.
+            Here is the complete list of actions Limitcode Pro can perform on your behalf, depending on the active work mode and your permission settings:
           </p>
-        </div>
-      </div>
-      <div class="prov-cta">
-        <p>Account routes depend on provider-controlled behavior. Google Antigravity in particular carries elevated account risk — prefer a secondary Google account and use it at your own responsibility.</p>
-        <a class="btn btn-primary" href="/providers">Full providers guide <span class="arrow">→</span></a>
-      </div>
-
-      <div class="integ-video">
-        <VideoCard
-          src="/limit-use-mcp.mp4?v=3"
-          poster="/limit-use-mcp-poster.jpg"
-          duration="0:53"
-          caption="Limitcode Pro driving a Playwright MCP server to run real tests."
-        />
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">12 — Command Palette</span>
-        <h2>Everything starts with <code class="inline-code">Limitcode:</code>.</h2>
-        <p>Open the Command Palette with <code class="inline-code">Ctrl+Shift+P</code> and type any command prefix.</p>
-      </div>
-      <div class="palette-grid">
-        {paletteGroups.map((group) => (
-          <article class="palette-group">
-            <h3>{group.name}</h3>
-            <ul>
-              {group.commands.map((cmd) => (
-                <li><code>Limitcode: {cmd}</code></li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">13 — Keyboard shortcuts</span>
-        <h2>Built-in shortcuts.</h2>
-      </div>
-      <div class="shortcut-list">
-        {shortcuts.map((s) => (
-          <div class="shortcut-row">
-            <kbd>{s.keys}</kbd>
-            <span>{s.action}</span>
+          <div class="table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Action</th>
+                  <th>Category</th>
+                  <th>What you can use it for</th>
+                </tr>
+              </thead>
+              <tbody>
+                {agentActions.map((t) => (
+                  <tr>
+                    <td><code>{t.name}</code></td>
+                    <td>{t.category}</td>
+                    <td>{t.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ))}
-      </div>
-    </section>
+        </section>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">14 — Settings</span>
-        <h2>Reference settings file.</h2>
-        <p>
-          Open <code class="inline-code">Preferences → Package Settings → Limitcode → Settings</code>.
-          Provider and model use <code class="inline-code">default_provider</code> and{" "}
-          <code class="inline-code">default_model</code>.
-        </p>
-      </div>
-      <pre class="codeblock"><code>{settingsExample}</code></pre>
-
-      <div class="table-wrap">
-        <table class="docs-table">
-          <thead>
-            <tr><th>Key</th><th>Description</th></tr>
-          </thead>
-          <tbody>
-            {settingsKeys.map((s) => (
-              <tr><td><code>{s.key}</code></td><td>{s.desc}</td></tr>
+        <!-- SECTION 20: COMMAND PALETTE -->
+        <section id="commands" class="doc-block">
+          <span class="doc-kicker">Reference</span>
+          <h2>Command Palette Reference</h2>
+          <p>
+            Open the Sublime Command Palette (<kbd>Ctrl+Shift+P</kbd> / <kbd>Cmd+Shift+P</kbd>) and type <code class="inline-code">Limitcode:</code> to access every command:
+          </p>
+          <div class="palette-grid">
+            {paletteGroups.map((group) => (
+              <article class="palette-group">
+                <h3>{group.name}</h3>
+                <ul>
+                  {group.commands.map((cmd) => (
+                    <li><code>Limitcode: {cmd}</code></li>
+                  ))}
+                </ul>
+              </article>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+          </div>
+        </section>
 
-    <section class="docs-section container">
-      <div class="section-head">
-        <span class="section-num">15 — FAQ</span>
-        <h2>Common questions.</h2>
-      </div>
-      <div class="faq-list">
-        {faq.map((item) => (
-          <details class="faq-item">
-            <summary>{item.q}</summary>
-            <p>{item.a}</p>
-          </details>
-        ))}
-      </div>
-    </section>
+        <!-- SECTION 21: SHORTCUTS -->
+        <section id="shortcuts" class="doc-block">
+          <span class="doc-kicker">Reference</span>
+          <h2>Keyboard Shortcuts</h2>
+          <p>
+            Default keybindings included out of the box (customizable via <strong>Preferences → Package Settings → Limitcode → Key Bindings</strong>):
+          </p>
+          <div class="shortcut-list">
+            {shortcuts.map((s) => (
+              <div class="shortcut-row">
+                <kbd>{s.keys}</kbd>
+                <span>{s.action}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
+        <!-- SECTION 22: SETTINGS -->
+        <section id="settings" class="doc-block">
+          <span class="doc-kicker">Reference</span>
+          <h2>Settings (<code class="inline-code">Limitcode.sublime-settings</code>)</h2>
+          <p>
+            Press <kbd>Ctrl+Alt+S</kbd> or go to <strong>Preferences → Package Settings → Limitcode → Settings</strong> to customize providers, permissions, and appearance:
+          </p>
+          <pre class="codeblock"><code>{settingsExample}</code></pre>
+
+          <div class="table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Setting</th>
+                  <th>What it controls</th>
+                </tr>
+              </thead>
+              <tbody>
+                {settingsKeys.map((s) => (
+                  <tr>
+                    <td><code>{s.key}</code></td>
+                    <td>{s.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 23: FAQ -->
+        <section id="faq" class="doc-block">
+          <span class="doc-kicker">Reference</span>
+          <h2>Troubleshooting &amp; FAQ</h2>
+          <div class="faq-list">
+            {faq.map((item) => (
+              <details class="faq-item">
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Bottom Support Banner -->
     <section class="docs-boundary">
       <div class="container">
-        <span class="eyebrow">Still stuck?</span>
-        <h2>Ask Jawuil directly.</h2>
-        <p>Installation help and questions about your license or a specific provider.</p>
-        <a class="btn btn-light" href="mailto:hola@jawuil.dev?subject=Limitcode%20Pro">hola@jawuil.dev →</a>
+        <span class="eyebrow">Direct support from the creator</span>
+        <h2>Need help setting up your workflow?</h2>
+        <p>Ask about installation, licensing, or connecting your preferred AI provider — in English or Spanish.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px;">
+          <a class="btn btn-primary" href="/#pricing">Get Limitcode Pro — $29 →</a>
+          <a class="btn btn-light" href="mailto:hola@jawuil.dev?subject=Limitcode%20Pro%20Support">Email hola@jawuil.dev →</a>
+        </div>
       </div>
     </section>
   </main>
+
   <Footer />
 </Layout>
 
+<script>
+  // Highlight active section in the sticky docs sidebar while scrolling
+  const links = Array.from(document.querySelectorAll("[data-docs-link]"));
+  const sections = links
+    .map((link) => {
+      const id = link.getAttribute("href")?.slice(1);
+      return id ? document.getElementById(id) : null;
+    })
+    .filter((el): el is HTMLElement => el !== null);
+
+  if (sections.length > 0 && "IntersectionObserver" in window) {
+    const setActive = (id: string) => {
+      links.forEach((link) => {
+        const match = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("is-active", match);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      { rootMargin: "-96px 0px -65% 0px", threshold: 0 }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+  }
+</script>
+
 <style>
   .docs-hero {
-    padding-top: clamp(64px, 8vw, 112px);
-    padding-bottom: clamp(56px, 7vw, 96px);
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(40px, 5vw, 64px);
+    border-bottom: 1px solid var(--hairline);
   }
 
   .docs-hero h1 {
-    max-width: 16ch;
-    margin: 18px 0 22px;
+    max-width: 18ch;
+    margin: 14px 0 18px;
   }
 
   .docs-hero .lead {
-    max-width: 62ch;
+    max-width: 64ch;
   }
 
-  .docs-section {
-    padding-top: clamp(56px, 7vw, 96px);
-    padding-bottom: clamp(56px, 7vw, 96px);
-    border-top: 1px solid var(--hairline);
-  }
-
-  .quick-grid {
+  /* 2-Column Docs Shell */
+  .docs-layout {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: clamp(36px, 5vw, 60px);
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: clamp(36px, 5vw, 72px);
+    align-items: start;
+    padding-top: clamp(36px, 5vw, 64px);
+    padding-bottom: clamp(64px, 8vw, 112px);
   }
 
-  .quick-card {
-    padding: 28px;
-    border: 1px solid var(--hairline);
+  .docs-sidebar {
+    position: sticky;
+    top: 84px;
+    max-height: calc(100vh - 104px);
+    overflow-y: auto;
+    padding-right: 12px;
+    border-right: 1px solid var(--hairline);
+  }
+
+  .sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+
+  .sidebar-heading {
+    display: block;
+    font-family: var(--font-prose);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 8px;
+  }
+
+  .sidebar-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .sidebar-group a {
+    display: block;
+    font-size: 0.86rem;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    padding: 5px 10px;
+    border-left: 2px solid transparent;
+    border-radius: 0 4px 4px 0;
+    transition: color 140ms ease, background 140ms ease, border-color 140ms ease;
+  }
+
+  .sidebar-group a:hover {
+    color: var(--ink);
     background: var(--paper-deep);
   }
 
-  .quick-card .ord {
+  .sidebar-group a.is-active {
+    color: var(--ink);
+    font-weight: 600;
+    border-left-color: var(--signal);
+    background: var(--paper-deep);
+  }
+
+  .sidebar-cta {
+    padding: 16px;
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+  }
+
+  .sidebar-cta p {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .btn-sm {
+    padding: 9px 14px;
+    font-size: 0.82rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Main Content Blocks */
+  .docs-content {
+    min-width: 0;
+  }
+
+  .doc-block {
+    padding: clamp(36px, 5vw, 56px) 0;
+    border-top: 1px solid var(--hairline);
+    scroll-margin-top: 88px;
+  }
+
+  .doc-block:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .doc-kicker {
+    display: inline-block;
     font-family: var(--font-prose);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 10px;
+  }
+
+  .doc-block h2 {
+    font-size: var(--step-3);
+    margin-bottom: 16px;
+    max-width: 28ch;
+  }
+
+  .doc-block > p {
+    max-width: 68ch;
+    margin-bottom: 16px;
+  }
+
+  .doc-bullets {
+    list-style: disc;
+    padding-left: 20px;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 68ch;
+    color: var(--ink-soft);
+  }
+
+  .doc-bullets li strong {
+    color: var(--ink);
+  }
+
+  .numbered-steps {
+    list-style: decimal;
+    padding-left: 22px;
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 68ch;
+    color: var(--ink-soft);
+  }
+
+  .numbered-steps li strong {
+    color: var(--ink);
+  }
+
+  /* Step Cards */
+  .step-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .step-card {
+    padding: 22px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+    border-radius: 4px;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
     font-size: 0.72rem;
     color: var(--signal);
-    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  .quick-card h3 {
-    margin: 14px 0 10px;
+  .step-card h3 {
     font-size: var(--step-1);
+    margin: 10px 0 8px;
   }
 
-  .quick-card p {
+  .step-card p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  /* Method Cards */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .method-card {
+    padding: 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+    border-radius: 4px;
+  }
+
+  .method-card h3 {
+    font-size: var(--step-0);
+    margin-bottom: 8px;
+  }
+
+  .method-card p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  /* Feature Detail List */
+  .feature-detail-list {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+    max-width: 72ch;
+  }
+
+  .feature-detail {
+    padding-left: 18px;
+    border-left: 2px solid var(--hairline);
+  }
+
+  .feature-detail h3 {
+    font-size: var(--step-0);
+    margin-bottom: 6px;
+  }
+
+  .feature-detail p {
+    font-size: 0.93rem;
+    color: var(--ink-soft);
+  }
+
+  /* Callout */
+  .callout {
+    margin-top: 24px;
+    padding: 18px 22px;
+    border: 1px solid rgba(232, 97, 50, 0.35);
+    border-left: 4px solid var(--signal);
+    background: rgba(232, 97, 50, 0.06);
     font-size: 0.92rem;
     color: var(--ink-soft);
+    max-width: 72ch;
   }
 
-  .code {
-    margin-top: 18px;
-    padding: 10px 14px;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    background: var(--paper);
-    border: 1px solid var(--hairline);
-    border-left: 3px solid var(--signal);
-    overflow-x: auto;
+  .callout strong {
+    color: var(--ink);
   }
 
-  .code .c {
-    color: var(--sage);
+  .text-link {
+    color: var(--signal);
+    font-weight: 600;
+    border-bottom: 1px solid currentColor;
   }
 
   .inline-code {
     font-family: var(--font-mono);
-    font-size: 0.86em;
+    font-size: 0.84em;
     background: var(--paper-deep);
     border: 1px solid var(--hairline);
     padding: 1px 6px;
@@ -875,71 +1461,34 @@ const faq = [
     color: var(--ink);
   }
 
-  /* Capability list */
-  .cap-list {
-    margin-top: clamp(36px, 5vw, 60px);
-    border-top: 1px solid var(--hairline);
-  }
-
-  .cap-row {
-    display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
-    gap: 24px;
-    padding: 26px 0;
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .cap-num {
-    font-family: var(--font-prose);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: var(--signal);
-    padding-top: 3px;
-  }
-
-  .cap-body h3 {
-    font-size: var(--step-1);
-    margin-bottom: 8px;
-  }
-
-  .cap-body p {
-    max-width: 64ch;
-    color: var(--ink-soft);
-  }
-
-  .cap-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 14px;
-  }
-
-  .cap-meta code {
+  kbd {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--ink-soft);
+    font-size: 0.8em;
+    color: var(--ink);
     background: var(--paper-deep);
-    border: 1px solid var(--hairline-soft);
-    padding: 3px 7px;
-    border-radius: 3px;
+    border: 1px solid var(--hairline);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    white-space: nowrap;
   }
 
-  /* Tables (tools, modes, subagents, settings) */
+  /* Tables */
   .table-wrap {
-    margin-top: clamp(28px, 4vw, 44px);
+    margin-top: 22px;
     overflow-x: auto;
   }
 
   .docs-table {
     width: 100%;
-    min-width: 620px;
+    min-width: 580px;
     border-collapse: collapse;
   }
 
   .docs-table th,
   .docs-table td {
     text-align: left;
-    padding: 12px 20px 12px 0;
+    padding: 12px 18px 12px 0;
     border-bottom: 1px solid var(--hairline);
     font-size: 0.9rem;
     vertical-align: top;
@@ -952,7 +1501,7 @@ const faq = [
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .docs-table td:first-child {
@@ -966,35 +1515,52 @@ const faq = [
     color: var(--ink);
   }
 
-  /* Sub-groups (instructions, skills, MCP, sessions, safety, providers) */
+  /* Sub-groups */
   .sub-groups {
-    margin-top: clamp(28px, 4vw, 44px);
+    margin-top: 22px;
     display: grid;
-    gap: 30px;
-    max-width: 880px;
+    gap: 24px;
+    max-width: 72ch;
   }
 
   .sub-group h3 {
     font-size: var(--step-0);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .sub-group p {
     color: var(--ink-soft);
-    max-width: 72ch;
+    font-size: 0.93rem;
+  }
+
+  .perm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 4vw, 48px);
+    margin-top: 22px;
+  }
+
+  .perm-grid h3 {
+    font-size: var(--step-0);
+    margin-bottom: 8px;
+  }
+
+  .perm-grid p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
   }
 
   .palette-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: clamp(36px, 5vw, 60px);
+    gap: 16px;
+    margin-top: 24px;
   }
 
   .palette-group {
     border: 1px solid var(--hairline);
     background: var(--paper-deep);
-    padding: 26px;
+    padding: 22px;
   }
 
   .palette-group h3 {
@@ -1002,8 +1568,8 @@ const faq = [
     font-size: 0.74rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
+    color: var(--signal);
+    margin-bottom: 12px;
   }
 
   .palette-group ul {
@@ -1011,11 +1577,11 @@ const faq = [
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
   }
 
   .palette-group li {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--ink-soft);
   }
 
@@ -1025,7 +1591,7 @@ const faq = [
   }
 
   .shortcut-list {
-    margin-top: clamp(36px, 5vw, 60px);
+    margin-top: 22px;
     border-top: 1px solid var(--hairline);
     max-width: 760px;
   }
@@ -1033,33 +1599,26 @@ const faq = [
   .shortcut-row {
     display: flex;
     align-items: center;
-    gap: 28px;
-    padding: 14px 0;
+    gap: 24px;
+    padding: 12px 0;
     border-bottom: 1px solid var(--hairline);
   }
 
   .shortcut-row kbd {
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    color: var(--ink);
-    background: var(--paper-deep);
-    border: 1px solid var(--hairline);
-    border-bottom-width: 2px;
-    border-radius: 5px;
+    font-size: 0.8rem;
     padding: 4px 10px;
-    min-width: 150px;
+    min-width: 170px;
     text-align: center;
-    white-space: nowrap;
   }
 
   .shortcut-row span {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--ink-soft);
   }
 
   .codeblock {
-    margin: clamp(36px, 5vw, 60px) 0 0;
-    padding: 26px;
+    margin: 22px 0 0;
+    padding: 22px;
     background: #1c1a16;
     border: 1px solid var(--hairline);
     border-radius: 6px;
@@ -1068,69 +1627,24 @@ const faq = [
 
   .codeblock code {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     line-height: 1.65;
     color: #e8e2d4;
     white-space: pre;
   }
 
   .codeblock-sm {
-    margin-top: 18px;
-    padding: 20px;
-  }
-
-  .codeblock-sm code {
-    font-size: 0.76rem;
-  }
-
-  .perm-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(36px, 6vw, 80px);
-    margin-top: 44px;
-  }
-
-  .perm-grid h3 {
-    font-size: var(--step-0);
-    margin-bottom: 10px;
-  }
-
-  .perm-grid p {
-    font-size: 0.93rem;
-    color: var(--ink-soft);
-  }
-
-  .prov-cta {
-    margin-top: clamp(36px, 5vw, 60px);
-    display: grid;
-    grid-template-columns: 1.4fr auto;
-    align-items: center;
-    gap: 32px;
-    padding: 28px 32px;
-    border: 1px solid rgba(232, 97, 50, 0.42);
-    border-left: 4px solid var(--signal);
-    background: rgba(232, 97, 50, 0.07);
-  }
-
-  .prov-cta p {
-    font-size: 0.94rem;
-    color: var(--ink-soft);
-    margin: 0;
+    margin-top: 16px;
+    padding: 18px;
   }
 
   .integ-video {
-    margin-top: 28px;
+    margin-top: 24px;
     max-width: 720px;
   }
 
-  .integ-video p {
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
   .faq-list {
-    margin: clamp(36px, 5vw, 60px) auto 0;
+    margin-top: 22px;
     max-width: 780px;
   }
 
@@ -1141,8 +1655,8 @@ const faq = [
   .faq-item summary {
     cursor: pointer;
     font-weight: 600;
-    font-size: 1.02rem;
-    padding: 20px 4px;
+    font-size: 1rem;
+    padding: 18px 4px;
     list-style: none;
     display: flex;
     align-items: center;
@@ -1165,16 +1679,16 @@ const faq = [
   }
 
   .faq-item p {
-    padding: 0 4px 22px;
-    font-size: 0.94rem;
+    padding: 0 4px 20px;
+    font-size: 0.93rem;
     color: var(--ink-soft);
-    max-width: 62ch;
+    max-width: 64ch;
   }
 
   .docs-boundary {
     background: var(--ink);
     color: var(--paper);
-    padding: clamp(64px, 9vw, 120px) 0;
+    padding: clamp(64px, 9vw, 112px) 0;
   }
 
   .docs-boundary h2,
@@ -1191,38 +1705,39 @@ const faq = [
     color: var(--paper-soft);
   }
 
-  .docs-boundary .btn {
-    margin-top: 28px;
-  }
-
-  @media (max-width: 640px) {
-    .cap-row {
+  @media (max-width: 980px) {
+    .docs-layout {
       grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 22px 0;
     }
 
-    .cap-num {
-      padding-top: 0;
+    .docs-sidebar {
+      position: static;
+      max-height: none;
+      border-right: 0;
+      border-bottom: 1px solid var(--hairline);
+      padding-right: 0;
+      padding-bottom: 20px;
+    }
+
+    .sidebar-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
     }
   }
 
-  @media (max-width: 800px) {
-    .quick-grid,
+  @media (max-width: 760px) {
+    .step-cards,
+    .method-grid,
     .palette-grid,
     .perm-grid {
       grid-template-columns: 1fr;
     }
 
-    .prov-cta {
-      grid-template-columns: 1fr;
-      padding: 24px;
-    }
-
     .shortcut-row {
       flex-direction: column;
       align-items: flex-start;
-      gap: 8px;
+      gap: 6px;
     }
 
     .shortcut-row kbd {

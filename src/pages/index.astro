@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import ProofStrip from "../components/ProofStrip.astro";
+import PainPoints from "../components/PainPoints.astro";
 import WhyLimitcode from "../components/WhyLimitcode.astro";
 import Lightweight from "../components/Lightweight.astro";
 import Capabilities from "../components/Capabilities.astro";
@@ -26,9 +27,9 @@ import Footer from "../components/Footer.astro";
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows, macOS",
     "applicationSubCategory": "Coding agent for Sublime Text",
-    "description": "A lightweight coding-agent workflow inside Sublime Text: stay in your editor while Limitcode inspects project files, applies approved edits, runs approved commands, and uses skills, MCP servers, and web search under configurable permissions.",
+    "description": "A lightweight coding-agent workflow inside Sublime Text: stay in your editor while Limitcode inspects project files, applies approved edits, runs approved commands, and uses skills, MCP servers, and web search under configurable permissions. One-time $29 early access.",
     "url": "https://limitcode.jawuil.dev/",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "offers": { "@type": "Offer", "price": "29", "priceCurrency": "USD", "availability": "https://schema.org/LimitedAvailability" },
     "publisher": { "@id": "https://limitcode.jawuil.dev/#organization" },
     "featureList": "Side-by-side streaming chat, file inspection and edits, approved command execution, web search, skills, MCP servers, subagents, account sign-in for GitHub Copilot, OpenAI Codex, and Google Antigravity, local models via Ollama and LM Studio"
   })} />
@@ -36,6 +37,7 @@ import Footer from "../components/Footer.astro";
   <main>
     <Hero />
     <ProofStrip />
+    <PainPoints />
     <WhyLimitcode />
     <Lightweight />
     <Capabilities />

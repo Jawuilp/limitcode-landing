@@ -4,27 +4,27 @@ import VideoCard from "./VideoCard.astro";
 const capabilities = [
   {
     index: "01 / PROJECT",
-    title: "Work against the project on disk.",
-    body: "Limitcode can list, read, and search files, then create targeted edits, apply patches, and run build or test commands from the same conversation.",
-    meta: ["inspect files", "targeted edits", "patches", "builds & tests"],
+    title: "Go from question to tested code in one place.",
+    body: "Ask Limitcode to explore your folders, search across files, apply targeted edits or patches, and run your build or test suite — all from the same side-by-side conversation.",
+    meta: ["inspect files", "targeted edits", "native diffs", "builds & tests"],
   },
   {
     index: "02 / CONTROL",
-    title: "Mutating tools ask by default.",
-    body: "Reading and searching can stay frictionless. Writes, change previews, shell commands, web search and page fetching, and MCP calls follow configurable permission rules before they change state.",
-    meta: ["ask by default", "web search", "session rules", "cancel anytime"],
+    title: "Every edit and command waits for your green light.",
+    body: "File reads and searches stay fast and automatic, while file writes, diffs, shell commands, web lookups, and MCP tools ask for your approval first. Protect sensitive paths like .env by default.",
+    meta: ["ask before mutating", "file protection", "session rules", "stop anytime"],
   },
   {
-    index: "03 / MEMORY",
-    title: "Keep context without losing recovery.",
-    body: "Conversations are saved by project, long sessions compact automatically, and agent edits receive snapshots for Limitcode Undo and Redo during the session.",
-    meta: ["sessions", "auto-compaction", "undo / redo"],
+    index: "03 / RECOVERY & MEMORY",
+    title: "Keep long sessions alive — and undo any edit in one shortcut.",
+    body: "Conversations are saved per project and automatically summarized when context gets long so you never hit a wall. Every file edit is backed up so Ctrl+Alt+U reverts it immediately.",
+    meta: ["project sessions", "long-session memory", "instant undo / redo"],
   },
   {
     index: "04 / EXTEND",
-    title: "Bring the workflow your repository already uses.",
-    body: "Load repository instructions, reusable skills, configured MCP connections, and focused subagents without moving the task into a separate application.",
-    meta: ["project instructions", "skills", "MCP", "subagents"],
+    title: "Teach it your repo's conventions, Skills, and MCP tools.",
+    body: "Drop an AGENTS.md file in your repo, load reusable Agent Skills, connect local or remote MCP servers, and delegate focused work to subagents without leaving Sublime.",
+    meta: ["AGENTS.md rules", "Agent Skills", "MCP servers", "subagents"],
     video: "/limit-search-skilss.mp4?v=3",
   },
 ];
@@ -32,9 +32,9 @@ const capabilities = [
 
 <section id="features" class="capabilities container">
   <div class="section-head">
-    <span class="section-num reveal">04 — Capabilities</span>
-    <h2 class="reveal d1">A working loop, <em class="not-wrapper">not a prompt wrapper</em>.</h2>
-    <p class="reveal d2">Limitcode combines project tools, approval boundaries, conversation memory, and recovery inside the Sublime workflow you already use.</p>
+    <span class="section-num reveal">05 — Capabilities</span>
+    <h2 class="reveal d1">A real coding agent, <em class="not-wrapper">not a chat wrapper</em>.</h2>
+    <p class="reveal d2">Everything you need to plan, edit, test, and review real multi-file changes inside Sublime Text — while staying in complete control of your codebase.</p>
   </div>
 
   <div class="capability-ledger">

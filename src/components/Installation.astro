@@ -2,30 +2,30 @@
 const steps = [
   {
     ord: "Step 01 / 03",
-    title: "Download the matching build",
-    body: "Keep the activation key from Gumroad and download the package matched to your Sublime Text build.",
-    code: "Choose the download for your Sublime build",
+    title: "Download your Sublime build",
+    body: "After checkout on Gumroad, copy your license key and download the package matched to your Sublime Text 4 build.",
+    code: "Download Limitcode.sublime-package",
   },
   {
     ord: "Step 02 / 03",
-    title: "Install and activate",
-    body: "Copy Limitcode.sublime-package into Installed Packages, restart Sublime, then activate the device from the Command Palette.",
-    code: "Command Palette → Limitcode Pro: Activate License",
+    title: "Drop into Installed Packages & activate",
+    body: "Move the file into Sublime's Installed Packages folder, restart Sublime Text, and activate your license from the Command Palette.",
+    code: "Ctrl+Shift+P → Limitcode Pro: Activate License",
   },
   {
     ord: "Step 03 / 03",
-    title: "Connect a provider",
-    body: "Add an API key, sign in with a supported account, use an existing CLI login, or point Limitcode at a local endpoint. Then open Limitcode Chat.",
-    code: "Command Palette → Limitcode: Setup Provider API Key",
+    title: "Connect a provider & press Ctrl+Alt+L",
+    body: "Paste an API key, sign in with Copilot / Codex / Antigravity, reuse Claude Code CLI, or connect local Ollama. Open the chat and start shipping.",
+    code: "Ctrl+Shift+P → Limitcode: Setup Provider API Key",
   },
 ];
 ---
 
 <section id="install" class="container">
   <div class="section-head">
-    <span class="section-num">07 - Installation</span>
-    <h2>From download to first task in three steps.</h2>
-    <p>No separate daemon is required. API-key providers work directly from the plugin; account, CLI, and local integrations use their own optional setup.</p>
+    <span class="section-num">08 - Installation</span>
+    <h2>Up and running in under two minutes.</h2>
+    <p>No external daemon to configure. Drop the package in, connect your preferred model, and open the side-by-side chat with <code class="mono">Ctrl+Alt+L</code>.</p>
   </div>
 
   <div class="install-steps">
@@ -39,7 +39,12 @@ const steps = [
     ))}
   </div>
 
-  <a class="docs-link" href="mailto:hola@jawuil.dev?subject=Limitcode%20Pro%20installation">
-    Need installation help? Email Jawuil →
-  </a>
+  <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center;">
+    <a class="docs-link" href="/docs/">
+      Read the complete User Guide &amp; Documentation →
+    </a>
+    <a class="docs-link" href="mailto:hola@jawuil.dev?subject=Limitcode%20Pro%20installation">
+      Need installation help? Email Jawuil →
+    </a>
+  </div>
 </section>

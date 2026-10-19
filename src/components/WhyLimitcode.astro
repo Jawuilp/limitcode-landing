@@ -1,28 +1,28 @@
 ---
 const editorNative = [
   {
-    label: "Send to Agent",
-    body: "Pass the current selection or the active file to the agent explicitly, with one shortcut — not by pasting content back and forth.",
+    label: "One-keystroke context (Ctrl+Alt+A)",
+    body: "Hand your active selection or open file directly to the agent — no manual copy-pasting or explaining line numbers.",
   },
   {
-    label: "Permission rules",
-    body: "Reads and searches can stay frictionless while writes, shell commands, web access, and MCP calls ask by default. You set the boundaries.",
+    label: "Native diff review & instant Undo",
+    body: "Inspect proposed changes inside Sublime's own diff view (Accept / Reject) and revert any agent edit in one shortcut (Ctrl+Alt+U).",
   },
   {
-    label: "Undo / Redo",
-    body: "Agent edits receive snapshots, so you can undo or redo them during the session without leaving the editor.",
+    label: "Granular approval boundaries",
+    body: "Let file reads and codebase searches run freely while writes, shell commands, web lookups, and MCP tools ask for your green light.",
   },
   {
-    label: "LSP diagnostics",
-    body: "After an edit, syntax and type errors from Sublime's LSP feed back to the agent — the editor itself stays part of the loop.",
+    label: "Automatic LSP error feedback",
+    body: "When an edit introduces a syntax or type issue, Sublime's LSP reports it back so the agent can fix its own mistake immediately.",
   },
   {
-    label: "Scoped modes",
-    body: "Code, Architect, Ask, and Debug modes give each step a different toolset, instead of one always-maximal configuration.",
+    label: "Four task-focused modes",
+    body: "Switch between Ask (read-only), Architect (planning), Code (implementation), and Debug so the agent only uses the tools the step requires.",
   },
   {
-    label: "Visible costs",
-    body: "Provider, model, reasoning effort, context, and per-session cost statistics are always one status bar away.",
+    label: "Live token & cost visibility",
+    body: "See your active provider, model, reasoning effort, context usage, and session cost right in the status bar — with optional budget alerts.",
   },
 ];
 ---
@@ -30,38 +30,28 @@ const editorNative = [
 <section id="why-limitcode" class="why-lc">
   <div class="container">
     <div class="section-head">
-      <span class="section-num reveal">02 — Why Limitcode</span>
-      <h2 class="reveal d1">Why not just use Claude Code, Codex, Pi or OpenCode in a terminal?</h2>
+      <span class="section-num reveal">03 — Why Limitcode</span>
+      <h2 class="reveal d1">Why not just run Claude Code, Codex, Pi or OpenCode in a terminal?</h2>
       <p class="reveal d2">
-        Terminal agents are excellent for terminal-first workflows — and Limitcode
-        is not trying to replace them. It is built for developers who want the
-        agent to live where they already work: inside Sublime Text.
+        Terminal agents are great if you prefer a shell-driven workflow. Limitcode is built for developers who think and navigate inside their editor — and want the agent right next to their code.
       </p>
     </div>
 
     <div class="why-grid">
       <article class="why-card reveal d1">
-        <h3>If your workflow is terminal-first, keep it.</h3>
+        <h3>Keep your terminal agents if you love the shell.</h3>
         <p>
-          Running a coding agent in a shell, next to any editor, is a proven way
-          to work. Claude Code, Codex, Pi, and OpenCode do that well, and
-          Limitcode does not attempt to re-create every terminal-first workflow.
+          Running Claude Code, Codex, Pi, or OpenCode in a terminal window is a solid workflow. Limitcode isn't here to force you out of tools that already work for you.
         </p>
         <p>
-          Limitcode exists for the other case: you want the agent inside the
-          editor you already have open — reading the project on disk, applying
-          approved edits, running approved commands — without adopting a
-          terminal-centric loop. A realistic setup is Limitcode as the
-          lightweight default agent inside Sublime, while terminal agents stay
-          available for the specialized workflows that call for them.
+          Limitcode exists for the moments you want to stay in Sublime Text: reading files on disk, reviewing diffs side-by-side, sending a highlighted function in one keystroke, and running approved commands without context-switching to a separate terminal loop. Many buyers use Limitcode as their everyday default inside Sublime and keep CLI agents for heavy shell tasks.
         </p>
       </article>
 
       <article class="why-card reveal d2">
-        <h3>More than a terminal embedded in Sublime.</h3>
+        <h3>A true Sublime citizen — not a wrapped terminal.</h3>
         <p>
-          The chat is a native Sublime view working against the project on disk,
-          not a wrapped shell. That shows up in the details:
+          Because Limitcode is a native Sublime Text view rather than an embedded shell, it connects directly to how you already edit code:
         </p>
         <ul class="why-list">
           {editorNative.map((item) => (

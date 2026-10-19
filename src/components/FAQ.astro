@@ -2,51 +2,51 @@
 const faqs = [
   {
     q: "Why not just use Claude Code, Codex, Pi or OpenCode in a terminal?",
-    a: "If you prefer a terminal-first workflow, those tools may be a better fit — Limitcode is not trying to replace them. Limitcode is designed for developers who want agentic coding integrated directly into Sublime Text. A realistic setup: Limitcode as the lightweight default agent inside Sublime, while still using terminal agents when a specialized workflow calls for them.",
+    a: "If you prefer a terminal-first workflow, keep using them — Limitcode is not trying to replace your shell tools. Limitcode is built for developers who want an agent integrated directly into Sublime Text: passing selections with Ctrl+Alt+A, reviewing diffs natively, getting automatic LSP error feedback, and undoing edits in one shortcut without switching windows.",
   },
   {
-    q: "Does Limitcode require another background agent process?",
-    a: "Direct API providers work without a separate Limitcode agent daemon. Limitcode runs through Sublime's plugin environment, while optional CLI, account, and local integrations may use their respective runtimes.",
+    q: "Does Limitcode slow down Sublime Text or run a background daemon?",
+    a: "No. When using direct API keys, Limitcode runs inside Sublime's plugin host with no separate background daemon. Close the chat view and Sublime Text behaves exactly as it always has.",
   },
   {
-    q: "Does Limitcode support diffs?",
-    a: "Yes. Limitcode supports basic change previews (diffs) so you can see proposed edits before they are applied.",
+    q: "Can I review changes before they touch my files, or undo them?",
+    a: "Yes. Proposed edits can be inspected in Sublime Text's native diff view (Accept / Reject), and every file touched by the agent is backed up first so you can undo (Ctrl+Alt+U) or redo (Ctrl+Alt+Shift+R) any agent edit at any point in the session.",
   },
   {
     q: "Does it work with my Sublime Text version?",
-    a: "Limitcode targets Sublime Text builds 4050+. Download the package matched to your Sublime build.",
+    a: "Limitcode Pro supports Sublime Text 4 (builds 4050+) on Windows, macOS, and Linux. After purchase, you simply download the package matched to your Sublime Text build.",
   },
   {
-    q: "Which AI providers can I use?",
-    a: "The main integrations are OpenAI, Anthropic, Google Gemini, GitHub Copilot, OpenRouter, and Mistral AI. Limitcode also includes OpenAI-compatible adapters for services such as DeepSeek and custom or local endpoints including Ollama, LM Studio, and LiteLLM. Model and tool compatibility still depends on the selected provider.",
+    q: "Which AI models and providers can I connect?",
+    a: "Over 40 providers are supported out of the box: OpenAI, Anthropic, Google Gemini, OpenRouter (500+ models), DeepSeek, Mistral, Groq, xAI, plus account sign-in for GitHub Copilot, OpenAI Codex, and Google Antigravity, CLI bridges for Claude Code and Codex CLI, and local models via Ollama, LM Studio, and LiteLLM.",
   },
   {
-    q: "Do I need my own API key?",
-    a: "It depends on the integration. Direct API providers require your own key. Copilot uses an eligible GitHub account, CLI-backed providers use an existing local login, and local endpoints may not require a key. Provider usage or subscriptions are not included with Limitcode Pro.",
+    q: "Do I need my own API key or subscription?",
+    a: "Yes — you bring your own access so you never pay a middleman markup. You can use a direct API key, sign in with an eligible GitHub Copilot / Codex / Antigravity account, reuse your existing Claude Code CLI login, or run local models for free via Ollama or LM Studio.",
   },
   {
-    q: "What does the license include?",
-    a: "A one-time purchase for Limitcode Pro with activation on up to three personal devices, plus free updates for one year. Updates released during that year are included at no extra cost, and the version you own keeps working after it ends. Provider usage or subscriptions are not included.",
+    q: "What happens after the 1 year of free updates ends?",
+    a: "The version of Limitcode Pro you own keeps working on your machines. You are never locked out of your editor when the update window ends, and there is no mandatory subscription.",
   },
   {
-    q: "How many devices can I activate?",
-    a: "Up to three personal devices. Periodic verification refreshes offline access, which can continue for up to 30 days after a successful check.",
+    q: "How many devices can I activate, and does it work offline?",
+    a: "One license activates up to 3 personal devices (and you can deactivate a machine anytime from the Command Palette to move your seat). Once activated, periodic verification lets you work offline for up to 30 days at a time.",
   },
   {
-    q: "What happens before an edit or shell command?",
-    a: "Read, list, and search tools are allowed by default. File writes, change previews, shell commands, web search, page fetching, and MCP calls ask by default. You can change those rules in Limitcode settings, cancel an active run, and use Limitcode Undo or Redo for agent edits during the session.",
+    q: "What happens before the agent edits a file or runs a shell command?",
+    a: "Reading and searching your project are allowed by default so the agent can answer questions smoothly. Any action that changes state — writing or editing files, running shell commands, searching the web, or calling MCP tools — asks for your approval first. You can customize rules per tool and per file pattern.",
   },
   {
-    q: "What leaves my machine?",
-    a: "Your prompt and any file context or tool results included in a request are sent to the provider or endpoint you selected. Activation and periodic verification contact the Limitcode service. Local model inference can stay local, but occasional network access is still required.",
+    q: "What data leaves my machine?",
+    a: "Only the prompts, file context, and tool results you send in a conversation go directly to the AI provider or local endpoint you selected. License activation and periodic checks only verify your license status with the Limitcode licensing service.",
   },
   {
-    q: "Does it read unsaved buffers automatically?",
-    a: "No. File tools operate on the version stored on disk. Use Send to Agent when you want to include the current selection or the active file contents explicitly.",
+    q: "Does it read unsaved tabs automatically?",
+    a: "Project tools read the saved files on disk. Whenever you want the agent to inspect unsaved code or a specific snippet, highlight it and press Ctrl+Alt+A (Send to Agent) to include it directly.",
   },
   {
-    q: "Where can I get help?",
-    a: "Email hola@jawuil.dev for installation, licensing, provider setup, bug reports, or feature requests.",
+    q: "Where can I get help or ask a question before buying?",
+    a: "Check the full User Guide in the Docs page, or email hola@jawuil.dev in English or Spanish for fast, direct help from the creator.",
   },
 ];
 ---
@@ -55,7 +55,7 @@ const faqs = [
   <div class="faq">
     <div class="faq-aside">
       <div class="section-head" style="margin-bottom: 0;">
-        <span class="section-num">10 - FAQ</span>
+        <span class="section-num">11 - FAQ</span>
         <h2 style="font-size: var(--step-3);">Short answers, real behavior.</h2>
       </div>
       <div class="aside-card" style="margin-top: 28px;">

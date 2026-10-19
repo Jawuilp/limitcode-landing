@@ -4,54 +4,74 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 
 const apiProviders = [
-  { name: "OpenAI", detail: "Direct API key" },
-  { name: "Anthropic", detail: "Direct API key" },
-  { name: "Google Gemini", detail: "Google AI API key" },
-  { name: "OpenRouter", detail: "Models enabled for your account" },
-  { name: "DeepSeek", detail: "Direct OpenAI-compatible API" },
-  { name: "Mistral AI", detail: "Direct OpenAI-compatible API" },
-  { name: "Other compatible APIs", detail: "Groq, xAI, Together, and custom gateways" },
+  { name: "OpenRouter", id: "openrouter", detail: "Unified API key for 500+ models across Anthropic, OpenAI, Google, Meta, DeepSeek, and more." },
+  { name: "Anthropic", id: "anthropic", detail: "Direct API key for Claude Sonnet 5, Claude Opus 5.5, and Claude Fable 5.1." },
+  { name: "OpenAI", id: "openai", detail: "Direct API key for GPT-6, GPT-6 Astra, GPT-6 Sol, and reasoning series." },
+  { name: "Google Gemini", id: "gemini", detail: "Google AI Studio API key for Gemini 4 Argon and Gemini 3.7 Flash." },
+  { name: "DeepSeek", id: "deepseek", detail: "Direct API key (api.deepseek.com) for DeepSeek V4 and reasoning models." },
+  { name: "xAI (Grok)", id: "xai", detail: "Direct API key (api.x.ai/v1) for Grok 4.20 and coding models." },
+  { name: "Mistral AI", id: "mistral", detail: "Direct API key (api.mistral.ai/v1) for Mistral Large, Codestral, and Devstral." },
+  { name: "Groq", id: "groq", detail: "Direct API key (api.groq.com/openai/v1) for ultra-fast LPU inference." },
+  { name: "Cerebras", id: "cerebras", detail: "Direct API key (api.cerebras.ai/v1) for high-speed wafer-scale inference." },
+  { name: "Together AI", id: "together", detail: "Direct API key (api.together.xyz/v1) for open-weight coding and chat models." },
+  { name: "DeepInfra", id: "deepinfra", detail: "Direct API key (api.deepinfra.com/v1/openai) for serverless open models." },
+  { name: "Moonshot AI / Kimi", id: "moonshot", detail: "Direct API key (api.moonshot.ai/v1) for Kimi K2.5 and long-context models." },
+  { name: "Alibaba DashScope (Qwen)", id: "alibaba", detail: "DashScope API key for Qwen3 Coder and Qwen models." },
+  { name: "Xiaomi MiMo", id: "xiaomi", detail: "Direct API key for Xiaomi MiMo reasoning and coding models." },
+  { name: "NVIDIA NIM", id: "nvidia", detail: "Direct API key (integrate.api.nvidia.com/v1) for NVIDIA-hosted inference." },
+  { name: "Perplexity", id: "perplexity", detail: "Direct API key (api.perplexity.ai) for Sonar online and reasoning models." },
+  { name: "Venice AI", id: "venice", detail: "Direct API key (api.venice.ai/api/v1) for privacy-focused model inference." },
+  { name: "Cohere", id: "cohere", detail: "Direct API key for Command R+ and enterprise Cohere models." },
+  { name: "OpenCode Zen & Go", id: "opencode-zen / opencode-go", detail: "Curated coding gateways (opencode.ai/zen/v1 and opencode.ai/zen/go/v1)." },
+  { name: "Amazon Bedrock", id: "bedrock", detail: "AWS Bedrock Converse API for enterprise-hosted Claude, Llama, and Titan models." },
+  { name: "Azure OpenAI", id: "azure", detail: "Microsoft Azure Cognitive Services endpoint and key." },
+  { name: "Google Cloud Vertex AI", id: "vertex / vertex_anthropic", detail: "Enterprise Google Cloud Vertex endpoints for Gemini and Claude models." },
+  { name: "Cloudflare Workers AI", id: "cloudflare", detail: "Serverless edge inference via Cloudflare Workers AI." },
+  { name: "Vercel AI Gateway", id: "vercel", detail: "Unified routing and caching via ai-gateway.vercel.sh/v1." },
+  { name: "Helicone", id: "helicone", detail: "Observability and proxy gateway via oai.hconeai.com/v1." },
+  { name: "GitLab AI & SAP AI Core", id: "gitlab / sap", detail: "Enterprise GitLab AI (gitlab.com/api/v4/ai) and SAP AI Core (api.ai.sap.com/v1) endpoints." },
+  { name: "Custom OpenAI-Compatible", id: "openai-compatible / custom", detail: "Any self-hosted vLLM, TGI, corporate proxy, or custom /v1/chat/completions URL." },
 ];
 
 const accountProviders = [
   {
     name: "GitHub Copilot",
-    status: "Account",
-    detail: "Sign in with GitHub. Availability and model access depend on an eligible Copilot account or subscription.",
+    status: "Account · copilot",
+    detail: "Sign in with GitHub via Limitcode: Login with GitHub Copilot (Ctrl+Alt+B). Availability and model access depend on an eligible Copilot subscription.",
   },
   {
     name: "OpenAI Codex OAuth",
-    status: "Account",
-    detail: "Uses an OpenAI browser login and a local callback. Account eligibility, quotas, and endpoint behavior are controlled by OpenAI and may change.",
+    status: "Account · codex-oauth",
+    detail: "Sign in via Limitcode: Login with Codex (Ctrl+Alt+Z) using an OpenAI browser login and local callback. Account eligibility and quotas are controlled by OpenAI.",
   },
   {
     name: "Google Antigravity OAuth **",
-    status: "Experimental · elevated risk",
-    detail: "Uses Google OAuth and Antigravity/Code Assist service behavior to access models available to the signed-in account.",
+    status: "Experimental · google-antigravity",
+    detail: "Sign in via Limitcode: Login with Google Antigravity (Ctrl+Alt+Shift+G) to access models available to the signed-in account.",
   },
 ];
 
 const cliProviders = [
-  { name: "Claude Code CLI", detail: "Uses an existing local `claude login` session." },
-  { name: "Codex CLI", detail: "Uses an existing local `codex login` session." },
+  { name: "Claude Code CLI (claude_code_cli)", detail: "Reuses an existing local claude login session from your terminal (Ctrl+Alt+E)." },
+  { name: "Codex CLI (codex_cli)", detail: "Reuses an existing local codex login session from your terminal." },
 ];
 
 const localProviders = [
-  { name: "Ollama", detail: "Default local OpenAI-compatible endpoint" },
-  { name: "LM Studio", detail: "Local server and models managed by LM Studio" },
-  { name: "LiteLLM", detail: "Local or remote provider gateway" },
-  { name: "Custom endpoint", detail: "User-supplied OpenAI-compatible base URL" },
+  { name: "Ollama (ollama)", detail: "Default local OpenAI-compatible endpoint at http://localhost:11434/v1." },
+  { name: "LM Studio (lm-studio)", detail: "Local server and models managed by LM Studio at http://localhost:1234/v1." },
+  { name: "LiteLLM (litellm)", detail: "Local or remote proxy gateway at http://localhost:4000/v1." },
+  { name: "Custom endpoint (openai-compatible)", detail: "User-supplied OpenAI-compatible base URL in provider_base_urls." },
 ];
 ---
 
-<Layout title="Providers — Limitcode Pro" description="API, OAuth, CLI, and local model connection methods available in Limitcode Pro." canonicalPath="/providers/">
+<Layout title="Providers — Limitcode Pro" description="Complete list of 40+ API, OAuth, CLI, enterprise cloud, and local model providers supported in Limitcode Pro." canonicalPath="/providers/">
   <Nav />
   <main>
     <section class="provider-hero">
       <div class="container">
         <span class="eyebrow reveal"><span class="dot"></span>Connection guide</span>
         <h1 class="reveal d1">Bring the model access you already use.</h1>
-        <p class="lead reveal d2">Limitcode supports direct APIs, account sign-in, existing CLI sessions, and local OpenAI-compatible runtimes. Each route has different billing, privacy, and account-risk boundaries.</p>
+        <p class="lead reveal d2">Limitcode supports 40+ direct APIs, enterprise cloud gateways, account sign-in, existing CLI sessions, and local OpenAI-compatible runtimes. Each route has different billing, privacy, and account-risk boundaries.</p>
 
         <div class="connection-map reveal d3" aria-label="Provider connection methods">
           <span><b>API key</b>Direct provider billing</span>
@@ -64,15 +84,15 @@ const localProviders = [
 
     <section class="provider-section container">
       <div class="section-head">
-        <span class="section-num">01 — Direct APIs</span>
+        <span class="section-num">01 — Direct APIs &amp; Cloud Gateways</span>
         <h2>Use a provider-issued key.</h2>
-        <p>Requests go from the plugin to the provider or gateway you select. Usage, rates, limits, and model availability remain with that service.</p>
+        <p>Requests go directly from Sublime Text to the provider or gateway you select. Configure any provider via Ctrl+Alt+K or by adding its settings ID to api_keys in Limitcode.sublime-settings.</p>
       </div>
 
       <div class="catalog-grid">
         {apiProviders.map((provider) => (
           <article class="catalog-card">
-            <span class="method">API KEY</span>
+            <span class="method">API KEY · {provider.id}</span>
             <h3>{provider.name}</h3>
             <p>{provider.detail}</p>
           </article>

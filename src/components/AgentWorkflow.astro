@@ -5,30 +5,30 @@ const steps = [
   {
     num: "01",
     label: "Ask",
-    title: "Describe the task.",
-    body: "Open Limitcode Chat and describe the task. Type @ to insert a project path, or use Send to Agent to include the current selection or file.",
-    meta: "chat · @file paths · selection or file context",
+    title: "Hand over the task in seconds.",
+    body: "Open the chat (Ctrl+Alt+L) and describe what you need. Type @ to attach project files, press Ctrl+Alt+A to send your active selection, or paste a screenshot (Ctrl+V).",
+    meta: "Ctrl+Alt+L · @file paths · Ctrl+Alt+A selection · Ctrl+V screenshots",
   },
   {
     num: "02",
     label: "Inspect",
-    title: "Read the project on disk.",
-    body: "Limitcode can list, search, and read files in the open workspace. Repository-level instructions can join the task context automatically.",
-    meta: "file discovery · project search · repository instructions",
+    title: "Let it explore your real project.",
+    body: "Limitcode searches and reads the relevant files in your workspace and automatically picks up your repository's AGENTS.md instructions so it follows your conventions.",
+    meta: "codebase search · file reads · automatic AGENTS.md rules",
   },
   {
     num: "03",
     label: "Act",
-    title: "Use dedicated tools.",
-    body: "Targeted edits, file creation, patches, builds, tests, and shell commands follow your permission rules. Mutating tools ask by default.",
-    meta: "targeted edits · patches · shell commands · permissions",
+    title: "Approve edits, diffs, and commands.",
+    body: "When the agent is ready to edit files, apply patches, or run tests and builds, it asks for your approval first — once, or for the rest of your session.",
+    meta: "targeted edits · native diffs · shell commands · approval prompts",
   },
   {
     num: "04",
     label: "Review",
-    title: "Keep a recovery path.",
-    body: "Tool calls and results remain in the conversation. Agent edits receive snapshots for Limitcode Undo and Redo while the session stays active.",
-    meta: "tool history · snapshots · Limitcode Undo / Redo",
+    title: "Accept, reject, or undo in one shortcut.",
+    body: "Review proposed diffs inside Sublime Text, watch live task checklists complete, and revert any agent change at any time with Ctrl+Alt+U.",
+    meta: "native diff toolbar · LSP self-correction · Ctrl+Alt+U Undo",
   },
 ];
 ---
@@ -36,9 +36,9 @@ const steps = [
 <section id="how-it-works" class="workflow">
   <div class="container">
     <div class="section-head">
-      <span class="section-num reveal">05 - Workflow</span>
-      <h2 class="reveal d1">The loop Limitcode uses on a task.</h2>
-      <p class="reveal d2">The conversation is the control surface. Tools inspect the project, make approved changes, and report each result back into the same session.</p>
+      <span class="section-num reveal">06 - Workflow</span>
+      <h2 class="reveal d1">How a task flows inside Sublime Text.</h2>
+      <p class="reveal d2">No context-switching between windows. You stay in the driver's seat while Limitcode explores, proposes changes, runs tests, and reports back into the same panel.</p>
     </div>
 
     <div class="workflow-grid">
