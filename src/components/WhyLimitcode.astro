@@ -46,6 +46,18 @@ const editorNative = [
         <p>
           Limitcode exists for the moments you want to stay in Sublime Text: reading files on disk, reviewing diffs side-by-side, sending a highlighted function in one keystroke, and running approved commands without context-switching to a separate terminal loop. Many buyers use Limitcode as their everyday default inside Sublime and keep CLI agents for heavy shell tasks.
         </p>
+        <div class="compare-links">
+          <span class="compare-label">Detailed comparisons:</span>
+          <a href="/blog/limitcode-pro-vs-claude-code/">vs Claude Code</a>
+          <a href="/blog/limitcode-pro-vs-cursor/">vs Cursor</a>
+          <a href="/blog/limitcode-pro-vs-copilot/">vs GitHub Copilot</a>
+          <a href="/blog/limitcode-pro-vs-opencode/">vs OpenCode</a>
+          <a href="/blog/limitcode-pro-vs-pi/">vs Pi</a>
+          <a href="/blog/limitcode-pro-vs-tabnine/">vs Tabnine</a>
+          <a href="/blog/limitcode-pro-vs-pieces/">vs Pieces</a>
+          <a href="/blog/limitcode-pro-vs-termmate/">vs TermMate</a>
+          <a href="/blog/">All guides →</a>
+        </div>
       </article>
 
       <article class="why-card reveal d2">
@@ -117,6 +129,41 @@ const editorNative = [
   .why-list li strong {
     color: var(--ink);
     font-weight: 600;
+  }
+
+  .compare-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--hairline-soft);
+  }
+
+  .compare-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+
+  .compare-links a {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 4px 9px;
+    border: 1px solid var(--hairline);
+    background: var(--paper);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .compare-links a:hover {
+    border-color: var(--signal);
+    color: var(--signal);
   }
 
   @media (max-width: 800px) {

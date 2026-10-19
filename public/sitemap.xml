@@ -2,148 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://limitcode.jawuil.dev/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/providers/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://limitcode.jawuil.dev/docs/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/about/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/changelog/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/news/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://limitcode.jawuil.dev/providers/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://limitcode.jawuil.dev/blog/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-termmate/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://limitcode.jawuil.dev/about/</loc>
+    <lastmod>2026-10-19</lastmod>
+  </url>
+  <url>
+    <loc>https://limitcode.jawuil.dev/changelog/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-claude-code/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-opencode/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pi/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-cursor/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pieces/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-tabnine/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-copilot/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <!-- Machine-readable pages for AI agents -->
-  <url>
-    <loc>https://limitcode.jawuil.dev/index.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/pricing.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-opencode/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/providers.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pi/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/docs.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-tabnine/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/changelog.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-pieces/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-termmate.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-claude-code.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-opencode.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-pi.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-cursor.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-pieces.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-tabnine.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/limitcode-pro-vs-copilot.md</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://limitcode.jawuil.dev/llms.txt</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://limitcode.jawuil.dev/blog/limitcode-pro-vs-termmate/</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
 </urlset>

@@ -49,9 +49,9 @@ const schema = {
               <span class="post-tag">{p.tag}</span>
               <span class="post-date">{p.dateLabel}</span>
             </div>
-            <h2><a href={p.url}>{p.title}</a></h2>
+            <h2><a href={p.url + "/"}>{p.title}</a></h2>
             <p>{p.description}</p>
-            <a class="read-more" href={p.url}>{p.cta} →</a>
+            <a class="read-more" href={p.url + "/"}>{p.cta} →</a>
           </article>
         ))}
       </div>
