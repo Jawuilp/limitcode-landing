@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout
+  title="License — Limitcode Pro"
+  description="Limitcode Pro licensing terms."
+  canonicalPath="/license/"
+>
+  <Nav />
+
+  <main class="license-page">
+    <section class="container license-wrap">
+      <h1>License</h1>
+
+      <h2>Limitcode Pro licensing terms</h2>
+
+      <h3>Limitcode Pro package</h3>
+      <p>
+        Limitcode Pro is a native AI coding agent plugin built for Sublime Text 4.
+        Limitcode Pro is proprietary software, copyrighted by Jawuil (Jawuil Labs).
+      </p>
+
+      <p>
+        <em>
+          (Note: The separate open-source edition of Limitcode is governed by its own open-source
+          license in its respective GitHub repository).
+        </em>
+      </p>
+
+      <hr />
+
+      <h2>Summary (TL;DR)</h2>
+      <ul>
+        <li>
+          <strong>One-time purchase, perpetual use:</strong>
+          Your license grants you permanent use of Limitcode Pro. It includes <strong>1 full year of
+          free updates</strong> from the date of purchase. After one year, you can continue using the latest
+          version released within your update window indefinitely, with no recurring subscription required.
+        </li>
+        <li>
+          <strong>3 devices per user:</strong>
+          One license allows a single person to activate and use Limitcode Pro on up to <strong>3 computers</strong>
+          (Windows, macOS, or Linux) used exclusively by that person, for both personal and commercial/work projects.
+        </li>
+        <li>
+          <strong>Offline grace period:</strong>
+          License verification requires a periodic internet check, with up to <strong>30 days of offline grace</strong>
+          between checks.
+        </li>
+        <li>
+          <strong>Privacy &amp; BYOK:</strong>
+          Limitcode Pro connects directly from your machine to your chosen AI providers or local models. Your source code,
+          prompts, and API keys are never routed through or stored on Limitcode servers.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>Limitcode Pro License</h2>
+
+      <p><strong>Copyright (c) 2026 Jawuil (limitcode.jawuil.dev)</strong></p>
+
+      <ol>
+        <li>
+          <strong>Grant of License:</strong> Purchasing a license on Gumroad or directly from the author grants a single
+          individual non-exclusive, non-transferable permission to install and use Limitcode Pro on up to three (3)
+          computers operating under that person's direct use, including for commercial software development.
+        </li>
+        <li>
+          <strong>Updates &amp; Perpetual Access:</strong> Each license includes one (1) year of software updates starting
+          from the purchase date. Once the one-year update period expires, the licensee retains the perpetual right to use
+          the last version of the software released prior to the expiration date.
+        </li>
+        <li>
+          <strong>Restrictions:</strong> Limitcode Pro may not be sub-licensed, resold, shared, or redistributed. You may
+          not publish or share your license key, bypass or modify the license verification mechanism, or loan, rent,
+          transfer, or grant any rights to Limitcode Pro—or any derivative work containing Limitcode Pro—to any other
+          person or organization without the prior written consent of the author.
+        </li>
+        <li>
+          <strong>Intellectual Property:</strong> Limitcode Pro is copyrighted by Jawuil. No title or intellectual property
+          rights in the Limitcode Pro software are transferred to you. The author retains all rights not expressly granted
+          by this license. You retain full ownership and responsibility for any code, files, or outputs generated or
+          modified within your projects using the software.
+        </li>
+        <li>
+          <strong>Disclaimer of Warranty &amp; Liability:</strong>
+          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+          THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+          AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES (INCLUDING, WITHOUT LIMITATION, LOSS OF DATA,
+          SOURCE CODE MODIFICATIONS, SHELL COMMAND EXECUTION, OR THIRD-PARTY API CHARGES) OR OTHER LIABILITY, WHETHER IN
+          AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+          OTHER DEALINGS IN THE SOFTWARE.
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .license-page {
+    padding: clamp(32px, 6vw, 72px) 0 clamp(64px, 8vw, 120px);
+  }
+
+  .license-wrap {
+    max-width: 860px;
+  }
+
+  .license-wrap h1 {
+    margin-bottom: 24px;
+  }
+
+  .license-wrap h2 {
+    font-size: clamp(1.8rem, 2.4vw, 2.3rem);
+    margin: 28px 0 14px;
+  }
+
+  .license-wrap h3 {
+    font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+    margin: 18px 0 10px;
+  }
+
+  .license-wrap p,
+  .license-wrap li {
+    color: var(--ink-soft);
+  }
+
+  .license-wrap p {
+    margin: 0 0 14px;
+    line-height: 1.65;
+  }
+
+  .license-wrap ul,
+  .license-wrap ol {
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .license-wrap ul {
+    list-style: disc;
+  }
+
+  .license-wrap ol {
+    list-style: decimal;
+  }
+
+  .license-wrap li {
+    line-height: 1.65;
+  }
+
+  .license-wrap hr {
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    margin: 28px 0;
+  }
+</style>
