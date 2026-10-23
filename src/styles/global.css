@@ -1021,6 +1021,20 @@ section[id]:not(.post-section) {
 }
 .pricing-notes span { display: inline-flex; align-items: center; gap: 8px; }
 .pricing-notes span::before { content: "✓"; color: var(--sage); font-weight: 700; }
+.pricing-notes .pricing-team-note {
+  display: block;
+  width: 100%;
+  flex-basis: 100%;
+  margin-top: 6px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--sage) 35%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--sage) 9%, transparent);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.pricing-notes .pricing-team-note::before { content: none; }
 
 /* =========================================================
    FAQ

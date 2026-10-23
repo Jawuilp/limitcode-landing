@@ -1,0 +1,10 @@
+name,pageviews,visitors,visits,bounces,totaltime
+chrome,254,85,112,67,24325
+edge-chromium,107,27,42,22,11225
+firefox,59,23,25,13,1388
+safari,21,10,11,6,1024
+ios,14,10,10,7,235
+crios,5,4,4,3,10
+edge,1,1,1,1,0
+ios-webview,1,1,1,1,0
+opera,2,1,1,0,306
