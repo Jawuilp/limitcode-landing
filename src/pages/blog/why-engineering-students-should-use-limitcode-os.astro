@@ -1,0 +1,274 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: "Why Engineering Students Should Use an AI Pair Programmer (Not an Autonomous Agent)",
+      description:
+        "Autonomous agents are tempting shortcuts in CS programs — but they can atrophy your fundamentals. Here is why a lightweight pair-programming tool keeps you in the driver's seat.",
+      datePublished: "2026-09-23",
+      dateModified: "2026-09-23",
+      author: { "@type": "Person", name: "Jawuil Pineda", url: "https://jawuil.dev" },
+      publisher: {
+        "@type": "Organization",
+        name: "Limitcode",
+        url: "https://limitcode.jawuil.dev",
+        brand: { "@type": "Brand", name: "Limitcode" },
+      },
+      mainEntityOfPage: "https://limitcode.jawuil.dev/blog/why-engineering-students-should-use-limitcode-os/",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://limitcode.jawuil.dev/" },
+        { "@type": "ListItem", position: 2, name: "Blog", item: "https://limitcode.jawuil.dev/blog/" },
+        { "@type": "ListItem", position: 3, name: "Why Engineering Students Should Use an AI Pair Programmer" },
+      ],
+    },
+  ],
+};
+---
+
+<Layout
+  title="Why Engineering Students Should Use an AI Pair Programmer (Not an Autonomous Agent)"
+  description="Autonomous agents are tempting shortcuts in CS programs — but they can atrophy your fundamentals. Here is why a lightweight pair-programming tool keeps you in the driver's seat."
+  canonicalPath="/blog/why-engineering-students-should-use-limitcode-os/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head-extra" />
+  <Nav />
+  <main>
+    <section class="post-hero">
+      <div class="container">
+        <span class="eyebrow reveal"><span class="dot"></span>Guide &middot; Sep 2026</span>
+        <h1 class="reveal d1">Why Engineering Students Should Use an AI Pair Programmer (Not an Autonomous Agent)</h1>
+        <p class="lead reveal d2">
+          If you are studying Computer Science or Software Engineering today, you
+          are surrounded by a tempting shortcut: drop your assignment into an
+          autonomous AI agent, watch it edit five files, let it run your compiler
+          in the background, and hand in the result.
+        </p>
+      </div>
+    </section>
+
+    <article class="post-article container">
+      <p>
+        It works&mdash;until you sit down for a whiteboard interview, debug a race
+        condition in production, or realize you cannot read a stack trace without
+        pasting it into a chat box.
+      </p>
+      <p>
+        Using an autonomous agent before you have built your mental models of code
+        is like bringing a forklift to the gym. The weight gets lifted, your
+        assignment gets done, and your muscles atrophy.
+      </p>
+      <p>
+        That does not mean you should avoid AI while learning to code. It means
+        you need the right level of assistance for the stage you are in:
+        intentional pair programming instead of autonomous delegation.
+      </p>
+
+      <h2>1. Driver vs. Navigator: Who Holds the Keyboard Matters</h2>
+      <p>
+        In classic pair programming, there are two roles: the Driver (who writes
+        the code and controls the editor) and the Navigator (who reviews, explains
+        concepts, and spots edge cases).
+      </p>
+      <p>
+        When you use a fully autonomous coding agent as a beginner, those roles
+        get flipped in the worst possible way: the AI becomes the Driver, and you
+        become a passive spectator approving diffs you barely understand.
+      </p>
+      <p>With a lightweight pair-programming tool, you stay the Driver:</p>
+      <ul>
+        <li>You navigate your own project tree and open the files yourself.</li>
+        <li>
+          You explicitly select the function or struct you want to discuss
+          (<code>Ctrl+Alt+A</code>) instead of letting a background indexer guess
+          your entire repository.
+        </li>
+        <li>You read the explanation, understand the logic, and apply the changes deliberately.</li>
+      </ul>
+      <p>
+        That slight friction is not a limitation&mdash;it is where engineering
+        intuition is built.
+      </p>
+
+      <h2>2. Zero Inline "Ghost Text" Hijacking Your Train of Thought</h2>
+      <p>
+        Many modern AI editors bombard you with inline multi-line autocomplete
+        ("ghost text") every time you pause for half a second to think.
+      </p>
+      <p>
+        When you are learning data structures, pointers, recursion, or SQL joins,
+        that pause is where learning happens. If an inline completion writes the
+        for loop before your brain finishes formulating the boundary condition,
+        you never actually learn to write the loop&mdash;you only learn to press
+        Tab.
+      </p>
+
+      <h2>3. Learn Your Tools Before Automating Them Away</h2>
+      <p>
+        Autonomous agents love to hide the terminal. They run <code>gcc</code>,
+        <code>pytest</code>, <code>cargo check</code>, or <code>git</code> behind
+        the scenes, parse the errors, and patch the code before you even read what
+        failed.
+      </p>
+      <p>
+        As an engineering student, failing builds and cryptic compiler errors are
+        part of the curriculum. You need to run the terminal commands yourself, see
+        why a segmentation fault or type mismatch happened, and use your AI pair
+        programmer to ask: "Why does this memory error happen on line 42?" rather
+        than "Fix my project."
+      </p>
+
+      <h2>4. Respect Your Hardware and Budget</h2>
+      <p>
+        Let&rsquo;s be practical: not every student has high-end hardware or a
+        monthly budget to burn on heavy IDE subscriptions and agent loops consuming
+        millions of background tokens.
+      </p>
+      <p>
+        A lightweight environment built on a fast, native text editor uses a
+        fraction of the RAM, opens instantly, and lets you plug in affordable APIs,
+        free-tier models, or local instances via llama.cpp or Ollama without
+        breaking the bank. That is precisely why we keep Limitcode OS free and open
+        source inside Sublime Text: to stay out of your way, help you reason through
+        your logic, and keep you firmly in the driver's seat while you build your
+        fundamentals.
+      </p>
+    </article>
+
+    <section class="container post-related-wrap">
+      <aside class="related">
+        <span class="related-label">Keep reading</span>
+        <a href="/blog/limitcode-pro-vs-termmate">Limitcode Pro vs TermMate &rarr;</a>
+        <a href="/blog/limitcode-pro-vs-opencode">Limitcode Pro vs OpenCode &rarr;</a>
+        <a href="/blog">All posts &rarr;</a>
+      </aside>
+    </section>
+
+    <section class="container post-cta-wrap">
+      <div class="about-cta">
+        <div>
+          <h3>Stay in the driver's seat.</h3>
+          <p>Limitcode OS is the free, open-source pair-programming edition for Sublime Text. Build your fundamentals &mdash; the autonomous agent comes later.</p>
+        </div>
+        <div class="about-cta-links">
+          <a class="btn btn-primary" href="https://github.com/Jawuilp/Limitcode">Get Limitcode OS <span class="arrow">&rarr;</span></a>
+          <a class="btn btn-quiet" href="/#pricing">See Limitcode Pro &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-hero {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+
+  .post-hero h1 {
+    max-width: 20ch;
+    margin: 18px 0 22px;
+    font-size: clamp(2rem, 4.2vw, 3.2rem);
+    line-height: 1.12;
+  }
+
+  .lead {
+    max-width: 60ch;
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+  }
+
+  .post-article {
+    max-width: 760px;
+    padding-top: clamp(28px, 4vw, 48px);
+    padding-bottom: clamp(28px, 4vw, 48px);
+  }
+
+  .post-article p {
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin: 0 0 20px;
+    font-size: 1.04rem;
+  }
+
+  .post-article h2 {
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    margin: 40px 0 16px;
+    line-height: 1.25;
+  }
+
+  .post-article ul {
+    list-style: disc;
+    padding-left: 1.4rem;
+    margin: 0 0 22px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .post-article li {
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-size: 1.02rem;
+  }
+
+  .post-article code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+
+  /* Related posts */
+  .post-related-wrap {
+    margin-top: clamp(32px, 4vw, 56px);
+  }
+
+  .related {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+
+  .related-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .related a {
+    font-weight: 600;
+  }
+
+  /* CTA */
+  .post-cta-wrap {
+    margin-top: clamp(40px, 5vw, 72px);
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+
+  @media (max-width: 640px) {
+    .post-hero {
+      padding-top: clamp(48px, 12vw, 72px);
+    }
+
+    .post-hero h1 {
+      font-size: var(--step-3);
+    }
+  }
+</style>
