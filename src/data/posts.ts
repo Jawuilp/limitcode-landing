@@ -20,7 +20,19 @@ export const RSS_TITLE = "Limitcode Pro Blog";
 export const RSS_DESCRIPTION =
   "Comparisons and guides about coding agents for Sublime Text: Limitcode Pro vs Claude Code, Cursor, Copilot, TermMate, and more.";
 
-export const posts: Post[] = [
+const rawPosts: Post[] = [
+  {
+    url: "/blog/why-engineering-students-should-use-limitcode-os",
+    date: "2026-09-23",
+    dateLabel: "Sep 2026",
+    tag: "Guide",
+    title: "Why Engineering Students Should Use an AI Pair Programmer (Not an Autonomous Agent)",
+    description:
+      "Autonomous agents are tempting shortcuts in CS programs — but they can atrophy your fundamentals. Here is why a lightweight pair-programming tool keeps you in the driver's seat.",
+    cta: "Read the guide",
+    contentEncoded:
+      "If you are studying Computer Science or Software Engineering, dropping your assignment into an autonomous agent works until the whiteboard interview. Using an autonomous agent before you have built mental models of code is like bringing a forklift to the gym. This guide argues for intentional pair programming: stay the Driver, avoid inline ghost text, run your own failing builds, and respect your hardware and budget with a free, open-source tool like Limitcode OS inside Sublime Text.",
+  },
   {
     url: "/blog/limitcode-pro-vs-claude-code",
     date: "2026-08-27",
@@ -117,16 +129,8 @@ export const posts: Post[] = [
     contentEncoded:
       "Pieces is a passive memory layer that captures your screens and clipboard every couple of seconds, then lets you search and summarize what happened. Limitcode Pro is an active agent: give it a task and it searches your project, proposes edits, and runs approved commands inside Sublime Text. We compare architecture, privacy, and pricing ($18.99/mo subscription vs a one-time license).",
   },
-  {
-    url: "/blog/why-engineering-students-should-use-limitcode-os",
-    date: "2026-09-23",
-    dateLabel: "Sep 2026",
-    tag: "Guide",
-    title: "Why Engineering Students Should Use an AI Pair Programmer (Not an Autonomous Agent)",
-    description:
-      "Autonomous agents are tempting shortcuts in CS programs — but they can atrophy your fundamentals. Here is why a lightweight pair-programming tool keeps you in the driver's seat.",
-    cta: "Read the guide",
-    contentEncoded:
-      "If you are studying Computer Science or Software Engineering, dropping your assignment into an autonomous agent works until the whiteboard interview. Using an autonomous agent before you have built mental models of code is like bringing a forklift to the gym. This guide argues for intentional pair programming: stay the Driver, avoid inline ghost text, run your own failing builds, and respect your hardware and budget with a free, open-source tool like Limitcode OS inside Sublime Text.",
-  },
 ];
+
+export const posts: Post[] = [...rawPosts].sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
