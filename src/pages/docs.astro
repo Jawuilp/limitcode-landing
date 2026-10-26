@@ -179,64 +179,315 @@ const providerSetupExample = `{
 const providerCatalog = [
   {
     category: "Direct API Keys — Frontier & Cloud Providers",
-    subtitle: "Configure via Ctrl+Alt+K using Limitcode: Setup Provider API Key, or add the provider ID under \"api_keys\" in Limitcode.sublime-settings.",
+    subtitle: "All direct providers connect via your personal API key. Set with Ctrl+Alt+K or define inside \"api_keys\" in Limitcode.sublime-settings.",
     items: [
-      { name: "OpenRouter", id: "openrouter", setup: "API key in api_keys.openrouter — unified access to 500+ models across all major labs." },
-      { name: "Anthropic", id: "anthropic", setup: "API key in api_keys.anthropic — direct access to Claude Sonnet 5, Opus 5.5, and Fable 5.1." },
-      { name: "OpenAI", id: "openai", setup: "API key in api_keys.openai — direct access to GPT-6, GPT-6 Astra, GPT-6 Sol, and reasoning models." },
-      { name: "Google Gemini", id: "gemini", setup: "Google AI Studio key in api_keys.gemini — direct access to Gemini 4 Argon and Gemini 3.7 Flash." },
-      { name: "DeepSeek", id: "deepseek", setup: "API key in api_keys.deepseek (api.deepseek.com) — DeepSeek V4 and reasoning series." },
-      { name: "xAI (Grok)", id: "xai", setup: "API key in api_keys.xai (api.x.ai/v1) — Grok 4.20 and coding models." },
-      { name: "Mistral AI", id: "mistral", setup: "API key in api_keys.mistral (api.mistral.ai/v1) — Mistral Large, Codestral, and Devstral." },
-      { name: "Groq", id: "groq", setup: "API key in api_keys.groq (api.groq.com/openai/v1) — ultra-fast LPU inference." },
-      { name: "Cerebras", id: "cerebras", setup: "API key in api_keys.cerebras (api.cerebras.ai/v1) — high-speed wafer-scale inference." },
-      { name: "Together AI", id: "together", setup: "API key in api_keys.together (api.together.xyz/v1) — open-weight coding and chat models." },
-      { name: "DeepInfra", id: "deepinfra", setup: "API key in api_keys.deepinfra (api.deepinfra.com/v1/openai) — serverless open-model inference." },
-      { name: "Moonshot AI / Kimi", id: "moonshot", setup: "API key in api_keys.moonshot (api.moonshot.ai/v1) — Kimi K2.5 and long-context models." },
-      { name: "Alibaba DashScope (Qwen)", id: "alibaba", setup: "API key in api_keys.alibaba (dashscope.aliyuncs.com/compatible-mode/v1) — Qwen3 Coder and Qwen series." },
-      { name: "Xiaomi MiMo", id: "xiaomi", setup: "API key in api_keys.xiaomi — Xiaomi MiMo reasoning and coding models." },
-      { name: "NVIDIA NIM", id: "nvidia", setup: "API key in api_keys.nvidia (integrate.api.nvidia.com/v1) — NVIDIA-hosted inference endpoints." },
-      { name: "Perplexity", id: "perplexity", setup: "API key in api_keys.perplexity (api.perplexity.ai) — Sonar search and reasoning models." },
-      { name: "Venice AI", id: "venice", setup: "API key in api_keys.venice (api.venice.ai/api/v1) — privacy-focused model inference." },
-      { name: "Cohere", id: "cohere", setup: "API key in api_keys.cohere — Command R+ and enterprise Cohere models." },
-      { name: "OpenCode Zen", id: "opencode-zen", setup: "API key in api_keys[\"opencode-zen\"] (opencode.ai/zen/v1) — curated coding gateway." },
-      { name: "OpenCode Go", id: "opencode-go", setup: "API key in api_keys[\"opencode-go\"] (opencode.ai/zen/go/v1) — can also reuse your OpenCode Zen key." },
+      {
+        name: "OpenRouter",
+        id: "openrouter",
+        badge: "Gateway",
+        badgeType: "gateway",
+        description: "Unified access to 500+ models across Anthropic, OpenAI, Meta, DeepSeek, and more with a single account.",
+        endpoint: "openrouter.ai/api/v1"
+      },
+      {
+        name: "Anthropic",
+        id: "anthropic",
+        badge: "Frontier",
+        badgeType: "direct",
+        description: "Direct official access to Claude Sonnet 5, Opus 5.5, and Fable 5.1 with prompt caching."
+      },
+      {
+        name: "OpenAI",
+        id: "openai",
+        badge: "Frontier",
+        badgeType: "direct",
+        description: "Direct official access to GPT-6, GPT-6 Astra, GPT-6 Sol, and o-series reasoning models."
+      },
+      {
+        name: "Google Gemini",
+        id: "gemini",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "Google AI Studio API key with direct access to Gemini 4 Argon and Gemini 3.7 Flash."
+      },
+      {
+        name: "DeepSeek",
+        id: "deepseek",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "DeepSeek V4, R1 reasoning series, and specialized coder models.",
+        endpoint: "api.deepseek.com"
+      },
+      {
+        name: "xAI (Grok)",
+        id: "xai",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "Grok 4.20 and high-context coding/reasoning models.",
+        endpoint: "api.x.ai/v1"
+      },
+      {
+        name: "Mistral AI",
+        id: "mistral",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "Mistral Large, Codestral, Devstral, and open-weight models.",
+        endpoint: "api.mistral.ai/v1"
+      },
+      {
+        name: "Groq",
+        id: "groq",
+        badge: "Fast LPU",
+        badgeType: "fast",
+        description: "Ultra-fast inference powered by LPU hardware for open-weight models.",
+        endpoint: "api.groq.com/openai/v1"
+      },
+      {
+        name: "Cerebras",
+        id: "cerebras",
+        badge: "Fast Wafer",
+        badgeType: "fast",
+        description: "High-speed wafer-scale engine for ultra low-latency code completion.",
+        endpoint: "api.cerebras.ai/v1"
+      },
+      {
+        name: "Together AI",
+        id: "together",
+        badge: "Cloud Host",
+        badgeType: "cloud",
+        description: "Cloud-hosted open-weight chat and code completion models.",
+        endpoint: "api.together.xyz/v1"
+      },
+      {
+        name: "DeepInfra",
+        id: "deepinfra",
+        badge: "Serverless",
+        badgeType: "cloud",
+        description: "Serverless pay-per-token inference for open-source AI models.",
+        endpoint: "api.deepinfra.com/v1/openai"
+      },
+      {
+        name: "Moonshot AI / Kimi",
+        id: "moonshot",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "Kimi K2.5 and ultra-long context reasoning models.",
+        endpoint: "api.moonshot.ai/v1"
+      },
+      {
+        name: "Alibaba DashScope (Qwen)",
+        id: "alibaba",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "Qwen3 Coder and complete Qwen open model family.",
+        endpoint: "dashscope.aliyuncs.com/compatible-mode/v1"
+      },
+      {
+        name: "Xiaomi MiMo",
+        id: "xiaomi",
+        badge: "Direct API",
+        badgeType: "direct",
+        description: "Xiaomi MiMo reasoning and code synthesis models."
+      },
+      {
+        name: "NVIDIA NIM",
+        id: "nvidia",
+        badge: "Cloud Host",
+        badgeType: "cloud",
+        description: "Optimized enterprise inference containers hosted on NVIDIA infrastructure.",
+        endpoint: "integrate.api.nvidia.com/v1"
+      },
+      {
+        name: "Perplexity",
+        id: "perplexity",
+        badge: "Search AI",
+        badgeType: "cloud",
+        description: "Sonar live search-augmented intelligence and reasoning models.",
+        endpoint: "api.perplexity.ai"
+      },
+      {
+        name: "Venice AI",
+        id: "venice",
+        badge: "Privacy",
+        badgeType: "privacy",
+        description: "Zero-data-retention, privacy-first private inference.",
+        endpoint: "api.venice.ai/api/v1"
+      },
+      {
+        name: "Cohere",
+        id: "cohere",
+        badge: "Enterprise",
+        badgeType: "enterprise",
+        description: "Command R+ and enterprise language and embedding models."
+      },
+      {
+        name: "OpenCode Zen",
+        id: "opencode-zen",
+        badge: "Coding Hub",
+        badgeType: "gateway",
+        description: "Curated gateway optimized specifically for developer coding workflows.",
+        endpoint: "opencode.ai/zen/v1"
+      },
+      {
+        name: "OpenCode Go",
+        id: "opencode-go",
+        badge: "Low Latency",
+        badgeType: "gateway",
+        description: "Ultra-fast coding gateway (can also share your OpenCode Zen key).",
+        endpoint: "opencode.ai/zen/go/v1"
+      },
     ],
   },
   {
     category: "Enterprise Cloud, Gateways & Custom Endpoints",
     subtitle: "Connect corporate cloud deployments, AI observability proxies, or any custom OpenAI-compatible server.",
     items: [
-      { name: "Amazon Bedrock", id: "bedrock", setup: "AWS Bedrock Converse API for enterprise-hosted Claude, Llama, and Titan models." },
-      { name: "Azure OpenAI", id: "azure", setup: "Microsoft Azure Cognitive Services endpoint and key." },
-      { name: "Google Cloud Vertex AI", id: "vertex", setup: "Google Cloud Vertex AI native endpoint for Gemini models." },
-      { name: "Vertex AI Anthropic", id: "vertex_anthropic", setup: "Claude models hosted on Google Cloud Vertex AI." },
-      { name: "Cloudflare Workers AI", id: "cloudflare", setup: "API key in api_keys.cloudflare (api.cloudflare.com/client/v4/accounts/{id}/ai/run/{model})." },
-      { name: "Vercel AI Gateway", id: "vercel", setup: "API key in api_keys.vercel (ai-gateway.vercel.sh/v1)." },
-      { name: "Helicone", id: "helicone", setup: "API key in api_keys.helicone (oai.hconeai.com/v1) — proxy and observability gateway." },
-      { name: "GitLab AI", id: "gitlab", setup: "Token in api_keys.gitlab (gitlab.com/api/v4/ai)." },
-      { name: "SAP AI Core", id: "sap", setup: "Credentials for SAP AI Core (api.ai.sap.com/v1)." },
-      { name: "Custom OpenAI-Compatible", id: "openai-compatible / custom", setup: "Set your custom base URL in provider_base_urls and your token in api_keys." },
+      {
+        name: "Amazon Bedrock",
+        id: "bedrock",
+        badge: "AWS Cloud",
+        badgeType: "enterprise",
+        description: "AWS Bedrock Converse API for VPC-hosted Claude, Llama, and Titan models inside your AWS perimeter."
+      },
+      {
+        name: "Azure OpenAI",
+        id: "azure",
+        badge: "Azure Cloud",
+        badgeType: "enterprise",
+        description: "Private GPT and reasoning deployments on Microsoft Azure Cognitive Services."
+      },
+      {
+        name: "Google Cloud Vertex AI",
+        id: "vertex",
+        badge: "GCP Cloud",
+        badgeType: "enterprise",
+        description: "Enterprise Google Cloud Vertex AI native endpoint for Gemini models."
+      },
+      {
+        name: "Vertex AI Anthropic",
+        id: "vertex_anthropic",
+        badge: "GCP Cloud",
+        badgeType: "enterprise",
+        description: "Claude models hosted natively within Google Cloud Vertex AI infrastructure."
+      },
+      {
+        name: "Cloudflare Workers AI",
+        id: "cloudflare",
+        badge: "Edge",
+        badgeType: "cloud",
+        description: "Serverless edge inference distributed across Cloudflare's global data centers.",
+        endpoint: "api.cloudflare.com/client/v4/accounts/{id}/ai/run/{model}"
+      },
+      {
+        name: "Vercel AI Gateway",
+        id: "vercel",
+        badge: "Gateway",
+        badgeType: "gateway",
+        description: "Unified proxy, rate-limiting, and telemetry for frontend deployments.",
+        endpoint: "ai-gateway.vercel.sh/v1"
+      },
+      {
+        name: "Helicone",
+        id: "helicone",
+        badge: "Observability",
+        badgeType: "gateway",
+        description: "LLM observability, analytics, caching, and rate-limiting proxy.",
+        endpoint: "oai.hconeai.com/v1"
+      },
+      {
+        name: "GitLab AI",
+        id: "gitlab",
+        badge: "Enterprise",
+        badgeType: "enterprise",
+        description: "GitLab Duo enterprise AI token for repository and code tasks.",
+        endpoint: "gitlab.com/api/v4/ai"
+      },
+      {
+        name: "SAP AI Core",
+        id: "sap",
+        badge: "Enterprise",
+        badgeType: "enterprise",
+        description: "Enterprise AI credentials for SAP business cloud environments.",
+        endpoint: "api.ai.sap.com/v1"
+      },
+      {
+        name: "Custom OpenAI-Compatible",
+        id: "openai-compatible / custom",
+        badge: "Self-Hosted / Proxy",
+        badgeType: "local",
+        description: "Connect any self-hosted proxy, vLLM, TGI, or custom enterprise gateway. Set custom URL in provider_base_urls."
+      },
     ],
   },
   {
     category: "Account Sign-In (OAuth) & Local CLI Sessions",
-    subtitle: "Use your existing subscriptions or authenticated terminal CLIs without generating separate API billing keys.",
+    subtitle: "Use existing subscriptions or authenticated terminal sessions without creating separate API billing keys.",
     items: [
-      { name: "GitHub Copilot", id: "copilot", setup: "Run Limitcode: Login with GitHub Copilot via Ctrl+Alt+B and authorize in your browser." },
-      { name: "OpenAI Codex OAuth", id: "codex-oauth", setup: "Run Limitcode: Login with Codex via Ctrl+Alt+Z to sign in with your OpenAI account in the browser." },
-      { name: "Google Antigravity OAuth", id: "google-antigravity", setup: "Run Limitcode: Login with Google Antigravity via Ctrl+Alt+Shift+G (experimental integration; use a secondary account)." },
-      { name: "Claude Code CLI", id: "claude_code_cli", setup: "Reuses an active claude login session from your terminal. Run Limitcode: Login with Claude Code via Ctrl+Alt+E." },
-      { name: "Codex CLI", id: "codex_cli", setup: "Reuses an active codex login session from your terminal." },
+      {
+        name: "GitHub Copilot",
+        id: "copilot",
+        badge: "OAuth Login",
+        badgeType: "oauth",
+        description: "Authorize via browser with your GitHub subscription. Run Limitcode: Login with GitHub Copilot via Ctrl+Alt+B."
+      },
+      {
+        name: "OpenAI Codex OAuth",
+        id: "codex-oauth",
+        badge: "OAuth Login",
+        badgeType: "oauth",
+        description: "Sign in with your OpenAI account in the browser. Run Limitcode: Login with Codex via Ctrl+Alt+Z."
+      },
+      {
+        name: "Google Antigravity OAuth",
+        id: "google-antigravity",
+        badge: "OAuth Login",
+        badgeType: "oauth",
+        description: "Sign in with your Google account via browser. Run Limitcode: Login with Google Antigravity via Ctrl+Alt+Shift+G."
+      },
+      {
+        name: "Claude Code CLI",
+        id: "claude_code_cli",
+        badge: "CLI Session",
+        badgeType: "oauth",
+        description: "Reuses your active terminal session from 'claude login'. Connect via Ctrl+Alt+E (Limitcode: Login with Claude Code)."
+      },
+      {
+        name: "Codex CLI",
+        id: "codex_cli",
+        badge: "CLI Session",
+        badgeType: "oauth",
+        description: "Reuses an active terminal session from 'codex login'. Automatically syncs authentication."
+      },
     ],
   },
   {
     category: "Local & Self-Hosted Runtimes (Offline-Capable)",
-    subtitle: "Run open-weight models on your own hardware with zero API cost.",
+    subtitle: "Run open-weight models locally on your GPU/CPU with 100% privacy and zero API token costs.",
     items: [
-      { name: "Ollama", id: "ollama", setup: "Connects to http://localhost:11434/v1 by default (customizable in provider_base_urls.ollama)." },
-      { name: "LM Studio", id: "lm-studio", setup: "Connects to http://localhost:1234/v1 by default when LM Studio's local server is running." },
-      { name: "LiteLLM", id: "litellm", setup: "Connects to http://localhost:4000/v1 by default for local or self-hosted LiteLLM proxy servers." },
+      {
+        name: "Ollama",
+        id: "ollama",
+        badge: "100% Local / Free",
+        badgeType: "local",
+        description: "Connects to your local Ollama instance. Fully offline and private.",
+        endpoint: "http://localhost:11434/v1"
+      },
+      {
+        name: "LM Studio",
+        id: "lm-studio",
+        badge: "100% Local / Free",
+        badgeType: "local",
+        description: "Connects to LM Studio's local server runtime for GUI-managed local weights.",
+        endpoint: "http://localhost:1234/v1"
+      },
+      {
+        name: "LiteLLM",
+        id: "litellm",
+        badge: "Local Proxy",
+        badgeType: "local",
+        description: "Connects to a local LiteLLM load balancer or proxy server.",
+        endpoint: "http://localhost:4000/v1"
+      },
     ],
   },
 ];
@@ -592,33 +843,63 @@ const faq = [
           <div class="sub-block" style="margin-top: 28px;">
             <h3>Complete List of Supported Providers</h3>
             <p>
-              Below is the full catalogue of AI providers supported in Limitcode, along with the provider ID used in <code class="inline-code">Limitcode.sublime-settings</code> and how each connection works:
+              Below is the full catalogue of AI providers supported in Limitcode, along with each provider's Settings ID for <code class="inline-code">Limitcode.sublime-settings</code> and supported models:
             </p>
 
+            <div class="provider-how-to">
+              <div class="how-to-card">
+                <span class="how-to-badge">Recommended</span>
+                <h4 style="margin: 6px 0 4px; font-size: 0.95rem; color: var(--ink);">Quick Setup via Command Palette</h4>
+                <p style="margin: 0; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5;">
+                  Press <kbd>Ctrl+Alt+K</kbd> (or <kbd>Cmd+Alt+K</kbd> on macOS) to run <em>Limitcode: Setup Provider API Key</em>, select your provider from the list, and paste your API key. Limitcode stores it securely in your settings.
+                </p>
+              </div>
+              <div class="how-to-card">
+                <span class="how-to-badge secondary">Manual JSON</span>
+                <h4 style="margin: 6px 0 4px; font-size: 0.95rem; color: var(--ink);">Configure in Sublime Settings</h4>
+                <p style="margin: 0; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5;">
+                  Open <code class="inline-code">Limitcode.sublime-settings</code> and add the provider's <strong>Settings ID</strong> under the <code class="inline-code">"api_keys"</code> object: <code class="inline-code">"api_keys": &#123; "&lt;settings_id&gt;": "your-key" &#125;</code>.
+                </p>
+              </div>
+            </div>
+
             {providerCatalog.map((group) => (
-              <div style="margin-top: 26px;">
+              <div style="margin-top: 30px;">
                 <h4 style="margin: 0 0 6px; font-size: 1rem; color: var(--ink);">{group.category}</h4>
-                <p style="margin: 0 0 12px; font-size: 0.9rem;">{group.subtitle}</p>
+                <p style="margin: 0 0 12px; font-size: 0.88rem; color: var(--muted);">{group.subtitle}</p>
                 <div class="table-wrap provider-table-wrap">
                   <table class="docs-table provider-table">
                     <colgroup>
-                      <col style="width: 25%;" />
-                      <col style="width: 20%;" />
-                      <col style="width: 55%;" />
+                      <col style="width: 26%;" />
+                      <col style="width: 18%;" />
+                      <col style="width: 56%;" />
                     </colgroup>
                     <thead>
                       <tr>
                         <th>Provider</th>
                         <th>Settings ID</th>
-                        <th>How to Configure &amp; Default Endpoint</th>
+                        <th>Supported Models &amp; Configuration</th>
                       </tr>
                     </thead>
                     <tbody>
                       {group.items.map((item) => (
                         <tr>
-                          <td><strong>{item.name}</strong></td>
+                          <td>
+                            <div class="provider-name-cell">
+                              <strong>{item.name}</strong>
+                              {item.badge && <span class={`badge-pill badge-${item.badgeType}`}>{item.badge}</span>}
+                            </div>
+                          </td>
                           <td><code class="inline-code">{item.id}</code></td>
-                          <td>{item.setup}</td>
+                          <td>
+                            <div class="provider-desc">{item.description}</div>
+                            {item.endpoint && (
+                              <div class="provider-endpoint">
+                                <span class="endpoint-label">Endpoint:</span>
+                                <code class="endpoint-code">{item.endpoint}</code>
+                              </div>
+                            )}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -1582,6 +1863,138 @@ const faq = [
     font-size: 0.82rem;
     font-family: var(--font-mono);
     color: var(--ink);
+  }
+
+  /* Quick setup banner cards */
+  .provider-how-to {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin: 18px 0 24px;
+  }
+
+  .how-to-card {
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .how-to-badge {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .how-to-badge.secondary {
+    background: var(--paper-edge);
+    color: var(--ink);
+  }
+
+  .provider-name-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .badge-pill {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .badge-gateway {
+    background: rgba(14, 165, 233, 0.12);
+    color: #0284c7;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+  }
+
+  .badge-direct {
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .badge-fast {
+    background: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .badge-cloud {
+    background: rgba(99, 102, 241, 0.12);
+    color: #4338ca;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+  }
+
+  .badge-privacy {
+    background: rgba(20, 184, 166, 0.12);
+    color: #0f766e;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+  }
+
+  .badge-enterprise {
+    background: rgba(168, 85, 247, 0.12);
+    color: #6b21a8;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .badge-oauth {
+    background: rgba(234, 88, 12, 0.12);
+    color: #c2410c;
+    border: 1px solid rgba(234, 88, 12, 0.3);
+  }
+
+  .badge-local {
+    background: rgba(71, 85, 105, 0.12);
+    color: #334155;
+    border: 1px solid rgba(71, 85, 105, 0.3);
+  }
+
+  .provider-desc {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .provider-endpoint {
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .endpoint-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  .endpoint-code {
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+    word-break: break-all;
   }
 
   /* Sub-groups */
