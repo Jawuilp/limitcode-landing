@@ -1,5 +1,21 @@
 # Limitcode Pro — Changelog
 
+## v1.1.13 (2026-11-12) — MCP 2026-07-28 stateless specification and native OAuth 2.1 flow
+
+Native support for the MCP `2026-07-28` stateless HTTP transport and
+end-to-end OAuth 2.1 + PKCE authorization, allowing remote MCP servers like
+Cloudflare to connect directly without external Node bridges.
+
+Added:
+- MCP `2026-07-28` stateless HTTP protocol support (`server/discover`, `MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name`, `_meta` metadata, `ttlMs` caching, and pagination) with automatic fallback to stateful MCP servers
+- Native OAuth 2.1 + PKCE authorization flow with RFC 9728 Protected Resource Metadata, RFC 8414 Authorization Server discovery, Dynamic Client Registration (`/register`), local callback capture, and automatic token refresh
+
+Changed:
+- Simplified MCP configuration that auto-detects remote or local servers from `url` or `command` without requiring an explicit `type` field
+
+Fixed:
+- Standard `User-Agent` headers on remote MCP requests to avoid Cloudflare WAF Error 1010 (`browser_signature_banned`)
+
 ## v1.1.12 (2026-11-05) — Prompt cache stability and Send to Agent context fix
 
 Sending a selection or active file to the agent now injects the context once
