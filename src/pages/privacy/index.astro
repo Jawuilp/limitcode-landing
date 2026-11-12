@@ -1,0 +1,265 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout
+  title="Privacy Policy — Limitcode Pro"
+  description="Privacy policy for the Limitcode Pro Sublime Text plugin and limitcode.jawuil.dev website: zero code middleman, local API keys, license verification, and website analytics."
+  canonicalPath="/privacy/"
+>
+
+  <Nav />
+
+  <main class="privacy-page">
+    <section class="container privacy-wrap">
+      <span class="eyebrow"><span class="dot"></span>Privacy &amp; Data Handling</span>
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: November 12, 2026</p>
+
+      <p class="privacy-intro">
+        Limitcode Pro and the open-source Limitcode plugin are built by Jawuil at <a href="https://jawuil.dev" target="_blank" rel="noopener">jawuil.dev</a>.
+        This policy separates
+        <strong>what happens locally inside the Sublime Text plugin on your machine</strong> from
+        <strong>what happens when you visit limitcode.jawuil.dev</strong>.
+      </p>
+
+      <h2>Summary (TL;DR)</h2>
+      <ul>
+        <li>
+          <strong>Zero code middleman in the plugin:</strong> Your source code, file contents, prompts, and
+          model responses go <strong>directly from your computer to your chosen AI provider</strong> (or stay
+          100% on your machine when using local models like Ollama or LM Studio). Limitcode servers never
+          receive, proxy, log, or store your code or prompts.
+        </li>
+        <li>
+          <strong>Your API keys &amp; OAuth tokens stay on your machine:</strong> Provider API keys and OAuth
+          sessions (GitHub Copilot, OpenAI Codex, Google Antigravity) are stored locally in your Sublime Text
+          configuration and are never transmitted to Limitcode servers.
+        </li>
+        <li>
+          <strong>Minimal license verification (Pro only):</strong> Limitcode Pro only contacts the Limitcode
+          license server to verify your license key and enforce the 3-device activation limit, issuing a signed
+          offline token valid for up to 30 days.
+        </li>
+        <li>
+          <strong>Zero editor telemetry:</strong> Neither the open-source edition nor Limitcode Pro collects
+          usage telemetry, keystrokes, file names, or crash reports from inside Sublime Text.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>1. Data Handled by the Sublime Text Plugin</h2>
+
+      <h3>1.1 Source Code, Prompts, and AI Provider Requests</h3>
+      <p>
+        Limitcode runs locally inside Sublime Text's plugin host. When you send a message or
+        approve a tool call, the plugin makes direct HTTPS requests from your machine to the API endpoint of
+        the provider you configured (such as OpenAI, Anthropic, Google Gemini, OpenRouter, DeepSeek, GitHub
+        Copilot, or a local endpoint).
+      </p>
+      <ul>
+        <li>We do not operate a proxy server for AI requests.</li>
+        <li>We cannot see, read, or train on your code, prompts, diffs, or conversation history.</li>
+        <li>Your conversation history and edit snapshots are saved locally on your computer inside your Sublime Text data directory.</li>
+        <li>How your chosen AI provider processes your prompts is governed by that provider's own privacy policy and API terms.</li>
+      </ul>
+
+      <h3>1.2 API Keys and Account Sign-In (OAuth)</h3>
+      <ul>
+        <li>
+          API keys entered in your Sublime Text settings and OAuth tokens obtained via account
+          sign-in remain stored on your local filesystem.
+        </li>
+        <li>
+          They are sent only to the respective provider endpoint to authenticate your requests and are never
+          shared with Jawuil or third parties.
+        </li>
+      </ul>
+
+      <h3>1.3 License Activation (Limitcode Pro)</h3>
+      <p>
+        When you activate Limitcode Pro or when the plugin refreshes its periodic offline lease (every few days,
+        with a 30-day offline grace window), the plugin sends an HTTPS request to the Limitcode license
+        verification endpoint containing only:
+      </p>
+      <ul>
+        <li>Your <strong>license key</strong>.</li>
+        <li>A <strong>non-reversible cryptographic device fingerprint</strong> (derived from basic system identifiers) and platform label to count active seats (up to 3 devices per license).</li>
+        <li>The plugin version number.</li>
+      </ul>
+      <p>
+        No source code, project paths, environment variables, or editor contents are ever included in license
+        verification requests.
+      </p>
+
+      <hr />
+
+      <h2>2. Data Collected on the Website</h2>
+
+      <h3>2.1 Website Analytics and Session Heatmaps</h3>
+      <p>
+        On <strong>limitcode.jawuil.dev</strong>, we use analytics tools to understand how pages are used and improve the site:
+      </p>
+      <ul>
+        <li>
+          <strong>Self-hosted Umami analytics and own analytics scripts:</strong> Collects
+          aggregated, privacy-friendly traffic metrics (page URL, HTTP referrer, browser/OS type, and country)
+          without cross-site tracking profiles.
+        </li>
+        <li>
+          <strong>Microsoft Clarity:</strong> We partner with Microsoft Clarity to
+          capture how visitors interact with the website through behavioral metrics, heatmaps, and anonymized
+          session replays to improve site usability. Website usage data is captured using
+          first- and third-party cookies and other tracking technologies. For more information about how
+          Microsoft collects and uses this data, visit the
+          <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.
+        </li>
+      </ul>
+      <p>
+        <em>Note:</em> These web analytics scripts run <strong>only on limitcode.jawuil.dev</strong>
+        and never inside the Sublime Text plugin.
+      </p>
+
+      <h3>2.2 Purchases, Billing, and Invoicing (Gumroad)</h3>
+      <ul>
+        <li>
+          All orders are processed by <strong>Gumroad</strong> acting as our Merchant of Record.
+        </li>
+        <li>
+          Your payment method details (credit card numbers, billing credentials) are handled directly by
+          Gumroad and Stripe; we never have access to your full card number.
+        </li>
+        <li>
+          When you purchase Limitcode Pro, Gumroad provides us with your name, purchase email address, country,
+          order timestamp, and generated license key so we can deliver your license, verify activations, send
+          critical release updates, and provide customer support.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>3. Open-Source Transparency</h2>
+      <p>
+        If you want to inspect how Limitcode interacts with Sublime Text views, settings, and provider APIs,
+        you can audit the open-source pair-programming edition at any time on GitHub:
+        <a href="https://github.com/Jawuilp/Limitcode" target="_blank" rel="noopener">github.com/Jawuilp/Limitcode</a>.
+      </p>
+
+      <hr />
+
+      <h2>4. Your Rights &amp; Contact</h2>
+      <p>
+        You can request information about your purchase/license records, ask to reset device activations, or
+        request deletion of your support correspondence at any time by contacting:
+      </p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:hola@jawuil.dev">hola@jawuil.dev</a></li>
+        <li><strong>Author:</strong> Jawuil Pineda — <a href="https://jawuil.dev" target="_blank" rel="noopener">jawuil.dev</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .privacy-page {
+    padding: clamp(32px, 6vw, 72px) 0 clamp(64px, 8vw, 120px);
+  }
+
+  .privacy-wrap {
+    max-width: 860px;
+  }
+
+  .privacy-wrap .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 14px;
+  }
+
+  .privacy-wrap .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--signal);
+  }
+
+  .privacy-wrap h1 {
+    margin-bottom: 8px;
+  }
+
+  .last-updated {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .privacy-wrap h2 {
+    font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+    margin: 30px 0 14px;
+  }
+
+  .privacy-wrap h3 {
+    font-size: var(--step-1);
+    margin: 22px 0 10px;
+  }
+
+  .privacy-wrap p,
+  .privacy-wrap li {
+    color: var(--ink-soft);
+  }
+
+  .privacy-intro {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    margin: 0 0 8px;
+  }
+
+  .privacy-wrap p {
+    margin: 0 0 14px;
+    line-height: 1.65;
+  }
+
+  .privacy-wrap ul {
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 12px;
+    margin: 0 0 14px;
+    list-style: disc;
+  }
+
+  .privacy-wrap li {
+    line-height: 1.65;
+  }
+
+  .privacy-wrap a {
+    color: var(--signal);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .privacy-wrap code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--paper-deep);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+
+  .privacy-wrap hr {
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    margin: 28px 0;
+  }
+</style>

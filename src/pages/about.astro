@@ -23,27 +23,36 @@ const limits = [
 ---
 
 <Layout
-  title="Why Limitcode? — Limitcode Pro"
-  description="The story behind the Limitcode name: a lightweight coding agent that works inside Sublime Text, within the limits you control — and who it is (and is not) for."
+  title="About & Why Limitcode — Limitcode Pro"
+  description="Who built Limitcode, why it was created for Sublime Text, the story behind the name, and who it is for."
   canonicalPath="/about/"
 >
   <Nav />
   <main>
     <section class="about-hero">
       <div class="container">
-        <span class="eyebrow reveal"><span class="dot"></span>About the name</span>
-        <h1 class="reveal d1">Why Limitcode?</h1>
+        <span class="eyebrow reveal"><span class="dot"></span>About the creator</span>
+        <h1 class="reveal d1">Hi, I'm Jawuil.</h1>
         <p class="lead reveal d2">
-          Sublime Text was never built to host a coding agent. Limitcode exists
-          to prove it can: a full agentic workflow running natively inside the
-          editor, pushing it to its limit — without pushing you out of it.
+          I'm a developer who likes building simple, fast tools. I created
+          Limitcode because terminal agents were eating all my RAM, and I wanted
+          a lightweight coding agent that lived natively inside Sublime Text.
+          More about me at <a href="https://jawuil.dev/" target="_blank" rel="noopener">jawuil.dev</a>.
         </p>
+        <div class="founder-links reveal d3">
+          <a class="btn btn-quiet" href="https://jawuil.dev/en/blog/why-i-built-limitcode/" target="_blank" rel="noopener">
+            Why I built Limitcode <span class="arrow">→</span>
+          </a>
+          <a class="btn btn-quiet" href="https://github.com/Jawuilp/Limitcode" target="_blank" rel="noopener">
+            Open-source edition <span class="arrow">→</span>
+          </a>
+        </div>
       </div>
     </section>
 
     <section class="about-section container">
       <div class="section-head">
-        <span class="section-num">01 — The name</span>
+        <span class="section-num">01 — Why Limitcode?</span>
         <h2>Limit + code: pushing Sublime Text to its limit.</h2>
         <p>
           For years, Sublime Text has been the editor of choice for developers
@@ -146,12 +155,25 @@ const limits = [
   }
 
   .about-hero h1 {
-    max-width: 12ch;
+    max-width: 18ch;
     margin: 18px 0 22px;
   }
 
   .about-hero .lead {
     max-width: 56ch;
+  }
+
+  .about-hero .lead a {
+    color: var(--signal);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .founder-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 28px;
   }
 
   .about-section {

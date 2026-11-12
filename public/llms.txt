@@ -18,7 +18,8 @@ The Pro edition is the fully autonomous version.
 - [Home](https://limitcode.jawuil.dev/) — product overview, capabilities, workflow, pricing
 - [Providers](https://limitcode.jawuil.dev/providers/) — API keys, account sign-in (GitHub Copilot, OpenAI Codex, Google Antigravity), CLI sessions, local models
 - [Docs](https://limitcode.jawuil.dev/docs/) — installation, command palette, settings, keyboard shortcuts, FAQ
-- [Why Limitcode](https://limitcode.jawuil.dev/about/) - the story behind the name, who it is for and who it is not for
+- [Why Limitcode](https://limitcode.jawuil.dev/about/) - the story behind the name, who built it (Jawuil), architecture, and who it is for
+- [Privacy Policy](https://limitcode.jawuil.dev/privacy/) — plugin zero-middleman data policy and website analytics disclosure
 - [Changelog](https://limitcode.jawuil.dev/changelog/) — release notes
 - [News](https://limitcode.jawuil.dev/news/) — announcements
 - [Blog](https://limitcode.jawuil.dev/blog/) — comparisons and guides
@@ -38,6 +39,7 @@ The Pro edition is the fully autonomous version.
 - [Pricing](https://limitcode.jawuil.dev/pricing.md) — structured pricing for both editions
 - [Providers](https://limitcode.jawuil.dev/providers.md) — full provider list and connection methods
 - [Quick reference](https://limitcode.jawuil.dev/docs.md) — installation, shortcuts, settings, capabilities
+- [Privacy Policy](https://limitcode.jawuil.dev/privacy.md) — plugin & website privacy policy in markdown
 - [Changelog](https://limitcode.jawuil.dev/changelog.md) — release notes in markdown
 - [Limitcode Pro vs TermMate](https://limitcode.jawuil.dev/limitcode-pro-vs-termmate.md) - comparison article in markdown
 - [Limitcode Pro vs Claude Code](https://limitcode.jawuil.dev/limitcode-pro-vs-claude-code.md) - comparison article in markdown
