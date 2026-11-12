@@ -1,5 +1,33 @@
 # Limitcode Pro — Changelog
 
+## v1.1.12 (2026-11-05) — Prompt cache stability and Send to Agent context fix
+
+Sending a selection or active file to the agent now injects the context once
+in the user turn instead of duplicating it into the system prompt, keeping the
+system prompt stable across turns for provider prompt caching.
+
+Fixed:
+- Removed duplicate `Current Selection/Context` injection from the system prompt when using `Limitcode: Send to Agent`
+
+Changed:
+- System prompt stays stable across turns when attaching editor context, preserving provider prompt cache hits
+
+## v1.1.11 (2026-10-30) — GitHub Copilot Auto session and Responses API support
+
+Full support for GitHub Copilot Auto model routing and the `/responses`
+transport, so Copilot Free, Student, and Pro accounts work out of the box.
+
+Added:
+- Full GitHub Copilot `auto` session flow (`/models/session`, `/models/session/intent`, and `Copilot-Session-Token` management)
+- `/responses` endpoint support for Auto-selected models with streaming SSE, instructions, input items, and `function_call` round-trips
+- 26 automated regression tests for GitHub Copilot Auto and Responses API flows
+
+Changed:
+- Copilot model picker now parses structured capabilities metadata and scopes the list to models authorized for the signed-in account (defaulting Free and Student accounts to `auto`)
+
+Fixed:
+- Preserved assistant text alongside tool calls in Copilot history for accurate Responses API turn reconstruction
+
 ## v1.1.10 (2026-09-29) — Permission engine fixes
 
 Trust and always-allow decisions now work everywhere, with full visibility
