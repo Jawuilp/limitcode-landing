@@ -71,7 +71,7 @@ const ogImage = site + image;
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={imageAlt} />
 
-    <!-- Organization + WebSite schema (sitewide) -->
+    <!-- Organization schema (sitewide) + WebSite schema (home only for Site Name) -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
@@ -83,15 +83,16 @@ const ogImage = site + image;
           "email": "hola@jawuil.dev",
           "brand": { "@type": "Brand", "name": "Limitcode" }
         },
-        {
+        ...(canonicalPath === '/' ? [{
           "@type": "WebSite",
           "@id": site + "/#website",
-          "url": site,
+          "url": site + "/",
           "name": "Limitcode Pro",
+          "alternateName": "Limitcode",
           "description": "A lightweight coding-agent workflow for Sublime Text: inspect files, apply approved edits, and run approved commands from a side-by-side chat, without a separate AI IDE.",
           "publisher": { "@id": site + "/#organization" },
           "inLanguage": "en"
-        }
+        }] : [])
       ]
     })} />
     <script defer src="https://u.jawuil.dev/script.js" data-website-id="2b40f4c4-8977-4faa-bc77-c39cc66a80bc"></script>
